@@ -2851,6 +2851,21 @@ public final class Settings {
         public static final int SCREEN_BRIGHTNESS_MODE_AUTOMATIC = 1;
 
         /**
+         * The button brightness to be used while the screen is on or after a button press,
+         * depending on the value of {@link BUTTON_BACKLIGHT_TIMEOUT}.
+         * Valid value range is between 0 and {@link PowerManager#getMaximumButtonBrightness()}
+         * @hide
+         */
+        public static final String BUTTON_BRIGHTNESS = "button_brightness";
+
+        /**
+         * The time in ms to keep the button backlight on after pressing a button.
+         * A value of 0 will keep the buttons on for as long as the screen is on.
+         * @hide
+         */
+        public static final String BUTTON_BACKLIGHT_TIMEOUT = "button_backlight_timeout";
+
+        /**
          * Control whether the process CPU usage meter should be shown.
          *
          * @deprecated Use {@link Global#SHOW_PROCESSES} instead
@@ -3832,7 +3847,7 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
-       
+
         /**
          * whether to enable torch on lockscreen
          * @hide
@@ -3994,13 +4009,13 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_CITRUS_LOGO = "status_bar_citrus_logo";
- 
+
         /**
          * Statusbar Citrus-CAF logo color setting
          * @hide
          */
         public static final String STATUS_BAR_CITRUS_LOGO_COLOR = "status_bar_citrus_logo_color";
- 
+
          /**
          * Style of Status bar logo
          * 0 - Left (default)
