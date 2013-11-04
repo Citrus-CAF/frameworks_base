@@ -4097,7 +4097,7 @@ public final class Settings {
          */
 
         /**
-         * Citrus-CAF Addition starts
+         * Citrus-CAF SystemSettings additions starts
          */
 
         /**
@@ -4128,7 +4128,7 @@ public final class Settings {
         private static final Validator STATUS_BAR_IME_SWITCHER_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
-         * Citrus-CAF Addition ends
+         * Citrus-CAF SystemSettings additions ends
          */
 
         /**
@@ -4190,7 +4190,7 @@ public final class Settings {
             NOTIFICATION_VIBRATION_INTENSITY,
             HAPTIC_FEEDBACK_INTENSITY,
             DISPLAY_COLOR_MODE,
-            // Citrus-CAF Addition starts
+            // Citrus-CAF additions starts
             LOCKSCREEN_MEDIA_METADATA,
             SENSOR_BLOCK,
             STATUS_BAR_IME_SWITCHER,
@@ -4308,7 +4308,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(EGG_MODE);
             PRIVATE_SETTINGS.add(SHOW_BATTERY_PERCENT);
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
-            // Citrus-CAF Addition starts
+            // Citrus-CAF additions starts
             PRIVATE_SETTINGS.add(LOCKSCREEN_MEDIA_METADATA);
             PRIVATE_SETTINGS.add(SENSOR_BLOCK);
             PRIVATE_SETTINGS.add(STATUS_BAR_IME_SWITCHER);
@@ -4400,7 +4400,7 @@ public final class Settings {
             VALIDATORS.put(WIFI_STATIC_DNS1, WIFI_STATIC_DNS1_VALIDATOR);
             VALIDATORS.put(WIFI_STATIC_DNS2, WIFI_STATIC_DNS2_VALIDATOR);
             VALIDATORS.put(SHOW_BATTERY_PERCENT, SHOW_BATTERY_PERCENT_VALIDATOR);
-            // Citrus-CAF Addition starts
+            // Citrus-CAF additions starts
             VALIDATORS.put(LOCKSCREEN_MEDIA_METADATA, LOCKSCREEN_MEDIA_METADATA_VALIDATOR);
             VALIDATORS.put(SENSOR_BLOCK, SENSOR_BLOCK_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_IME_SWITCHER, STATUS_BAR_IME_SWITCHER_VALIDATOR);
@@ -7991,6 +7991,20 @@ public final class Settings {
          */
         public static final String PACKAGES_TO_CLEAR_DATA_BEFORE_FULL_RESTORE =
                 "packages_to_clear_data_before_full_restore";
+
+        /**
+         * Citrus-CAF SecureSettings additions starts
+         */
+
+        /**
+         * The TCP/IP port to run ADB on, or -1 for USB
+         * @hide
+         */
+        public static final String ADB_PORT = "adb_port";
+
+        /**
+         * Citrus-CAF SecureSettings additions ends
+         */
 
         /**
          * This are the settings to be backed up.
