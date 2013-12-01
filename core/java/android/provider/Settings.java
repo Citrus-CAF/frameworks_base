@@ -4506,6 +4506,13 @@ public final class Settings {
          * @hide
          */
         public static final String DEVICE_OFF_SCREEN_GESTURE_FEEDBACK_ENABLED = "device_off_screen_gesture_feedback_enabled";
+        
+        /**
+         * Whether to mute annoying notifications
+         * @hide
+         */
+        public static final String MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD =
+                "mute_annoying_notifications_threshold";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -4736,6 +4743,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BUTTON_EXTRA_KEY_MAPPING);
             PRIVATE_SETTINGS.add(DEVICE_GESTURE_FEEDBACK_ENABLED);
             PRIVATE_SETTINGS.add(DEVICE_OFF_SCREEN_GESTURE_FEEDBACK_ENABLED);
+            PRIVATE_SETTINGS.add(MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD);            
         }
         
         /**
