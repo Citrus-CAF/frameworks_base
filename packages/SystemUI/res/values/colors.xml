@@ -145,6 +145,4 @@
     <color name="volume_slider_inactive">#FFB0BEC5</color><!-- blue grey 200 -->
     <color name="volume_slider_active">@color/system_accent_color</color>
 
-    <!-- Network speed indicator --> 
-    <color name="status_bar_traffic_color">#FFFFFFFF</color>  
 </resources>
