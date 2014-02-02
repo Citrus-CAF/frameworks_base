@@ -34,7 +34,6 @@ import android.view.ViewRootImpl;
 import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 import android.widget.FrameLayout;
-
 import com.android.systemui.R;
 import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.DragDownHelper;
@@ -286,6 +285,20 @@ public class StatusBarWindowView extends FrameLayout {
         if (mStackScrollLayout != null) {
             mStackScrollLayout.cancelExpandHelper();
         }
+    }
+
+    public void addContent(View content) {
+        addView(content);
+        mStackScrollLayout = (NotificationStackScrollLayout) content.findViewById(
+                R.id.notification_stack_scroller);
+        mNotificationPanel = (NotificationPanelView) content.findViewById(R.id.notification_panel);
+        mDragDownHelper = new DragDownHelper(getContext(), this, mStackScrollLayout, mService);
+        mBrightnessMirror = content.findViewById(R.id.brightness_mirror);
+
+    }
+
+    public void removeContent(View content) {
+        removeView(content);
     }
 
     public class LayoutParams extends FrameLayout.LayoutParams {
