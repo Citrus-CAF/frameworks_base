@@ -43,6 +43,7 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
     interface TaskViewCallbacks {
         public void onTaskViewAppIconClicked(TaskView tv);
         public void onTaskViewAppInfoClicked(TaskView tv);
+        public void onTaskFloatClicked(TaskView tv);
         public void onTaskViewClicked(TaskView tv, Task task, boolean lockToTask);
         public void onTaskViewDismissed(TaskView tv);
         public void onTaskViewClipStateChanged(TaskView tv);
@@ -293,8 +294,10 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
                 ctx.postAnimationTrigger.increment();
 
                 // Animate the action button in
-                fadeInActionButton(mConfig.transitionEnterFromAppDelay,
-                        mConfig.taskViewEnterFromAppDuration);
+                mActionButtonView.animate().alpha(1f)
+                        .setInterpolator(mConfig.fastOutLinearInInterpolator)
+                        .withLayer()
+                        .start();
             } else {
                 // Animate the task up if it was occluding the launch target
                 if (ctx.currentTaskOccludesLaunchTarget) {
@@ -359,18 +362,6 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
         }, startDelay);
     }
 
-    public void fadeInActionButton(int delay, int duration) {
-        // Hide the action button
-        mActionButtonView.setAlpha(0f);
-
-        // Animate the action button in
-        mActionButtonView.animate().alpha(1f)
-                .setStartDelay(delay)
-                .setDuration(duration)
-                .setInterpolator(PhoneStatusBar.ALPHA_IN)
-                .start();
-    }
-
     /** Animates this task view as it leaves recents by pressing home. */
     void startExitToHomeAnimation(ViewAnimation.TaskViewExitContext ctx) {
         animate()
@@ -420,6 +411,8 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
         } else {
             // Hide the dismiss button
             mHeaderView.startLaunchTaskDismissAnimation();
+            // Hide the floating button
+            mHeaderView.startLaunchFloatButtonAnimation();
             // If this is another view in the task grouping and is in front of the launch task,
             // animate it away first
             if (occludesLaunchTarget) {
@@ -662,10 +655,8 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
         mTask.setCallbacks(this);
 
         // Hide the action button if lock to app is disabled for this view
-        int lockButtonVisibility = (!t.lockToTaskEnabled || !t.lockToThisTask) ? GONE : VISIBLE;
-        if (mActionButtonView.getVisibility() != lockButtonVisibility) {
-            mActionButtonView.setVisibility(lockButtonVisibility);
-            requestLayout();
+        if (!t.lockToTaskEnabled && mActionButtonView.getVisibility() != View.GONE) {
+            mActionButtonView.setVisibility(View.GONE);
         }
     }
 
@@ -685,6 +676,7 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
             if (mConfig.multiStackEnabled) {
                 mHeaderView.mMoveTaskButton.setOnClickListener(this);
             }
+            mHeaderView.mFloatButton.setOnClickListener(this);
             mActionButtonView.setOnClickListener(this);
             mHeaderView.mApplicationIcon.setOnLongClickListener(this);
         }
@@ -701,6 +693,7 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
             // Unbind any listeners
             mHeaderView.mApplicationIcon.setOnClickListener(null);
             mHeaderView.mDismissButton.setOnClickListener(null);
+            mHeaderView.mFloatButton.setOnClickListener(null);
             if (mConfig.multiStackEnabled) {
                 mHeaderView.mMoveTaskButton.setOnClickListener(null);
             }
@@ -745,6 +738,10 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
                         // Keep track of deletions by the dismiss button
                         MetricsLogger.histogram(getContext(), "overview_task_dismissed_source",
                                 Constants.Metrics.DismissSourceHeaderButton);
+                    } else if (v == mHeaderView.mFloatButton) {
+                        if (mCb != null) {
+                            mCb.onTaskFloatClicked(tv);
+                        }
                     } else if (v == mHeaderView.mMoveTaskButton) {
                         if (mCb != null) {
                             mCb.onTaskResize(tv);

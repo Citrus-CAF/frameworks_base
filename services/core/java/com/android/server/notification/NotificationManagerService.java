@@ -1312,12 +1312,27 @@ public class NotificationManagerService extends SystemService {
             checkCallerIsSystem();
 
             mRankingHelper.setPackagePeekable(pkg, uid, peekable);
+            savePolicyFile();
         }
 
         @Override
         public boolean getPackagePeekable(String pkg, int uid) {
             checkCallerIsSystem();
             return mRankingHelper.getPackagePeekable(pkg, uid);
+        }
+
+        @Override
+        public void setPackageFloating(String pkg, int uid, boolean floating) {
+            checkCallerIsSystem();
+
+            mRankingHelper.setPackageFloating(pkg, uid, floating);
+            savePolicyFile();
+        }
+
+        @Override
+        public boolean getPackageFloating(String pkg, int uid) {
+            enforceSystemOrSystemUI("INotificationManager.getPackageFloating");
+            return mRankingHelper.getPackageFloating(pkg, uid);
         }
 
         @Override

@@ -634,6 +634,22 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                 new UserHandle(t.key.userId));
     }
 
+    public void onTaskFloatClicked(final Task t) {
+        // Hide and go home
+        onRecentsHidden();
+        mCb.onTaskLaunchFailed();
+        // Launch task in floating mode
+        post(new Runnable() {
+            @Override
+            public void run() {
+                Intent baseIntent = t.key.baseIntent;
+                baseIntent.setFlags(Intent.FLAG_FLOATING_WINDOW
+                           | Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(baseIntent);
+           }
+        });
+    }
+
     @Override
     public void onTaskViewDismissed(Task t) {
         // Remove any stored data from the loader.  We currently don't bother notifying the views

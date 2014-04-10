@@ -62,6 +62,7 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
                                       boolean lockToTask);
         public void onTaskViewAppInfoClicked(Task t);
         public void onTaskViewDismissed(Task t);
+        public void onTaskFloatClicked(Task t);
         public void onAllTaskViewsDismissed(ArrayList<Task> removedTasks);
         public void onTaskStackFilterTriggered();
         public void onTaskStackUnfilterTriggered();
@@ -1150,7 +1151,6 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
             TaskView frontTv = getChildViewForTask(newFrontMostTask);
             if (frontTv != null) {
                 frontTv.onTaskBound(newFrontMostTask);
-                frontTv.fadeInActionButton(0, mConfig.taskViewEnterFromAppDuration);
             }
         }
 
@@ -1368,6 +1368,13 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
 
             // Keep track of app-info invocations
             MetricsLogger.count(getContext(), "overview_app_info", 1);
+        }
+    }
+
+    @Override
+    public void onTaskFloatClicked(TaskView tv) {
+        if (mCb != null) {
+            mCb.onTaskFloatClicked(tv.getTask());
         }
     }
 
