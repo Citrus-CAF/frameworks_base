@@ -1157,9 +1157,6 @@ public class Vpn {
         public void exit() {
             // We assume that everything is reset after stopping the daemons.
             interrupt();
-            for (LocalSocket socket : mSockets) {
-                IoUtils.closeQuietly(socket);
-            }
             agentDisconnect();
             try {
                 mContext.unregisterReceiver(mBroadcastReceiver);
@@ -1408,8 +1405,8 @@ public class Vpn {
             } catch (InterruptedException e) {
                 Log.d(TAG, "interrupted during monitorDaemons(); stopping services");
             } finally {
-                for (String daemon : mDaemons) {
-                    SystemService.stop(daemon);
+                for (LocalSocket socket : mSockets) {
+                    IoUtils.closeQuietly(socket);
                 }
 
                 agentDisconnect();
