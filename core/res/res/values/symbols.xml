@@ -1777,6 +1777,7 @@
   <java-symbol type="array" name="config_networkNotifySwitches" />
   <java-symbol type="integer" name="config_networkAvoidBadWifi" />
   <java-symbol type="integer" name="config_notificationsBatteryFullARGB" />
+  <java-symbol type="integer" name="config_notificationsBatteryReallyFullARGB" />
   <java-symbol type="integer" name="config_notificationsBatteryLedOff" />
   <java-symbol type="integer" name="config_notificationsBatteryLedOn" />
   <java-symbol type="integer" name="config_notificationsBatteryLowARGB" />
@@ -2869,6 +2870,16 @@
   <!-- Screen-size-dependent modes for picker dialogs. -->
   <java-symbol type="integer" name="time_picker_mode" />
   <java-symbol type="integer" name="date_picker_mode" />
+  <java-symbol type="bool" name="config_useSystemClockforRotationSensor" />
+
+  <!-- Notification and battery light -->
+  <java-symbol type="bool" name="config_intrusiveNotificationLed" />
+  <java-symbol type="bool" name="config_multiColorNotificationLed" />
+  <java-symbol type="bool" name="config_intrusiveBatteryLed" />
+  <java-symbol type="bool" name="config_multiColorBatteryLed" />
+  <java-symbol type="array" name="notification_light_package_mapping" />
+  <java-symbol type="array" name="config_notificationNoAlertsVibePattern" />
+
   <java-symbol type="bool" name="config_permissionReviewRequired" />
 
   <java-symbol type="bool" name="use_lock_pattern_drawable" />
