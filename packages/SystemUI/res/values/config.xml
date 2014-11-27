@@ -355,9 +355,6 @@
     <!-- Show forbidden and greyed data icon when data is disabled -->
     <bool name="config_data_signal_control">false</bool>
 
-    <!-- When true, show charging animation -->
-    <bool name="config_show_battery_charging_anim">true</bool>
-
     <bool name="config_show4gForIWlan">false</bool>
     <bool name="config_showSignalForIWlan">false</bool>
 </resources>
