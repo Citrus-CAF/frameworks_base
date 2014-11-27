@@ -8616,6 +8616,7 @@ public final class Settings {
          * 1: Display the battery an icon in landscape mode
          * 2: Display the battery as a circle
          * 3: Display the battery as a dotted circle
+         * 5: Display the battery as text
          * default: 0
          * @hide
          */
@@ -8623,7 +8624,7 @@ public final class Settings {
 
         /** @hide */
         private static final Validator STATUS_BAR_BATTERY_STYLE_VALIDATOR =
-                new SettingsValidators.InclusiveIntegerRangeValidator(0, 3);
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 5);
 
         /**
          * Citrus-CAF SecureSettings additions ends
