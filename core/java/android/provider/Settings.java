@@ -3407,6 +3407,8 @@ public final class Settings {
          */
         public static final String WIFI_AUTO_CONNECT_TYPE = "wifi_auto_connect_type";
 
+        public static final String RECENTS_SHOW_SEARCH_BAR = "recents_show_search_bar"; 
+        
         /**
          * Action to perform when the home key is long-pressed.
          * (Default can be configured via config_longPressOnHomeBehavior)
