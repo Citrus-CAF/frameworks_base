@@ -6623,6 +6623,12 @@ public final class Settings {
          */
         public static final String THEMES_TILE_COMPONENTS = "themes_tile_components";
 
+         /**
+         * Whether user is allowed to pull down quick settings on secure keyguard.
+         * @hide
+         */
+        public static final String STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD = "status_bar_locked_on_secure_keyguard";
+
         /**
          * This are the settings to be backed up.
          *
@@ -6680,6 +6686,7 @@ public final class Settings {
             SLEEP_TIMEOUT,
             DOUBLE_TAP_TO_WAKE,
             CAMERA_GESTURE_DISABLED,
+            STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD
         };
 
         /**
