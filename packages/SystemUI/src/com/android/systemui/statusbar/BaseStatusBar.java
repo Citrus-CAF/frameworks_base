@@ -2158,6 +2158,7 @@ public abstract class BaseStatusBar extends SystemUI implements
         // update the contentIntent
         mNotificationClicker.register(entry.row, notification);
 
+        applyColorsAndBackgrounds(notification, entry);
         entry.row.setStatusBarNotification(notification);
         entry.row.notifyContentUpdated();
         entry.row.resetHeight();
