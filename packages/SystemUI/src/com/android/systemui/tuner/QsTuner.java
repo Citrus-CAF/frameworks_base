@@ -213,6 +213,7 @@ public class QsTuner extends Fragment implements Callback {
         else if (spec.equals("ime")) return R.string.quick_settings_ime_label;
         else if (spec.equals("navigation_bar")) return R.string.quick_settings_smartbar;
         else if (spec.equals("caffeine")) return R.string.quick_settings_caffeine_label;
+        else if (spec.equals("compass")) return R.string.quick_settings_compass;
         return 0;
     }
 
@@ -460,9 +461,14 @@ public class QsTuner extends Fragment implements Callback {
             else if (mSpec.equals("sync")) return R.drawable.ic_qs_sync_on;
             else if (mSpec.equals("timeout")) return R.drawable.ic_qs_screen_timeout_vector;
             else if (mSpec.equals("expanded_desktop")) return R.drawable.ic_qs_expanded_desktop;
+<<<<<<< HEAD
             else if (mSpec.equals("ime")) return R.drawable.ic_qs_ime;
             else if (mSpec.equals("navigation_bar")) return R.drawable.ic_qs_smartbar;
             else if (mSpec.equals("caffeine")) return R.drawable.ic_qs_caffeine_on;
+=======
+            else if (mSpec.equals("adb_network")) return R.drawable.ic_qs_network_adb_on;
+            else if (mSpec.equals("compass")) return R.drawable.ic_qs_compass_on;
+>>>>>>> cb3dc9b... SystemUI: port compass tile
             return R.drawable.android;
         }
 
