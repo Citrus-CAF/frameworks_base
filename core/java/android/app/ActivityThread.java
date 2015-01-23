@@ -2444,13 +2444,6 @@ public final class ActivityThread {
 
         } catch (Exception e) {
             if (!mInstrumentation.onException(activity, e)) {
-                if (e instanceof InflateException) {
-                    Log.e(TAG, "Failed to inflate", e);
-                    sendAppLaunchFailureBroadcast(r);
-                } else if (e instanceof Resources.NotFoundException) {
-                    Log.e(TAG, "Failed to find resource", e);
-                    sendAppLaunchFailureBroadcast(r);
-                }
                 throw new RuntimeException(
                     "Unable to start activity " + component
                     + ": " + e.toString(), e);
@@ -2465,7 +2458,7 @@ public final class ActivityThread {
         if (r.packageInfo != null && !TextUtils.isEmpty(r.packageInfo.getPackageName())) {
             pkg = r.packageInfo.getPackageName();
         }
-        Intent intent = new Intent(Intent.ACTION_APP_LAUNCH_FAILURE,
+        Intent intent = new Intent(Intent.ACTION_APP_FAILURE,
                 (pkg != null)? Uri.fromParts("package", pkg, null) : null);
         getSystemContext().sendBroadcast(intent);
     }
