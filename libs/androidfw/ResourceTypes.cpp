@@ -6750,6 +6750,7 @@ void ResTable::removeAssetsByCookie(const String8& /* packageName */, int32_t co
                 PackageGroup* grp = mPackageGroups.itemAt(i);
                 if (grp->overlayPackage == pkg) {
                     removeIdmappedTypesFromPackageGroup(grp);
+                    grp->clearBagCache();
                     grp->overlayPackage = NULL;
                 }
             }
