@@ -1122,6 +1122,7 @@ public class NotificationManagerService extends SystemService {
             // Grab our optional AudioService
             mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
             mAudioManagerInternal = getLocalService(AudioManagerInternal.class);
+            updateDisableDucking();
             mZenModeHelper.onSystemReady();
 
             updateDisableDucking();
