@@ -4200,8 +4200,15 @@ public final class Settings {
         public static final String LOCK_POWER_MENU_DISABLED = "lockscreen_power_menu_disabled";
 
         /** @hide */
-        private static final Validator LOCK_POWER_MENU_DISABLED_VALIDATOR =
-                BOOLEAN_VALIDATOR;
+        private static final Validator LOCK_POWER_MENU_DISABLED_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String SCREENSHOT_SHUTTER_SOUND = "screenshot_shutter_sound";
+
+        /** @hide */
+        private static final Validator SCREENSHOT_SHUTTER_SOUND_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
          * Citrus-CAF SystemSettings additions ends
@@ -4279,6 +4286,7 @@ public final class Settings {
             SCREEN_STATE_OFF_DELAY,
             SCREEN_STATE_ON_DELAY,
             LOCK_POWER_MENU_DISABLED,
+            SCREENSHOT_SHUTTER_SOUND,
         };
 
         /**
@@ -4406,6 +4414,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREEN_STATE_OFF_DELAY);
             PRIVATE_SETTINGS.add(SCREEN_STATE_ON_DELAY);
             PRIVATE_SETTINGS.add(LOCK_POWER_MENU_DISABLED);
+            PRIVATE_SETTINGS.add(SCREENSHOT_SHUTTER_SOUND);
         }
 
         /**
@@ -4507,6 +4516,7 @@ public final class Settings {
             VALIDATORS.put(SCREEN_STATE_OFF_DELAY, SCREEN_STATE_OFF_DELAY_VALIDATOR);
             VALIDATORS.put(SCREEN_STATE_ON_DELAY, SCREEN_STATE_ON_DELAY_VALIDATOR);
             VALIDATORS.put(LOCK_POWER_MENU_DISABLED, LOCK_POWER_MENU_DISABLED_VALIDATOR);
+            VALIDATORS.put(SCREENSHOT_SHUTTER_SOUND, SCREENSHOT_SHUTTER_SOUND_VALIDATOR);
         }
 
         /**
