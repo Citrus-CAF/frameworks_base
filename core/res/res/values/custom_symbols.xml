@@ -84,4 +84,7 @@
   <!-- notification volume -->
   <java-symbol type="drawable" name="ic_audio_notification_new" />
   <java-symbol type="drawable" name="ic_audio_notification_mute_new" />
+
+  <!-- Screen pinning -->
+  <java-symbol type="string" name="lock_to_app_toast_no_navbar" />
 </resources>
