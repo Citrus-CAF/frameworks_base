@@ -122,8 +122,7 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_default" translatable="false">
-        wifi,bt,inversion,dnd,cell,airplane,rotation,flashlight,location,cast,screenoff,compass,hotspot,music,screenshot,caffeine,themes,nfc,sync,timeout,expanded_desktop,ime,navigation_bar
-    </string>
+        wifi,bt,inversion,dnd,cell,airplane,rotation,flashlight,location,cast,screenoff,compass,hotspot,music,screenshot,caffeine,themes,nfc,sync,timeout,expanded_desktop,ime,navigation_bar,heads_up</string>
 
     <!-- The tiles to display in QuickSettings -->
     <string name="quick_settings_tiles" translatable="false">wifi,bt,dnd,cell,airplane,rotation,flashlight,location,themes,navigation_bar</string>
@@ -220,7 +219,7 @@
      from home. -->
     <integer name="recents_task_enter_from_home_duration">225</integer>
 
-    <!-- The stagger for each task when animating the task from the bottom of the screen when 
+    <!-- The stagger for each task when animating the task from the bottom of the screen when
      transitioning from home. -->
     <integer name="recents_task_enter_from_home_stagger_delay">12</integer>
 
