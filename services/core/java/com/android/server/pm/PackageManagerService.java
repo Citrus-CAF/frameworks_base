@@ -9121,8 +9121,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                         == PackageManager.SIGNATURE_MATCH);
         if (!allowed && (bp.protectionLevel
                 & PermissionInfo.PROTECTION_FLAG_PRIVILEGED) != 0) {
-            boolean allowedSig = isAllowedSignature(pkg, perm);
-            if (isSystemApp(pkg) || allowedSig) {
+            if (isSystemApp(pkg)) {
                 // For updated system applications, a system permission
                 if (pkg.isUpdatedSystemApp()) {
                     final PackageSetting sysPs = mSettings
@@ -9153,7 +9152,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                         }
                     }
                 } else {
-                    allowed = isPrivilegedApp(pkg) || allowedSig;
+                    allowed = isPrivilegedApp(pkg);
                 }
             }
         }
