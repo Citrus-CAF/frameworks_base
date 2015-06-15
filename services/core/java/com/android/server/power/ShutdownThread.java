@@ -24,6 +24,7 @@ import android.app.IActivityManager;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.IBluetoothManager;
+import android.content.pm.ThemeUtils;
 import android.media.AudioAttributes;
 import android.nfc.NfcAdapter;
 import android.nfc.INfcAdapter;
@@ -764,5 +765,14 @@ public final class ShutdownThread extends Thread {
         } catch (Exception e) {
             Log.e(TAG, "Unknown exception while trying to invoke rebootOrShutdown");
         }
+    }
+
+    private static Context getUiContext(Context context) {
+        Context uiContext = null;
+        if (context != null) {
+            uiContext = ThemeUtils.createUiContext(context);
+            uiContext.setTheme(android.R.style.Theme_DeviceDefault_Light_DarkActionBar);
+        }
+        return uiContext != null ? uiContext : context;
     }
 }
