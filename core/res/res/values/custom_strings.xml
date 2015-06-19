@@ -22,7 +22,7 @@
 
     <!-- Notify user that they are in Lock-to-app (for devices without navbar) -->
     <string name="lock_to_app_toast_no_navbar">To unpin this screen, touch and hold the Back button.</string>
-    
+
     <!-- Reboot Dialog -->
     <string name="global_action_reboot">Reboot</string>
     <!-- Button to reboot the phone in reboot menu -->
@@ -33,6 +33,9 @@
     <string name="reboot_bootloader">Bootloader</string>
     <!-- Button to soft reboot the device in reboot menu -->
     <string name="reboot_soft">Soft reboot</string>
+    <!-- Button to Restart SystemUI, within the Reboot Options dialog -->
+    <string name="reboot_systemui">Restart SystemUI</string>
+
     <!-- Reboot Confirmation Dialog. -->
     <string name="reboot_confirm" product="tablet">Your tablet will reboot.</string>
     <string name="reboot_confirm" product="default">Your phone will reboot.</string>
