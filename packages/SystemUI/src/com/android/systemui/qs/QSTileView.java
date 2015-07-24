@@ -54,10 +54,11 @@ public class QSTileView extends ViewGroup {
     private final View mIcon;
     private final View mDivider;
     private final H mHandler = new H();
-    private final int mIconSizePx;
+    private int mIconSizePx;
+    private float mSizeScale = 1.0f;
     private final int mTileSpacingPx;
     private int mTilePaddingTopPx;
-    private final int mTilePaddingBelowIconPx;
+    private int mTilePaddingBelowIconPx;
     private final int mDualTileVerticalPaddingPx;
     private final View mTopBackgroundView;
 
@@ -86,9 +87,8 @@ public class QSTileView extends ViewGroup {
             mStyle = mContext.getResources().getInteger(R.integer.status_bar_style);
         }
         final Resources res = context.getResources();
-        mIconSizePx = res.getDimensionPixelSize(R.dimen.qs_tile_icon_size);
+        updateDimens(res, 1.0f);
         mTileSpacingPx = res.getDimensionPixelSize(R.dimen.qs_tile_spacing);
-        mTilePaddingBelowIconPx =  res.getDimensionPixelSize(R.dimen.qs_tile_padding_below_icon);
         mDualTileVerticalPaddingPx =
                 res.getDimensionPixelSize(R.dimen.qs_dual_tile_padding_vertical);
         mTileBackground = newTileBackground();
@@ -113,6 +113,14 @@ public class QSTileView extends ViewGroup {
         setId(View.generateViewId());
     }
 
+    void updateDimens(Resources res, float scaleFactor) {
+        mSizeScale = scaleFactor;
+        mIconSizePx = Math
+                .round(res.getDimensionPixelSize(R.dimen.qs_tile_icon_size) * scaleFactor);
+        mTilePaddingBelowIconPx = Math.round(res
+                .getDimensionPixelSize(R.dimen.qs_tile_padding_below_icon) * scaleFactor);
+    }
+
     private void updateTopPadding() {
         Resources res = getResources();
         int padding = res.getDimensionPixelSize(R.dimen.qs_tile_padding_top);
@@ -134,7 +142,7 @@ public class QSTileView extends ViewGroup {
         }
     }
 
-    private void recreateLabel() {
+    void recreateLabel() {
         CharSequence labelText = null;
         CharSequence labelDescription = null;
         if (mLabel != null) {
@@ -144,7 +152,9 @@ public class QSTileView extends ViewGroup {
         }
         if (mDualLabel != null) {
             labelText = mDualLabel.getText();
-            labelDescription = mLabel.getContentDescription();
+            if (mLabel != null) {
+                labelDescription = mLabel.getContentDescription();
+            }
             removeView(mDualLabel);
             mDualLabel = null;
         }
@@ -178,7 +188,7 @@ public class QSTileView extends ViewGroup {
             mLabel.setPadding(0, 0, 0, 0);
             mLabel.setTypeface(CONDENSED);
             mLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                    res.getDimensionPixelSize(R.dimen.qs_tile_text_size));
+                    Math.round(res.getDimensionPixelSize(R.dimen.qs_tile_text_size) * mSizeScale));
             mLabel.setClickable(false);
             if (labelText != null) {
                 mLabel.setText(labelText);
@@ -305,8 +315,8 @@ public class QSTileView extends ViewGroup {
 
     private void updateRippleSize(int width, int height) {
         // center the touch feedback on the center of the icon, and dial it down a bit
-        boolean useFourColumns = Settings.Secure.getInt(
-            mContext.getContentResolver(), Settings.Secure.QS_USE_FOUR_COLUMNS,
+        boolean useFourColumns = Settings.System.getInt(
+            mContext.getContentResolver(), Settings.System.QS_USE_FOUR_COLUMNS,
                 0) == 1;
         final int cx = width / 2;
         final int cy = mDual ? mIcon.getTop() + mIcon.getHeight() : height / 2;

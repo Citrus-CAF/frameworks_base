@@ -3513,6 +3513,13 @@ public final class Settings {
         public static final String QS_USE_FOUR_COLUMNS = "qs_use_four_columns";
 
         /**
+         * Number of columns to display on the quick settings panel
+         * Default is 3
+         * @hide
+         */
+        public static final String QS_NUM_TILE_COLUMNS = "sysui_qs_num_tile_columns";
+
+        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
