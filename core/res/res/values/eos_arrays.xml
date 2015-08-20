@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-/* Copyright 2012, The Android Open Source Project
+/* //device/apps/common/assets/res/any/colors.xml
+**
+** Copyright 2006, The Android Open Source Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -15,15 +17,10 @@
 ** limitations under the License.
 */
 -->
-<resources>
-  <!-- Theme install failure notification -->
-  <java-symbol type="string" name="theme_install_error_title" />
-  <java-symbol type="string" name="theme_install_error_message" />
-
-  <!-- Theme reset notification -->
-  <java-symbol type="string" name="theme_reset_notification_title" />
-  <java-symbol type="string" name="theme_reset_notification_body" />
-
-  <!-- Non-themeable packages -->
-  <java-symbol type="array" name="non_themeable_packages" />
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- List of packages that should not be themed.
+         Note: These strings are checked using String.startsWith() so include as much of the
+         package name as possible to avoid other packages being un-themed unintentionally -->
+    <string-array name="non_themeable_packages" translatable="false">
+    </string-array>
 </resources>

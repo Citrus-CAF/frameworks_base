@@ -1718,7 +1718,8 @@ public final class ActivityThread {
             String[] libDirs, int displayId, Configuration overrideConfiguration,
             LoadedApk pkgInfo, Context context, String pkgName) {
         return mResourcesManager.getTopLevelResources(resDir, splitResDirs, overlayDirs, libDirs,
-                displayId, pkgName, overrideConfiguration, pkgInfo.getCompatibilityInfo(), context);
+                displayId, pkgName, overrideConfiguration, pkgInfo.getCompatibilityInfo(), context,
+                pkgInfo.getApplicationInfo().isThemeable);
     }
 
     /**
@@ -1727,7 +1728,8 @@ public final class ActivityThread {
     Resources getTopLevelThemedResources(String resDir, int displayId, LoadedApk pkgInfo,
                                          String pkgName, String themePkgName) {
         return mResourcesManager.getTopLevelThemedResources(resDir, displayId, pkgName,
-                themePkgName, pkgInfo.getCompatibilityInfo());
+                themePkgName, pkgInfo.getCompatibilityInfo(),
+                pkgInfo.getApplicationInfo().isThemeable);
     }
 
     final Handler getHandler() {
