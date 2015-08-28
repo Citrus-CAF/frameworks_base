@@ -4015,7 +4015,7 @@ public final class Settings {
          * @hide
          */
         public static final String CUSTOM_CARRIER_LABEL = "custom_carrier_label";
- 
+
         /**
          * show clear all recents button
          * @hide
@@ -4027,7 +4027,7 @@ public final class Settings {
          * @hide
          */
         public static final String  RECENTS_CLEAR_ALL_LOCATION = "recents_clear_all_location";
- 
+
         /**
          * show the membar in recents
          *  @hide
@@ -4242,13 +4242,13 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_CITRUS_LOGO = "status_bar_citrus_logo";
- 
+
         /**
          * Statusbar Citrus-CAF logo color setting
          * @hide
          */
         public static final String STATUS_BAR_CITRUS_LOGO_COLOR = "status_bar_citrus_logo_color";
- 
+
          /**
          * Style of Status bar logo
          * 0 - Left (default)
@@ -4256,7 +4256,7 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_CITRUS_LOGO_STYLE = "status_bar_citrus_logo_style";
-        
+
         /**
          * Statusbar Custom logos
          * @hide
@@ -4271,7 +4271,7 @@ public final class Settings {
 	    public static final String CUSTOM_LOGO_COLOR = "custom_logo_color";
 
  	    /**
-         * Take your Pick 
+         * Take your Pick
          * @hide
          */
         public static final String CUSTOM_LOGO_STYLE = "custom_logo_style";
@@ -4320,6 +4320,12 @@ public final class Settings {
          * @hide
          */
         public static final String CALL_FLIP_ACTION_KEY = "call_flip_action_key";
+
+        /**
+         * Toast icon
+         * @hide
+         */
+        public static final String TOAST_ICON = "toast_icon";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -7005,7 +7011,7 @@ public final class Settings {
          */
         public static final String WAKE_GESTURE_ENABLED = "wake_gesture_enabled";
 
- 
+
        /**
          * Whether to show the keyguard visualizer.
          * Boolean setting. 0 = off, 1 = on.
@@ -7535,9 +7541,9 @@ public final class Settings {
         public static final String QQS_COUNT = "sysui_qqs_count";
 
         /**
-         * Whether to use one tap tile action to enable or disable data 
+         * Whether to use one tap tile action to enable or disable data
          * @hide
-         * 
+         *
          */
         public static final String QS_DATA_ADVANCED = "qs_data_advanced";
 
