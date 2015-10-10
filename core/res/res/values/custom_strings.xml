@@ -22,4 +22,20 @@
 
     <!-- Notify user that they are in Lock-to-app (for devices without navbar) -->
     <string name="lock_to_app_toast_no_navbar">To unpin this screen, touch and hold the Back button.</string>
+    
+    <!-- Reboot Dialog -->
+    <string name="global_action_reboot">Reboot</string>
+    <!-- Button to reboot the phone in reboot menu -->
+    <string name="reboot_reboot">Reboot</string>
+    <!-- Button to reboot the phone into recovery in reboot menu-->
+    <string name="reboot_recovery">Recovery</string>
+    <!-- Button to reboot the phone into bootloader in reboot menu -->
+    <string name="reboot_bootloader">Bootloader</string>
+    <!-- Button to soft reboot the device in reboot menu -->
+    <string name="reboot_soft">Soft reboot</string>
+    <!-- Reboot Confirmation Dialog. -->
+    <string name="reboot_confirm" product="tablet">Your tablet will reboot.</string>
+    <string name="reboot_confirm" product="default">Your phone will reboot.</string>
+    <!-- Reboot Progress Dialog. This is shown if the user chooses to reboot the phone. -->
+    <string name="reboot_progress">Rebooting\u2026</string>
 </resources>
