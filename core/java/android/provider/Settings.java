@@ -7225,6 +7225,12 @@ public final class Settings {
         public static final String QS_WIFI_EASY_TOGGLE = "qs_wifi_easy_toggle";
 
         /**
+         * Whether to include options in power menu for rebooting into recovery and bootloader
+         * @hide
+         */
+        public static final String ADVANCED_REBOOT = "advanced_reboot";
+
+        /**
          * Whether the device should doze if configured.
          * @hide
          */
@@ -7857,7 +7863,8 @@ public final class Settings {
             STATUS_BAR_SHOW_BATTERY_PERCENT,
             STATUS_BAR_BATTERY_STYLE,
             LOCKSCREEN_QUICK_UNLOCK_CONTROL,
-            BATTERY_TILE_STYLE
+            BATTERY_TILE_STYLE,
+            ADVANCED_REBOOT
         };
 
         /**
