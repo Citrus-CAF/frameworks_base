@@ -58,6 +58,7 @@ import android.app.WallpaperManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentCallbacks2;
+import android.content.ContentResolver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -71,6 +72,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.UserInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -622,6 +624,8 @@ public class StatusBar extends SystemUI implements DemoMode,
     private boolean mVibrateOnOpening;
     private VibratorHelper mVibratorHelper;
 
+    private boolean mLockscreenMediaMetadata;
+
     @Override
     public void start() {
         mGroupManager = Dependency.get(NotificationGroupManager.class);
@@ -785,6 +789,9 @@ public class StatusBar extends SystemUI implements DemoMode,
         Dependency.get(ActivityStarterDelegate.class).setActivityStarterImpl(this);
 
         Dependency.get(ConfigurationController.class).addCallback(this);
+
+        mCustomSettingsObserver.observe();
+        mCustomSettingsObserver.update();
     }
 
     // ================================================================================
@@ -1624,7 +1631,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
 
         Drawable artworkDrawable = null;
-        if (mediaMetadata != null) {
+        if (mediaMetadata != null && mLockscreenMediaMetadata) {
             Bitmap artworkBitmap = mediaMetadata.getBitmap(MediaMetadata.METADATA_KEY_ART);
             if (artworkBitmap == null) {
                 artworkBitmap = mediaMetadata.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART);
@@ -3143,6 +3150,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         updateNotificationViews();
         mMediaManager.clearCurrentMediaNotification();
         setLockscreenUser(newUserId);
+        mCustomSettingsObserver.update();
     }
 
     @Override
@@ -4543,6 +4551,37 @@ public class StatusBar extends SystemUI implements DemoMode,
             }
         }
     };
+
+    private CustomSettingsObserver mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
+    private class CustomSettingsObserver extends ContentObserver {
+        CustomSettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_MEDIA_METADATA),
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_MEDIA_METADATA))) {
+                setLockscreenMediaMetadata();
+            }
+        }
+
+        public void update() {
+            setLockscreenMediaMetadata();
+        }
+    }
+
+    private void setLockscreenMediaMetadata() {
+        mLockscreenMediaMetadata = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_MEDIA_METADATA, 1, UserHandle.USER_CURRENT) == 1;
+    }
 
     public int getWakefulnessState() {
         return mWakefulnessLifecycle.getWakefulness();

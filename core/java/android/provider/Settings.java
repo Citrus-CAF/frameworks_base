@@ -4097,6 +4097,23 @@ public final class Settings {
          */
 
         /**
+         * Citrus-CAF Addition starts
+         */
+
+        /**
+         * Whether to show media art on lockscreen
+         * @hide
+         */
+        public static final String LOCKSCREEN_MEDIA_METADATA = "lockscreen_media_metadata";
+
+        /** @hide */
+        private static final Validator LOCKSCREEN_MEDIA_METADATA_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * Citrus-CAF Addition ends
+         */
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4154,7 +4171,9 @@ public final class Settings {
             SHOW_BATTERY_PERCENT,
             NOTIFICATION_VIBRATION_INTENSITY,
             HAPTIC_FEEDBACK_INTENSITY,
-            DISPLAY_COLOR_MODE
+            DISPLAY_COLOR_MODE,
+            // Citrus-CAF Addition starts
+            LOCKSCREEN_MEDIA_METADATA,
         };
 
         /**
@@ -4269,6 +4288,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(EGG_MODE);
             PRIVATE_SETTINGS.add(SHOW_BATTERY_PERCENT);
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
+            // Citrus-CAF Addition starts
+            PRIVATE_SETTINGS.add(LOCKSCREEN_MEDIA_METADATA);
         }
 
         /**
@@ -4357,6 +4378,8 @@ public final class Settings {
             VALIDATORS.put(WIFI_STATIC_DNS1, WIFI_STATIC_DNS1_VALIDATOR);
             VALIDATORS.put(WIFI_STATIC_DNS2, WIFI_STATIC_DNS2_VALIDATOR);
             VALIDATORS.put(SHOW_BATTERY_PERCENT, SHOW_BATTERY_PERCENT_VALIDATOR);
+            // Citrus-CAF Addition starts
+            VALIDATORS.put(LOCKSCREEN_MEDIA_METADATA, LOCKSCREEN_MEDIA_METADATA_VALIDATOR);
         }
 
         /**
