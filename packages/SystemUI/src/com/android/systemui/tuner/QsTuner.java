@@ -56,18 +56,18 @@ import java.util.List;
 
 public class QsTuner extends Fragment implements Callback {
 
-    private static final String TAG = "QsTuner";
+    public static final String TAG = "QsTuner";
 
-    private static final int MENU_RESET = Menu.FIRST;
+    public static final int MENU_RESET = Menu.FIRST;
 
-    private DraggableQsPanel mQsPanel;
-    private CustomHost mTileHost;
+    public DraggableQsPanel mQsPanel;
+    public CustomHost mTileHost;
 
-    private FrameLayout mDropTarget;
+    public FrameLayout mDropTarget;
 
-    private ScrollView mScrollRoot;
+    public ScrollView mScrollRoot;
 
-    private FrameLayout mAddTarget;
+    public FrameLayout mAddTarget;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -129,7 +129,7 @@ public class QsTuner extends Fragment implements Callback {
         super.onDestroyView();
     }
 
-    private void setupDropTarget() {
+    public void setupDropTarget() {
         QSTileView tileView = new QSTileView(getContext());
         QSTile.State state = new QSTile.State();
         state.visible = true;
@@ -146,7 +146,7 @@ public class QsTuner extends Fragment implements Callback {
         });
     }
 
-    private void setupAddTarget() {
+    public void setupAddTarget() {
         QSTileView tileView = new QSTileView(getContext());
         QSTile.State state = new QSTile.State();
         state.visible = true;
@@ -188,7 +188,7 @@ public class QsTuner extends Fragment implements Callback {
         mQsPanel.setTiles(mTileHost.getTiles());
     }
 
-    private static int getLabelResource(String spec) {
+    public static int getLabelResource(String spec) {
         if (spec.equals("wifi")) return R.string.quick_settings_wifi_label;
         else if (spec.equals("bt")) return R.string.quick_settings_bluetooth_label;
         else if (spec.equals("inversion")) return R.string.quick_settings_inversion_label;
@@ -213,7 +213,7 @@ public class QsTuner extends Fragment implements Callback {
         return 0;
     }
 
-    private static class CustomHost extends QSTileHost {
+    public static class CustomHost extends QSTileHost {
 
         public CustomHost(Context context) {
             super(context, null, null, null, null, null, null, null, null, null,
@@ -262,7 +262,7 @@ public class QsTuner extends Fragment implements Callback {
                     ActivityManager.getCurrentUser());
         }
 
-        private void setTiles(List<String> tiles) {
+        public void setTiles(List<String> tiles) {
             Secure.putStringForUser(getContext().getContentResolver(), TILES_SETTING,
                     TextUtils.join(",", tiles), ActivityManager.getCurrentUser());
         }
@@ -324,7 +324,7 @@ public class QsTuner extends Fragment implements Callback {
                     }).show();
         }
 
-        private boolean isValid(String action) {
+        public boolean isValid(String action) {
             for (int i = 0; i < action.length(); i++) {
                 char c = action.charAt(i);
                 if (!Character.isAlphabetic(c) && !Character.isDigit(c) && c != '.') {
@@ -334,7 +334,7 @@ public class QsTuner extends Fragment implements Callback {
             return true;
         }
 
-        private static class BlankSecurityController implements SecurityController {
+        public static class BlankSecurityController implements SecurityController {
             @Override
             public boolean hasDeviceOwner() {
                 return false;
@@ -384,10 +384,10 @@ public class QsTuner extends Fragment implements Callback {
         }
     }
 
-    private static class DraggableTile extends QSTile<QSTile.State>
+    public static class DraggableTile extends QSTile<QSTile.State>
             implements DropListener {
-        private String mSpec;
-        private QSTileView mView;
+        public String mSpec;
+        public QSTileView mView;
 
         protected DraggableTile(QSTile.Host host, String tileSpec) {
             super(host);
@@ -426,7 +426,7 @@ public class QsTuner extends Fragment implements Callback {
             state.label = getLabel();
         }
 
-        private String getLabel() {
+        public String getLabel() {
             int resource = getLabelResource(mSpec);
             if (resource != 0) {
                 return mContext.getString(resource);
@@ -442,7 +442,7 @@ public class QsTuner extends Fragment implements Callback {
             return mSpec;
         }
 
-        private int getIcon() {
+        public int getIcon() {
             if (mSpec.equals("wifi")) return R.drawable.ic_qs_wifi_full_3;
             else if (mSpec.equals("bt")) return R.drawable.ic_qs_bluetooth_connected;
             else if (mSpec.equals("inversion")) return R.drawable.ic_invert_colors_enable;
@@ -487,10 +487,10 @@ public class QsTuner extends Fragment implements Callback {
 
     }
 
-    private class DragHelper implements OnDragListener {
+    public class DragHelper implements OnDragListener {
 
-        private final View mView;
-        private final DropListener mListener;
+        public final View mView;
+        public final DropListener mListener;
 
         public DragHelper(View view, DropListener dropListener) {
             mView = view;
@@ -524,7 +524,7 @@ public class QsTuner extends Fragment implements Callback {
         void onDrop(String sourceText);
     }
 
-    private class DraggableQsPanel extends QSPanel implements OnTouchListener {
+    public class DraggableQsPanel extends QSPanel implements OnTouchListener {
         public DraggableQsPanel(Context context) {
             super(context);
             mBrightnessView.setVisibility(View.GONE);
