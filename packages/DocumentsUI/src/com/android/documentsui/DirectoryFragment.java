@@ -33,25 +33,13 @@ package com.android.documentsui;
 import static com.android.documentsui.BaseActivity.State.ACTION_BROWSE;
 import static com.android.documentsui.BaseActivity.State.ACTION_BROWSE_ALL;
 import static com.android.documentsui.BaseActivity.State.ACTION_CREATE;
-import static com.android.documentsui.BaseActivity.State.ACTION_GET_CONTENT;
 import static com.android.documentsui.BaseActivity.State.ACTION_MANAGE;
-import static com.android.documentsui.BaseActivity.State.ACTION_OPEN;
-import static com.android.documentsui.BaseActivity.State.ACTION_OPEN_TREE;
+import static com.android.documentsui.BaseActivity.State.ACTION_STANDALONE;
 import static com.android.documentsui.BaseActivity.State.MODE_GRID;
 import static com.android.documentsui.BaseActivity.State.MODE_LIST;
 import static com.android.documentsui.BaseActivity.State.MODE_UNKNOWN;
 import static com.android.documentsui.BaseActivity.State.SORT_ORDER_UNKNOWN;
 import static com.android.documentsui.DocumentsActivity.TAG;
-<<<<<<< HEAD
-=======
-import static com.android.documentsui.DocumentsActivity.State.ACTION_CREATE;
-import static com.android.documentsui.DocumentsActivity.State.ACTION_MANAGE;
-import static com.android.documentsui.DocumentsActivity.State.ACTION_STANDALONE;
-import static com.android.documentsui.DocumentsActivity.State.MODE_GRID;
-import static com.android.documentsui.DocumentsActivity.State.MODE_LIST;
-import static com.android.documentsui.DocumentsActivity.State.MODE_UNKNOWN;
-import static com.android.documentsui.DocumentsActivity.State.SORT_ORDER_UNKNOWN;
->>>>>>> 9fc07eb... Add a standalone File Manager
 import static com.android.documentsui.model.DocumentInfo.getCursorInt;
 import static com.android.documentsui.model.DocumentInfo.getCursorLong;
 import static com.android.documentsui.model.DocumentInfo.getCursorString;
@@ -544,27 +532,18 @@ public class DirectoryFragment extends Fragment {
             final MenuItem share = menu.findItem(R.id.menu_share);
             final MenuItem delete = menu.findItem(R.id.menu_delete);
             final MenuItem copy = menu.findItem(R.id.menu_copy);
-<<<<<<< HEAD
+            final MenuItem cut = menu.findItem(R.id.menu_cut);
 
             final boolean manageOrBrowse = (state.action == ACTION_MANAGE
                     || state.action == ACTION_BROWSE || state.action == ACTION_BROWSE_ALL);
+            final boolean stdMode = state.action == ACTION_STANDALONE;
 
-            open.setVisible(!manageOrBrowse);
-            share.setVisible(manageOrBrowse);
-            delete.setVisible(manageOrBrowse);
+
+            open.setVisible(!manageOrBrowse && !stdMode);
+            share.setVisible(manageOrBrowse || stdMode);
+            delete.setVisible(manageOrBrowse || stdMode);
             // Disable copying from the Recents view.
             copy.setVisible(manageOrBrowse && mType != TYPE_RECENT_OPEN);
-=======
-            final MenuItem cut = menu.findItem(R.id.menu_cut);
-
-            final boolean manageMode = state.action == ACTION_MANAGE;
-            final boolean stdMode = state.action == ACTION_STANDALONE;
-            open.setVisible(!manageMode && !stdMode);
-            share.setVisible(manageMode || stdMode);
-            delete.setVisible(manageMode || stdMode);
-            copy.setVisible(stdMode);
-            cut.setVisible(stdMode);
->>>>>>> 9fc07eb... Add a standalone File Manager
 
             return true;
         }
@@ -604,19 +583,16 @@ public class DirectoryFragment extends Fragment {
                 onCopyDocuments(docs);
                 mode.finish();
                 return true;
-
-<<<<<<< HEAD
             } else if (id == R.id.menu_select_all) {
                 int count = mCurrentView.getCount();
                 for (int i = 0; i < count; i++) {
                     mCurrentView.setItemChecked(i, true);
                 }
                 updateDisplayState();
-=======
+                return true;
             } else if (id == R.id.menu_cut) {
                 onCutDocuments(docs);
                 mode.finish();
->>>>>>> 9fc07eb... Add a standalone File Manager
                 return true;
 
             } else {
@@ -637,28 +613,10 @@ public class DirectoryFragment extends Fragment {
                 boolean valid = false;
                 boolean hasFolder = false;
 
-                final State state = getDisplayState(DirectoryFragment.this);
                 final Cursor cursor = mAdapter.getItem(position);
                 if (cursor != null) {
                     final String docMimeType = getCursorString(cursor, Document.COLUMN_MIME_TYPE);
                     final int docFlags = getCursorInt(cursor, Document.COLUMN_FLAGS);
-<<<<<<< HEAD
-                    switch (state.action) {
-                        case ACTION_OPEN:
-                        case ACTION_CREATE:
-                        case ACTION_GET_CONTENT:
-                        case ACTION_OPEN_TREE:
-                            valid = isDocumentEnabled(docMimeType, docFlags)
-                                    && !Document.MIME_TYPE_DIR.equals(docMimeType);
-                            break;
-                        default:
-                            valid = isDocumentEnabled(docMimeType, docFlags);
-                            break;
-                    }
-=======
-<<<<<<< HEAD
-                    valid = isDocumentEnabled(docMimeType, docFlags);
-=======
                     final State state = getDisplayState(DirectoryFragment.this);
                     if (Document.MIME_TYPE_DIR.equals(docMimeType)) {
                         hasFolder = true;
@@ -666,7 +624,6 @@ public class DirectoryFragment extends Fragment {
                     if (!Document.MIME_TYPE_DIR.equals(docMimeType) || state.action == ACTION_STANDALONE) {
                         valid = isDocumentEnabled(docMimeType, docFlags);
                     }
->>>>>>> 9fc07eb... Add a standalone File Manager
                 }
 
                 if (hasFolder) {
@@ -675,7 +632,6 @@ public class DirectoryFragment extends Fragment {
                     final MenuItem cut = menu.findItem(R.id.menu_cut);
                     copy.setVisible(false);
                     cut.setVisible(false);
->>>>>>> 501bc75... Add a standalone File Manager
                 }
 
                 if (!valid) {
@@ -822,10 +778,6 @@ public class DirectoryFragment extends Fragment {
         }
 
         return !hadTrouble;
-    }
-
-    private void onCopyDocuments(final List<DocumentInfo> docs) {
-        ((DocumentsActivity) getActivity()).setClipboardDocuments(docs, true);
     }
 
     private void onCutDocuments(final List<DocumentInfo> docs) {
@@ -1413,3 +1365,4 @@ public class DirectoryFragment extends Fragment {
         return ((DocumentsActivity) getActivity()).getCurrentExecutor();
     }
 }
+
