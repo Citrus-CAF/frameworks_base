@@ -96,6 +96,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 
     private int mCustomLogo;
     private ImageView mCLogo;
+    private TextView mCarrierLabel;
 
     private int mIconSize;
     private int mIconHPadding;
@@ -166,6 +167,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
         mCLogo = (ImageView) statusBar.findViewById(R.id.custom);
+        mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
         mHandler = new Handler();
         loadDimens();
 
@@ -365,6 +367,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 Settings.System.SHOW_CUSTOM_LOGO, 0) == 1) {
        animateHide(mCLogo, animate);
        }
+        animateHide(mCarrierLabel,animate);
+       }
     }
 
     public void showSystemIconArea(boolean animate) {
@@ -382,6 +386,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 Settings.System.SHOW_CUSTOM_LOGO, 0) == 1 ) {
         animateShow(mCLogo, animate);
         }
+        animateShow(mCarrierLabel,animate);
     }
 
     public void hideNotificationIconArea(boolean animate) {
@@ -643,6 +648,13 @@ Settings.System.getIntForUser(mContext.getContentResolver(),
             mCitrusLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
             mCitrusLogoRight.setImageTintList(ColorStateList.valueOf(mIconTint));
             mCitrusLogoLeft.setImageTintList(ColorStateList.valueOf(mIconTint));
+        }
+        if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_CARRIER_COLOR,
+                mContext.getResources().getColor(R.color.status_bar_clock_color),
+                UserHandle.USER_CURRENT) == mContext.getResources().
+                getColor(R.color.status_bar_clock_color)) {
+        mCarrierLabel.setTextColor(mIconTint);
         }
     }
 
