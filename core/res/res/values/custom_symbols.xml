@@ -65,4 +65,36 @@
        Must be in the range specified by minimum and maximum. -->
     <java-symbol type="integer" name="config_buttonBrightnessSettingDefault" />
 
+    <!-- Hardware 'face' keys present on the device, stored as a bit field.
+         This integer should equal the sum of the corresponding value for each
+         of the following keys present:
+          1 - Home
+          2 - Back
+          4 - Menu
+          8 - Assistant (search)
+          16 - App switch
+          32 - Camera
+       For example, a device with Back, Home and AppSwitch keys would set this
+       config to 19. -->
+    <java-symbol type="integer" name="config_deviceHardwareKeys" />
+
+    <!-- Input policy constants  -->
+    <!-- home -->
+    <java-symbol type="integer" name="config_doubleTapOnHomeKeyBehavior" />
+    <java-symbol type="integer" name="config_longPressOnHomeKeyBehavior" />
+    <!-- menu -->
+    <java-symbol type="integer" name="config_doubleTapOnMenuKeyBehavior" />
+    <java-symbol type="integer" name="config_longPressOnMenuKeyBehavior" />
+    <!-- back -->
+    <java-symbol type="integer" name="config_doubleTapOnBackKeyBehavior" />
+    <java-symbol type="integer" name="config_longPressOnBackKeyBehavior" />
+    <!-- assist -->
+    <java-symbol type="integer" name="config_doubleTapOnAssistKeyBehavior" />
+    <java-symbol type="integer" name="config_longPressOnAssistKeyBehavior" />
+    <!-- app switch -->
+    <java-symbol type="integer" name="config_doubleTapOnAppSwitchKeyBehavior" />
+    <java-symbol type="integer" name="config_longPressOnAppSwitchKeyBehavior" />
+    <!-- camera -->
+    <java-symbol type="integer" name="config_doubleTapOnCameraKeyBehavior" />
+    <java-symbol type="integer" name="config_longPressOnCameraKeyBehavior" />
 </resources>

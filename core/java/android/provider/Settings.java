@@ -4300,6 +4300,145 @@ public final class Settings {
         private static final Validator BUTTON_BRIGHTNESS_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Action to perform when the home key is long-pressed.
+         * (Default can be configured via config_longPressOnHardwareHomeBehavior)
+         * 0 - Nothing
+         * 1 - Menu
+         * 2 - App-switch
+         * 3 - Search
+         * 4 - Voice search
+         * 5 - In-app search
+         * 6 - Launch Camera
+         * 7 - Launch last app
+         * @hide
+         */
+        public static final String KEY_HOME_LONG_PRESS_ACTION = "key_home_long_press_action";
+
+        /** @hide */
+        private static final Validator KEY_HOME_LONG_PRESS_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * Action to perform when the home key is double-tapped.
+         * (Default can be configured via config_doubleTapOnHardwareHomeBehavior)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_HOME_DOUBLE_TAP_ACTION = "key_home_double_tap_action";
+
+        /** @hide */
+        private static final Validator KEY_HOME_DOUBLE_TAP_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * Action to perform when the menu key is long-pressed.
+         * (Default can be configured via config_longPressOnHardwareMenuBehavior)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_MENU_LONG_PRESS_ACTION = "key_menu_long_press_action";
+
+        /** @hide */
+        private static final Validator KEY_MENU_LONG_PRESS_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * Action to perform when the menu key is double-tapped.
+         * (Default can be configured via config_doubleTapOnHardwareMenuBehavior)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_MENU_DOUBLE_TAP_ACTION = "key_menu_double_tap_action";
+
+        /** @hide */
+        private static final Validator KEY_MENU_DOUBLE_TAP_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * Action to perform when the back key is long-pressed.
+         * (Default can be configured via config_longPressOnHardwareBackBehavior)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_BACK_LONG_PRESS_ACTION = "key_back_long_press_action";
+
+        /** @hide */
+        private static final Validator KEY_BACK_LONG_PRESS_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * Action to perform when the back key is double-tapped.
+         * (Default can be configured via config_doubleTapOnHardwareBackBehavior)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_BACK_DOUBLE_TAP_ACTION = "key_back_double_tap_action";
+
+        /** @hide */
+        private static final Validator KEY_BACK_DOUBLE_TAP_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * Action to perform when the assist key is long-pressed.
+         * (Default can be configured via config_longPressOnHardwareAssistBehavior)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_ASSIST_LONG_PRESS_ACTION = "key_assist_long_press_action";
+
+        /** @hide */
+        private static final Validator KEY_ASSIST_LONG_PRESS_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * Action to perform when the assist key is double-tapped.
+         * (Default can be configured via config_doubleTapOnHardwareAssistBehavior)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_ASSIST_DOUBLE_TAP_ACTION = "key_assist_double_tap_action";
+
+        /** @hide */
+        private static final Validator KEY_ASSIST_DOUBLE_TAP_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * Action to perform when the app switch key is long-pressed.
+         * (Default can be configured via config_longPressOnHardwareAppSwitchBehavior)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_APP_SWITCH_LONG_PRESS_ACTION = "key_app_switch_long_press_action";
+
+        /** @hide */
+        private static final Validator KEY_APP_SWITCH_LONG_PRESS_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * Action to perform when the app switch key is double-tapped.
+         * (Default can be configured via config_doubleTapOnHardwareAppSwitchBehavior)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_APP_SWITCH_DOUBLE_TAP_ACTION = "key_app_switch_double_tap_action";
+
+        /** @hide */
+        private static final Validator KEY_APP_SWITCH_DOUBLE_TAP_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * Action to perform when the app switch key is long-pressed.
+         * (Default can be configured via config_longPressOnHardwareCameraBehavior)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_CAMERA_LONG_PRESS_ACTION = "key_camera_long_press_action";
+
+        /** @hide */
+        private static final Validator KEY_CAMERA_LONG_PRESS_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * Action to perform when the camera key is double-tapped.
+         * (Default can be configured via config_doubleTapOnHardwareCameraBehavior)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_CAMERA_DOUBLE_TAP_ACTION = "key_camera_double_tap_action";
+
+        /** @hide */
+        private static final Validator KEY_CAMERA_DOUBLE_TAP_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
@@ -4385,6 +4524,18 @@ public final class Settings {
             NAVIGATION_BAR_ENABLED,
             BUTTON_BRIGHTNESS,
             BUTTON_BRIGHTNESS_ENABLED,
+            KEY_HOME_LONG_PRESS_ACTION,
+            KEY_HOME_DOUBLE_TAP_ACTION,
+            KEY_MENU_LONG_PRESS_ACTION,
+            KEY_MENU_DOUBLE_TAP_ACTION,
+            KEY_BACK_LONG_PRESS_ACTION,
+            KEY_BACK_DOUBLE_TAP_ACTION,
+            KEY_ASSIST_LONG_PRESS_ACTION,
+            KEY_ASSIST_DOUBLE_TAP_ACTION,
+            KEY_APP_SWITCH_LONG_PRESS_ACTION,
+            KEY_APP_SWITCH_DOUBLE_TAP_ACTION,
+            KEY_CAMERA_LONG_PRESS_ACTION,
+            KEY_CAMERA_DOUBLE_TAP_ACTION,
         };
 
         /**
@@ -4522,6 +4673,18 @@ public final class Settings {
             PRIVATE_SETTINGS.add(NAVIGATION_BAR_ENABLED);
             PRIVATE_SETTINGS.add(BUTTON_BRIGHTNESS);
             PRIVATE_SETTINGS.add(BUTTON_BRIGHTNESS_ENABLED);
+            PRIVATE_SETTINGS.add(KEY_HOME_LONG_PRESS_ACTION);
+            PRIVATE_SETTINGS.add(KEY_HOME_DOUBLE_TAP_ACTION);
+            PRIVATE_SETTINGS.add(KEY_MENU_LONG_PRESS_ACTION);
+            PRIVATE_SETTINGS.add(KEY_MENU_DOUBLE_TAP_ACTION);
+            PRIVATE_SETTINGS.add(KEY_BACK_LONG_PRESS_ACTION);
+            PRIVATE_SETTINGS.add(KEY_BACK_DOUBLE_TAP_ACTION);
+            PRIVATE_SETTINGS.add(KEY_ASSIST_LONG_PRESS_ACTION);
+            PRIVATE_SETTINGS.add(KEY_ASSIST_DOUBLE_TAP_ACTION);
+            PRIVATE_SETTINGS.add(KEY_APP_SWITCH_LONG_PRESS_ACTION);
+            PRIVATE_SETTINGS.add(KEY_APP_SWITCH_DOUBLE_TAP_ACTION);
+            PRIVATE_SETTINGS.add(KEY_CAMERA_LONG_PRESS_ACTION);
+            PRIVATE_SETTINGS.add(KEY_CAMERA_DOUBLE_TAP_ACTION);
         }
 
         /**
@@ -4633,6 +4796,18 @@ public final class Settings {
             VALIDATORS.put(NAVIGATION_BAR_ENABLED, NAVIGATION_BAR_ENABLED_VALIDATOR);
             VALIDATORS.put(BUTTON_BRIGHTNESS, BUTTON_BRIGHTNESS_VALIDATOR);
             VALIDATORS.put(BUTTON_BRIGHTNESS_ENABLED, BUTTON_BRIGHTNESS_ENABLED_VALIDATOR);
+            VALIDATORS.put(KEY_HOME_LONG_PRESS_ACTION, KEY_HOME_LONG_PRESS_ACTION_VALIDATOR);
+            VALIDATORS.put(KEY_HOME_DOUBLE_TAP_ACTION, KEY_HOME_DOUBLE_TAP_ACTION_VALIDATOR);
+            VALIDATORS.put(KEY_MENU_LONG_PRESS_ACTION, KEY_MENU_LONG_PRESS_ACTION_VALIDATOR);
+            VALIDATORS.put(KEY_MENU_DOUBLE_TAP_ACTION, KEY_MENU_DOUBLE_TAP_ACTION_VALIDATOR);
+            VALIDATORS.put(KEY_BACK_LONG_PRESS_ACTION, KEY_BACK_LONG_PRESS_ACTION_VALIDATOR);
+            VALIDATORS.put(KEY_BACK_DOUBLE_TAP_ACTION, KEY_BACK_DOUBLE_TAP_ACTION_VALIDATOR);
+            VALIDATORS.put(KEY_ASSIST_LONG_PRESS_ACTION, KEY_ASSIST_LONG_PRESS_ACTION_VALIDATOR);
+            VALIDATORS.put(KEY_ASSIST_DOUBLE_TAP_ACTION, KEY_ASSIST_DOUBLE_TAP_ACTION_VALIDATOR);
+            VALIDATORS.put(KEY_APP_SWITCH_LONG_PRESS_ACTION, KEY_APP_SWITCH_LONG_PRESS_ACTION_VALIDATOR);
+            VALIDATORS.put(KEY_APP_SWITCH_DOUBLE_TAP_ACTION, KEY_APP_SWITCH_DOUBLE_TAP_ACTION_VALIDATOR);
+            VALIDATORS.put(KEY_CAMERA_LONG_PRESS_ACTION, KEY_CAMERA_LONG_PRESS_ACTION_VALIDATOR);
+            VALIDATORS.put(KEY_CAMERA_DOUBLE_TAP_ACTION, KEY_CAMERA_DOUBLE_TAP_ACTION_VALIDATOR);
         }
 
         /**
