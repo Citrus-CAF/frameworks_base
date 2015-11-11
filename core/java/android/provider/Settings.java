@@ -3839,6 +3839,7 @@ public final class Settings {
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
          * the setting value. See an example above.
+
          */
 
         /**
@@ -4103,11 +4104,17 @@ public final class Settings {
          */
         public static final String SCREENRECORD_CHORD_TYPE = "screenrecord_chord_type";
 
-        /**
+	/**
          * Toast icon
          * @hide
          */
         public static final String TOAST_ICON = "toast_icon";
+
+        /**
+         * Enable double tap gesture anywhere on the lock screen put device to sleep
+         * @hide
+         */
+        public static final String DOUBLE_TAP_SLEEP_ANYWHERE = "double_tap_sleep_anywhere";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

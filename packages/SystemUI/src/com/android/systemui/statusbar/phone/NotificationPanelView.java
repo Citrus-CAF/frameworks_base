@@ -225,6 +225,7 @@ public class NotificationPanelView extends PanelView implements
     private SettingsObserver mSettingsObserver;
 
     private boolean mDoubleTapToSleepEnabled;
+    private boolean mDoubleTapToSleepAnywhere;
     private int mStatusBarHeaderHeight;
     private GestureDetector mDoubleTapGesture;
 
@@ -238,7 +239,7 @@ public class NotificationPanelView extends PanelView implements
             @Override
             public boolean onDoubleTap(MotionEvent e) {
                 PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-                if (pm != null)
+                if(pm != null)
                     pm.goToSleep(e.getEventTime());
                 return true;
             }
@@ -294,7 +295,6 @@ public class NotificationPanelView extends PanelView implements
                 mNotificationStackScroller.setQsContainer(mQsContainer);
             }
         });
-    }
 
     @Override
     protected void loadDimens() {
@@ -782,6 +782,10 @@ public class NotificationPanelView extends PanelView implements
         if (mDoubleTapToSleepEnabled
                 && mStatusBarState == StatusBarState.KEYGUARD
                 && event.getY() < mStatusBarHeaderHeight) {
+            mDoubleTapGesture.onTouchEvent(event);
+        }
+        if (mDoubleTapToSleepAnywhere
+                && mStatusBarState == StatusBarState.KEYGUARD) {
             mDoubleTapGesture.onTouchEvent(event);
         }
         initDownStates(event);
@@ -2412,6 +2416,8 @@ public class NotificationPanelView extends PanelView implements
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_SLEEP_GESTURE), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_ANYWHERE), false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -2437,6 +2443,8 @@ public class NotificationPanelView extends PanelView implements
                     Settings.System.DOUBLE_TAP_SLEEP_GESTURE, 0, UserHandle.USER_CURRENT) == 1;
             mQsSecureExpandDisabled = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.LOCK_QS_DISABLED, 0, UserHandle.USER_CURRENT) != 0;
+            mDoubleTapToSleepAnywhere = Settings.System.getIntForUser(resolver,
+                    Settings.System.DOUBLE_TAP_SLEEP_ANYWHERE, 0, UserHandle.USER_CURRENT) == 1;
         }
 
         private boolean isQsSecureExpandDisabled() {
