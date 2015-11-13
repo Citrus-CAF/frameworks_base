@@ -26,6 +26,7 @@ import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Message;
 import android.os.UserHandle;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -88,6 +89,8 @@ public class QSPanel extends ViewGroup {
     private boolean mGridContentVisible = true;
     CarrierAppUtils.CARRIER carrier = CarrierAppUtils.getCarrierId();
 
+    protected Vibrator mVibrator;
+
     public QSPanel(Context context) {
         this(context, null);
     }
@@ -116,6 +119,7 @@ public class QSPanel extends ViewGroup {
         addView(mBrightnessView);
         addView(mFooter.getView());
         mClipper = new QSDetailClipper(mDetail);
+        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
         updateResources();
 
         mBrightnessController = new BrightnessController(getContext(),
@@ -149,6 +153,18 @@ public class QSPanel extends ViewGroup {
         }
         updateResources();
         return brightnessSliderEnabled;
+    }
+
+    public boolean isVibrationEnabled() {
+        return (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QUICK_SETTINGS_TILES_VIBRATE, 0, UserHandle.USER_CURRENT) == 1);
+    }
+
+    public void vibrateTile(int duration) {
+        if (!isVibrationEnabled()) { return; }
+        if (mVibrator != null) {
+            if (mVibrator.hasVibrator()) { mVibrator.vibrate(duration); }
+        }
     }
 
     private void updateDetailText() {
@@ -344,18 +360,21 @@ public class QSPanel extends ViewGroup {
             @Override
             public void onClick(View v) {
                 r.tile.click();
+                vibrateTile(20);
             }
         };
         final View.OnClickListener clickSecondary = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 r.tile.secondaryClick();
+                vibrateTile(20);
             }
         };
         final View.OnLongClickListener clickLong = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 r.tile.longClick();
+                vibrateTile(20);
                 return true;
             }
         };
