@@ -6370,6 +6370,13 @@ public final class Settings {
          */
         public static final String FLING_LONGSWIPE_THRESHOLD_DOWN_LAND = "fling_longswipe_threshold_down_land";
 
+
+        /**
+         * The TCP/IP port to run ADB on, or -1 for USB
+         * @hide
+         */
+        public static final String ADB_PORT = "adb_port";
+
         /**
          * This are the settings to be backed up.
          *

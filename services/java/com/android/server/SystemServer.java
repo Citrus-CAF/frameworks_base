@@ -46,12 +46,14 @@ import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.os.storage.IMountService;
 import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.Slog;
 import android.view.WindowManager;
 import android.webkit.WebViewFactory;
+import android.database.ContentObserver;
 
 import com.android.internal.R;
 import com.android.internal.os.BinderInternal;
@@ -166,6 +168,19 @@ public final class SystemServer {
 
     private boolean mOnlyCore;
     private boolean mFirstBoot;
+
+    private class AdbPortObserver extends ContentObserver {
+        public AdbPortObserver() {
+            super(null);
+        }
+        @Override
+        public void onChange(boolean selfChange) {
+            int adbPort = Settings.Secure.getInt(mContentResolver,
+                Settings.Secure.ADB_PORT, 0);
+            // setting this will control whether ADB runs on TCP/IP or USB
+            SystemProperties.set("service.adb.tcp.port", Integer.toString(adbPort));
+        }
+    }
 
     /**
      * Start the sensor service.
@@ -1041,6 +1056,14 @@ public final class SystemServer {
         if (!disableNonCoreServices) {
             mSystemServiceManager.startService(MediaProjectionManagerService.class);
         }
+
+        Settings.Secure.putInt(mContentResolver, Settings.Secure.ADB_PORT,
+                Integer.parseInt(SystemProperties.get("service.adb.tcp.port", "-1")));
+
+        // register observer to listen for settings changes
+        mContentResolver.registerContentObserver(
+            Settings.Secure.getUriFor(Settings.Secure.ADB_PORT),
+            false, new AdbPortObserver());
 
         // Before things start rolling, be sure we have decided whether
         // we are in safe mode.
