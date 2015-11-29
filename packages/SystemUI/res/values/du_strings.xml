@@ -58,4 +58,9 @@
     <!-- DU Logo -->
     <string name="status_bar_citrus_logo_title">Citrus-CAF logo</string>
     <string name="status_bar_citrus_logo_summary">Enable to show Citrus-CAF logo on the left side of the statusbar</string>
+
+    <!-- Reboot/Recovery QS Tile -->
+    <string name="quick_settings_reboot_label">Reboot</string>
+    <string name="quick_settings_reboot_recovery_label">Recovery</string>
+
 </resources>
