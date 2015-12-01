@@ -4600,6 +4600,15 @@ public final class Settings {
         private static final Validator MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
+         * Volume rocker wake
+         * @hide
+         */
+        public static final String VOLUME_ROCKER_WAKE = "volume_rocker_wake";
+
+        /** @hide */
+        private static final Validator VOLUME_ROCKER_WAKE_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
@@ -4714,6 +4723,7 @@ public final class Settings {
             HEADS_UP_ENABLED,
             NOTIFICATION_SOUND_VIB_SCREEN_ON,
             MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD,
+            VOLUME_ROCKER_WAKE,
         };
 
         /**
@@ -4879,6 +4889,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(HEADS_UP_ENABLED);
             PRIVATE_SETTINGS.add(NOTIFICATION_SOUND_VIB_SCREEN_ON);
             PRIVATE_SETTINGS.add(MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD);
+            PRIVATE_SETTINGS.add(VOLUME_ROCKER_WAKE);
         }
 
         /**
@@ -5019,6 +5030,7 @@ public final class Settings {
             VALIDATORS.put(HEADS_UP_ENABLED, HEADS_UP_ENABLED_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_SOUND_VIB_SCREEN_ON, NOTIFICATION_SOUND_VIB_SCREEN_ON_VALIDATOR);
             VALIDATORS.put(MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD, MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD_VALIDATOR);
+            VALIDATORS.put(VOLUME_ROCKER_WAKE, VOLUME_ROCKER_WAKE_VALIDATOR);
         }
 
         /**
