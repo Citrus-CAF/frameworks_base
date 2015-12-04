@@ -8,8 +8,6 @@ LOCAL_SRC_FILES:= \
 
 LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES -DEGL_EGLEXT_PROTOTYPES
 
-LOCAL_CFLAGS += -Wall -Werror -Wunused -Wunreachable-code
-
 LOCAL_C_INCLUDES += external/tinyalsa/include
 
 LOCAL_SHARED_LIBRARIES := \
@@ -23,7 +21,8 @@ LOCAL_SHARED_LIBRARIES := \
     libEGL \
     libGLESv1_CM \
     libgui \
-    libtinyalsa
+    libtinyalsa \
+    libmedia
 
 LOCAL_MODULE:= bootanimation
 
