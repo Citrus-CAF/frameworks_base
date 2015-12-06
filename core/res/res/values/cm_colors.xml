@@ -24,4 +24,15 @@
     <color name="notification_mtrl_action_textcolor">@color/secondary_text_material_light</color>
     <color name="notification_mtrl_big_picture_bg">#CCEEEEEE</color>
     <color name="resolver_list_bg">@color/white</color>
+    <color name="subscription_item_short_number_color">@android:color/white</color>
+    <color name="dropdown_item_2line_text_color">#323232</color>
+    <color name="pin_error_message_text_color">#FFFF0000</color>
+    <color name="recent_apps_text_color">@color/bright_foreground_dark</color>
+    <color name="recent_apps_dialog_text_color">#80FFFFFF</color>
+    <color name="browser_link_header_text_color">@color/white</color>
+    <color name="keyguard_label_text_color">#FFFFFFFF</color>
+    <color name="keyguard_background_color">#FF000000</color>
+    <color name="choose_account_type_background_color">#323232</color>
+    <color name="alert_dialog_micro_background_color">@android:color/white</color>
+    <color name="lockscreen_middle_button_tint_color">#666666</color>
 </resources>
