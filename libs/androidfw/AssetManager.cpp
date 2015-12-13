@@ -76,6 +76,7 @@ static const char* kDefaultVendor = "default";
 static const char* kAssetsRoot = "assets";
 static const char* kAppZipName = NULL; //"classes.jar";
 static const char* kSystemAssets = "framework/framework-res.apk";
+static const char* kCMSDKAssets = "framework/org.cyanogenmod.platform-res.apk";
 static const char* kAndroidManifest = "AndroidManifest.xml";
 static const int   kComposedIconAsset = 128;
 
@@ -222,10 +223,6 @@ bool AssetManager::addAssetPath(const String8& path, int32_t* cookie)
     }
 #endif
 
-    if (mResources != NULL) {
-        appendPathToResTable(ap);
-    }
-
     return true;
 }
 
@@ -312,7 +309,8 @@ bool AssetManager::addOverlayPath(const String8& idmapPath, const String8& overl
     *cookie = static_cast<int32_t>(mAssetPaths.size());
 
     if (mResources != NULL) {
-        appendPathToResTable(oap);
+        size_t index = mAssetPaths.size() - 1;
+        appendPathToResTable(oap, &index);
     }
 
     return true;
@@ -353,7 +351,8 @@ bool AssetManager::addCommonOverlayPath(const String8& themePackagePath, int32_t
     *cookie = static_cast<int32_t>(mAssetPaths.size());
 
     if (mResources != NULL) {
-        appendPathToResTable(oap);
+        size_t index = mAssetPaths.size() - 1;
+        appendPathToResTable(oap, &index);
     }
 
     return true;
@@ -404,7 +403,8 @@ bool AssetManager::addIconPath(const String8& packagePath, int32_t* cookie,
     *cookie = static_cast<int32_t>(mAssetPaths.size());
 
     if (mResources != NULL) {
-        appendPathToResTable(oap);
+        size_t index = mAssetPaths.size() - 1;
+        appendPathToResTable(oap, &index);
     }
 
    return true;
@@ -508,7 +508,10 @@ bool AssetManager::addDefaultAssets()
     String8 path(root);
     path.appendPath(kSystemAssets);
 
-    return addAssetPath(path, NULL);
+    String8 pathCM(root);
+    pathCM.appendPath(kCMSDKAssets);
+
+    return addAssetPath(path, NULL) & addAssetPath(pathCM, NULL);
 }
 
 int32_t AssetManager::nextAssetPath(const int32_t cookie) const
@@ -796,7 +799,7 @@ FileType AssetManager::getFileType(const char* fileName)
         return kFileTypeRegular;
 }
 
-bool AssetManager::appendPathToResTable(const asset_path& ap) const {
+bool AssetManager::appendPathToResTable(const asset_path& ap, size_t* entryIdx) const {
     // skip those ap's that correspond to system overlays
     if (ap.isSystemOverlay) {
         return true;
@@ -814,7 +817,7 @@ bool AssetManager::appendPathToResTable(const asset_path& ap) const {
         ass = const_cast<AssetManager*>(this)->openNonAssetInPathLocked("resources.arsc", Asset::ACCESS_BUFFER, ap, false);
         shared = false;
     } else if (ap.type != kFileTypeDirectory) {
-        if (nextEntryIdx == 0) {
+        if (*entryIdx == 0) {
             // The first item is typically the framework resources,
             // which we want to avoid parsing every time.
             sharedRes = const_cast<AssetManager*>(this)->
@@ -845,7 +848,7 @@ bool AssetManager::appendPathToResTable(const asset_path& ap) const {
                 // can quickly copy it out for others.
                 ALOGV("Creating shared resources for %s", ap.path.string());
                 sharedRes = new ResTable();
-                sharedRes->add(ass, idmap, nextEntryIdx + 1, false, ap.pkgIdOverride);
+                sharedRes->add(ass, idmap, *entryIdx + 1, false, ap.pkgIdOverride);
 #ifdef HAVE_ANDROID_OS
                 const char* data = getenv("ANDROID_DATA");
                 LOG_ALWAYS_FATAL_IF(data == NULL, "ANDROID_DATA not set");
@@ -874,7 +877,7 @@ bool AssetManager::appendPathToResTable(const asset_path& ap) const {
             mResources->add(sharedRes);
         } else {
             ALOGV("Parsing resources for %s", ap.path.string());
-            mResources->add(ass, idmap, nextEntryIdx + 1, !shared, ap.pkgIdOverride);
+            mResources->add(ass, idmap, *entryIdx + 1, !shared, ap.pkgIdOverride);
         }
         onlyEmptyResources = false;
 
@@ -923,7 +926,7 @@ const ResTable* AssetManager::getResTable(bool required) const
     bool onlyEmptyResources = true;
     const size_t N = mAssetPaths.size();
     for (size_t i=0; i<N; i++) {
-        bool empty = appendPathToResTable(mAssetPaths.itemAt(i));
+        bool empty = appendPathToResTable(mAssetPaths.itemAt(i), &i);
         onlyEmptyResources = onlyEmptyResources && empty;
     }
 
@@ -2396,3 +2399,4 @@ int AssetManager::ZipSet::getIndex(const String8& zip) const
 
     return mZipPath.size()-1;
 }
+
