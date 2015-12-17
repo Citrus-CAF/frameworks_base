@@ -32,11 +32,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Handler;
-import android.os.Message;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -53,9 +49,8 @@ import android.system.Os;
 
 import com.android.internal.telephony.ITelephony;
 import com.android.server.pm.PackageManagerService;
-import com.android.server.power.PowerManagerService;
+
 import android.util.Log;
-import android.view.IWindowManager;
 import android.view.WindowManager;
 import java.lang.reflect.Method;
 import dalvik.system.PathClassLoader;
@@ -63,13 +58,7 @@ import dalvik.system.PathClassLoader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.OutputStreamWriter;
-
-import java.lang.reflect.Method;
 
 public final class ShutdownThread extends Thread {
     // constants
@@ -124,21 +113,9 @@ public final class ShutdownThread extends Thread {
     private PowerManager.WakeLock mCpuWakeLock;
     private PowerManager.WakeLock mScreenWakeLock;
     private Handler mHandler;
-    private static MediaPlayer mMediaPlayer;
-    private static final String OEM_BOOTANIMATION_FILE = "/oem/media/shutdownanimation.zip";
-    private static final String SYSTEM_BOOTANIMATION_FILE = "/system/media/shutdownanimation.zip";
-    private static final String SYSTEM_ENCRYPTED_BOOTANIMATION_FILE =
-        "/system/media/shutdownanimation-encrypted.zip";
-
-    private static final String SHUTDOWN_MUSIC_FILE = "/system/media/shutdown.wav";
-    private static final String OEM_SHUTDOWN_MUSIC_FILE = "/oem/media/shutdown.wav";
-
-    private boolean isShutdownMusicPlaying = false;
 
     private static AlertDialog sConfirmDialog;
     private ProgressDialog mProgressDialog;
-
-    private static AudioManager mAudioManager;
 
     private ShutdownThread() {
     }
@@ -201,8 +178,7 @@ public final class ShutdownThread extends Thread {
                                     ? com.android.internal.R.string.reboot_title
                                     : com.android.internal.R.string.power_off)
                     .setMessage(resourceId)
-                    .setPositiveButton(com.android.internal.R.string.yes,
-                            new DialogInterface.OnClickListener() {
+                    .setPositiveButton(com.android.internal.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             beginShutdownSequence(context);
                         }
@@ -256,27 +232,6 @@ public final class ShutdownThread extends Thread {
         shutdownInner(context, confirm);
     }
 
-    private static String getShutdownMusicFilePath() {
-        final String[] fileName = {OEM_SHUTDOWN_MUSIC_FILE, SHUTDOWN_MUSIC_FILE};
-        File checkFile = null;
-        for(String music : fileName) {
-            checkFile = new File(music);
-            if (checkFile.exists()) {
-                return music;
-            }
-        }
-        return null;
-    }
-
-    private static void lockDevice() {
-        IWindowManager wm = IWindowManager.Stub.asInterface(ServiceManager
-                .getService(Context.WINDOW_SERVICE));
-        try {
-            wm.updateRotation(false, false);
-        } catch (RemoteException e) {
-            Log.w(TAG, "boot animation can not lock device!");
-        }
-    }
     /**
      * Request a reboot into safe mode.  Must be called from a Looper thread in which its UI
      * is shown.
@@ -306,56 +261,50 @@ public final class ShutdownThread extends Thread {
             sIsStarted = true;
         }
 
-        //acquire audio focus to make the other apps to stop playing muisc
-        mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        mAudioManager.requestAudioFocus(null,
-                AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+        // Throw up a system dialog to indicate the device is rebooting / shutting down.
+        ProgressDialog pd = new ProgressDialog(context);
 
-        if (!checkAnimationFileExist()) {
-                // Throw up a system dialog to indicate the device is rebooting / shutting down.
-            ProgressDialog pd = new ProgressDialog(context);
-
-            // Path 1: Reboot to recovery and install the update
-            //   Condition: mRebootReason == REBOOT_RECOVERY and mRebootUpdate == True
-            //   (mRebootUpdate is set by checking if /cache/recovery/uncrypt_file exists.)
-            //   UI: progress bar
-            //
-            // Path 2: Reboot to recovery for factory reset
-            //   Condition: mRebootReason == REBOOT_RECOVERY
-            //   UI: spinning circle only (no progress bar)
-            //
-            // Path 3: Regular reboot / shutdown
-            //   Condition: Otherwise
-            //   UI: spinning circle only (no progress bar)
-            if (PowerManager.REBOOT_RECOVERY.equals(mRebootReason)) {
-                mRebootUpdate = new File(UNCRYPT_PACKAGE_FILE).exists();
-                if (mRebootUpdate) {
-                    pd.setTitle(context.getText(com.android.internal.R.string.reboot_to_update_title));
-                    pd.setMessage(context.getText(
-                            com.android.internal.R.string.reboot_to_update_prepare));
-                    pd.setMax(100);
-                    pd.setProgressNumberFormat(null);
-                    pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                    pd.setProgress(0);
-                    pd.setIndeterminate(false);
-                } else {
-                    // Factory reset path. Set the dialog message accordingly.
-                    pd.setTitle(context.getText(com.android.internal.R.string.reboot_to_reset_title));
-                    pd.setMessage(context.getText(
-                            com.android.internal.R.string.reboot_to_reset_message));
-                    pd.setIndeterminate(true);
-                }
+        // Path 1: Reboot to recovery and install the update
+        //   Condition: mRebootReason == REBOOT_RECOVERY and mRebootUpdate == True
+        //   (mRebootUpdate is set by checking if /cache/recovery/uncrypt_file exists.)
+        //   UI: progress bar
+        //
+        // Path 2: Reboot to recovery for factory reset
+        //   Condition: mRebootReason == REBOOT_RECOVERY
+        //   UI: spinning circle only (no progress bar)
+        //
+        // Path 3: Regular reboot / shutdown
+        //   Condition: Otherwise
+        //   UI: spinning circle only (no progress bar)
+        if (PowerManager.REBOOT_RECOVERY.equals(mRebootReason)) {
+            mRebootUpdate = new File(UNCRYPT_PACKAGE_FILE).exists();
+            if (mRebootUpdate) {
+                pd.setTitle(context.getText(com.android.internal.R.string.reboot_to_update_title));
+                pd.setMessage(context.getText(
+                        com.android.internal.R.string.reboot_to_update_prepare));
+                pd.setMax(100);
+                pd.setProgressNumberFormat(null);
+                pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                pd.setProgress(0);
+                pd.setIndeterminate(false);
             } else {
-                pd.setTitle(context.getText(com.android.internal.R.string.power_off));
-                pd.setMessage(context.getText(com.android.internal.R.string.shutdown_progress));
+                // Factory reset path. Set the dialog message accordingly.
+                pd.setTitle(context.getText(com.android.internal.R.string.reboot_to_reset_title));
+                pd.setMessage(context.getText(
+                        com.android.internal.R.string.reboot_to_reset_message));
                 pd.setIndeterminate(true);
             }
-            pd.setCancelable(false);
-            pd.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
-            pd.show();
-            sInstance.mProgressDialog = pd;
+        } else {
+            pd.setTitle(context.getText(com.android.internal.R.string.power_off));
+            pd.setMessage(context.getText(com.android.internal.R.string.shutdown_progress));
+            pd.setIndeterminate(true);
         }
+        pd.setCancelable(false);
+        pd.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
 
+        pd.show();
+
+        sInstance.mProgressDialog = pd;
         sInstance.mContext = context;
         sInstance.mPowerManager = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
 
@@ -484,40 +433,6 @@ public final class ShutdownThread extends Thread {
             sInstance.setRebootProgress(PACKAGE_MANAGER_STOP_PERCENT, null);
         }
 
-        String shutDownFile = null;
-
-        //showShutdownAnimation() is called from here to sync
-        //music and animation properly
-        if(checkAnimationFileExist()) {
-            lockDevice();
-            showShutdownAnimation();
-
-            if (!isSilentMode()
-                    && (shutDownFile = getShutdownMusicFilePath()) != null) {
-                isShutdownMusicPlaying = true;
-                shutdownMusicHandler.obtainMessage(0, shutDownFile).sendToTarget();
-            }
-        }
-
-        Log.i(TAG, "wait for shutdown music");
-        final long endTimeForMusic = SystemClock.elapsedRealtime() + MAX_BROADCAST_TIME;
-        synchronized (mActionDoneSync) {
-            while (isShutdownMusicPlaying) {
-                long delay = endTimeForMusic - SystemClock.elapsedRealtime();
-                if (delay <= 0) {
-                    Log.w(TAG, "play shutdown music timeout!");
-                    break;
-                }
-                try {
-                    mActionDoneSync.wait(delay);
-                } catch (InterruptedException e) {
-                }
-            }
-            if (!isShutdownMusicPlaying) {
-                Log.i(TAG, "play shutdown music complete.");
-            }
-        }
-
         // Shutdown radios.
         shutdownRadios(MAX_RADIO_WAIT_TIME);
         if (mRebootUpdate) {
@@ -608,10 +523,11 @@ public final class ShutdownThread extends Thread {
                         ITelephony.Stub.asInterface(ServiceManager.checkService("phone"));
                 final IBluetoothManager bluetooth =
                         IBluetoothManager.Stub.asInterface(ServiceManager.checkService(
-                        BluetoothAdapter.BLUETOOTH_MANAGER_SERVICE));
+                                BluetoothAdapter.BLUETOOTH_MANAGER_SERVICE));
 
                 try {
-                    nfcOff = nfc == null || nfc.getState() == NfcAdapter.STATE_OFF;
+                    nfcOff = nfc == null ||
+                             nfc.getState() == NfcAdapter.STATE_OFF;
                     if (!nfcOff) {
                         Log.w(TAG, "Turning off NFC...");
                         nfc.disable(false); // Don't persist new state
@@ -844,56 +760,4 @@ public final class ShutdownThread extends Thread {
             Log.e(TAG, "Unknown exception while trying to invoke rebootOrShutdown");
         }
     }
-
-    private static boolean checkAnimationFileExist() {
-        if (new File(OEM_BOOTANIMATION_FILE).exists()
-                || new File(SYSTEM_BOOTANIMATION_FILE).exists()
-                || new File(SYSTEM_ENCRYPTED_BOOTANIMATION_FILE).exists())
-            return true;
-        else
-            return false;
-    }
-
-    private static boolean isSilentMode() {
-        return mAudioManager.isSilentMode();
-    }
-
-    private static void showShutdownAnimation() {
-        /*
-         * When boot completed, "service.bootanim.exit" property is set to 1.
-         * Bootanimation checks this property to stop showing the boot animation.
-         * Since we use the same code for shutdown animation, we
-         * need to reset this property to 0. If this is not set to 0 then shutdown
-         * will stop and exit after displaying the first frame of the animation
-         */
-        SystemProperties.set("service.bootanim.exit", "0");
-
-        SystemProperties.set("ctl.start", "bootanim");
-    }
-
-    private Handler shutdownMusicHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            String path = (String) msg.obj;
-            mMediaPlayer = new MediaPlayer();
-            try
-            {
-                mMediaPlayer.reset();
-                mMediaPlayer.setDataSource(path);
-                mMediaPlayer.prepare();
-                mMediaPlayer.start();
-                mMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        synchronized (mActionDoneSync) {
-                            isShutdownMusicPlaying = false;
-                            mActionDoneSync.notifyAll();
-                        }
-                    }
-                });
-            } catch (IOException e) {
-                Log.d(TAG, "play shutdown music error:" + e);
-            }
-        }
-    };
 }
