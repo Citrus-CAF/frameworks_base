@@ -20,6 +20,6 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
-    android:background="#40000000"
+    android:background="@color/recents_empty_background_color"
     android:src="@drawable/no_recent_apps_logo"
     android:visibility="gone" />
