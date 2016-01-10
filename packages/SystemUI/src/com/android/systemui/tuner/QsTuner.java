@@ -209,6 +209,7 @@ public class QsTuner extends Fragment implements Callback {
         else if (spec.equals("timeout")) return R.string.quick_settings_timeout_label;
         else if (spec.equals("expanded_desktop")) return R.string.quick_settings_expanded_desktop;
         else if (spec.equals("ime")) return R.string.quick_settings_ime_label;
+        else if (spec.equals("navigation_bar")) return R.string.quick_settings_smartbar;
         return 0;
     }
 
@@ -461,6 +462,7 @@ public class QsTuner extends Fragment implements Callback {
             else if (mSpec.equals("timeout")) return R.drawable.ic_qs_screen_timeout_vector;
             else if (mSpec.equals("expanded_desktop")) return R.drawable.ic_qs_expanded_desktop;
             else if (mSpec.equals("ime")) return R.drawable.ic_qs_ime;
+            else if (mSpec.equals("navigation_bar")) return R.drawable.ic_qs_smartbar;
             return R.drawable.android;
         }
 
