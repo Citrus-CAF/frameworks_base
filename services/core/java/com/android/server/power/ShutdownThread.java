@@ -831,27 +831,6 @@ public final class ShutdownThread extends Thread {
         }
     }
 
-    private static void deviceRebootOrShutdown(boolean reboot, String reason) {
-        Class<?> cl;
-        String deviceShutdownClassName = "com.qti.server.power.ShutdownOem";
-        try {
-            cl = Class.forName(deviceShutdownClassName);
-            Method m;
-                try {
-                    m = cl.getMethod("rebootOrShutdown", new Class[] {boolean.class, String.class});
-                    m.invoke(cl.newInstance(), reboot, reason);
-                } catch (NoSuchMethodException ex) {
-                    Log.e(TAG, "rebootOrShutdown method not found in class " + deviceShutdownClassName);
-                } catch (Exception ex) {
-                    Log.e(TAG, "Unknown exception hit while trying to invode rebootOrShutdown");
-                }
-        } catch (ClassNotFoundException e) {
-            Log.e(TAG, "Unable to find class " + deviceShutdownClassName);
-        } catch (Exception e) {
-            Log.e(TAG, "Unknown exception while trying to invoke rebootOrShutdown");
-        }
-    }
-
     private static Context getUiContext(Context context) {
         Context uiContext = null;
         if (context != null) {
