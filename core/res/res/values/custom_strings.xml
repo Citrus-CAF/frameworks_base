@@ -22,8 +22,6 @@
     <string name="permdesc_preventpower">Allows an app to override the power key.</string>
 
     <!-- Reboot menu -->
-    <!-- label for item that reboots the phone in phone options dialog -->
-    <string name="global_action_reboot">Reboot</string>
     <!-- Button to reboot the phone, within the Reboot Options dialog -->
     <string name="reboot_reboot">Reboot</string>
     <!-- Button to reboot the phone into recovery, within the Reboot Options dialog -->
@@ -34,8 +32,6 @@
     <string name="reboot_download">Download</string>
     <!-- Button to soft reboot the device, within the Reboot Options dialog -->
     <string name="reboot_soft">Soft reboot</string>
-    <!-- Title of dialog to confirm rebooting. -->
-    <string name="reboot_title">Reboot</string>
     <!-- Reboot Confirmation Dialog.  When the user chooses to reboot the device, there will
          be a confirmation dialog.  This is the message. -->
     <string name="reboot_confirm" product="tablet">Your tablet will reboot.</string>
