@@ -2070,6 +2070,11 @@ public class PackageManagerService extends IPackageManager.Stub {
             // avoid the resulting log spew.
             alreadyDexOpted.add(frameworkDir.getPath() + "/core-libart.jar");
 
+            // Gross hack for now: this prevents boot on aosp
+            // code, so don't dexopt it to avoid the resulting boot failure
+            alreadyDexOpted.add(frameworkDir.getPath() + "/org.cyanogenmod.platform.jar");
+            alreadyDexOpted.add(frameworkDir.getPath() + "/org.cyanogenmod.platform-res.apk");
+
             /**
              * There are a number of commands implemented in Java, which
              * we currently need to do the dexopt on so that they can be
