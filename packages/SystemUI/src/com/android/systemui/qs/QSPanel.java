@@ -37,6 +37,7 @@ import com.android.internal.logging.MetricsLogger;
 import com.android.internal.telephony.CarrierAppUtils;
 import com.android.systemui.FontSizeUtils;
 import com.android.systemui.R;
+import com.android.systemui.qs.QSTile.CustomTitleDetailAdapter;
 import com.android.systemui.qs.QSTile.DetailAdapter;
 import com.android.systemui.settings.BrightnessController;
 import com.android.systemui.settings.SimSwitchController;
@@ -414,7 +415,7 @@ public class QSPanel extends ViewGroup {
             MetricsLogger.visible(mContext, detailAdapter.getMetricsCategory());
             announceForAccessibility(mContext.getString(
                     R.string.accessibility_quick_settings_detail,
-                    mContext.getString(detailAdapter.getTitle())));
+                    QSTile.getDetailAdapterTitle(mContext, detailAdapter)));
             setDetailRecord(r);
             listener = mHideGridContentWhenDone;
             if (r instanceof TileRecord && visibleDiff) {

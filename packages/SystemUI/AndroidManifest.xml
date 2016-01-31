@@ -148,6 +148,10 @@
 
     <!-- Images in navbar -->
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+    <!-- Themes tile -->
+    <uses-permission android:name="android.permission.ACCESS_THEME_MANAGER" />
+    <uses-permission android:name="android.permission.READ_THEMES" />
+    <uses-permission android:name="android.permission.WRITE_THEMES" />
 
     <application
         android:name=".SystemUIApplication"
