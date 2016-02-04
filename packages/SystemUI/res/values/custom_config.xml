@@ -19,7 +19,7 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_extra" translatable="false">
-    adb_network,anbi,expanded_desktop,heads_up,navigation_bar,reboot,screenshot,sync,weather
+    adb_network,anbi,caffeine,expanded_desktop,heads_up,navigation_bar,reboot,screenshot,sync,weather
     </string>
 
 </resources>
