@@ -62,7 +62,6 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
         @Override
         public void onSimStateChanged(int subId, int slotId, State simState) {
            if (DEBUG) Log.v(TAG, "onSimStateChanged(subId=" + subId + ",state=" + simState + ")");
-           mSlotId = slotId + 1;
            resetState();
        };
     };
@@ -326,7 +325,7 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
                         true);
             return;
         }
-
+        mSlotId = SubscriptionManager.getSlotId(mSubId) + 1;
         int count = TelephonyManager.getDefault().getSimCount();
         Resources rez = getResources();
         final String msg;
