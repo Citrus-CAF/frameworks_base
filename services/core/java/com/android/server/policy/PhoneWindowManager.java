@@ -2697,7 +2697,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         if (isPowerOffAlarmMode == 1 && (keyCode == KeyEvent.KEYCODE_HOME
                 || keyCode == KeyEvent.KEYCODE_SEARCH
-                || keyCode == KeyEvent.KEYCODE_MENU)) {
+                || keyCode == KeyEvent.KEYCODE_MENU
+                || keyCode == KeyEvent.KEYCODE_APP_SWITCH)) {
             return -1;  // ignore the physical key here
         }
 
