@@ -336,7 +336,8 @@ public class MobileSignalController extends SignalController<
                 icons.mStackedDataIcon, icons.mStackedVoiceIcon,
                 dataContentDescription, description, icons.mIsWide,
                 mSubscriptionInfo.getSubscriptionId(), getImsIconId(),
-                isImsRegisteredInAirplaneMode(), getdataNetworkTypeInRoamingId());
+                isImsRegisteredInAirplaneMode(), getdataNetworkTypeInRoamingId(),
+                getEmbmsIconId());
 
         mCallbackHandler.post(new Runnable() {
             @Override
@@ -376,8 +377,22 @@ public class MobileSignalController extends SignalController<
         }
     }
 
+    private int getEmbmsIconId() {
+        if (mStyle == STATUS_BAR_STYLE_EXTENDED
+                && isEmbmsActiveOnDataSim()) {
+            return R.drawable.lte_embms_services_all_brackets;
+        } else {
+            return 0;
+        }
+    }
+
     private boolean isImsRegisteredOnDataSim() {
         return mPhone != null && mPhone.isImsRegistered()
+                && mCurrentState.dataSim;
+    }
+
+    private boolean isEmbmsActiveOnDataSim() {
+        return mNetworkController.isEmbmsActive()
                 && mCurrentState.dataSim;
     }
 
