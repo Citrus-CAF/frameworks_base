@@ -301,7 +301,7 @@ public class MobileSignalController extends SignalController<
             showDataIcon = mCurrentState.dataConnected;
         } else {
             showDataIcon = mCurrentState.dataConnected
-                    || mCurrentState.iconGroup == TelephonyIcons.ROAMING;
+                    || (mCurrentState.iconGroup == TelephonyIcons.ROAMING || isRoaming());
         }
         IconState statusIcon = new IconState(mCurrentState.enabled && !mCurrentState.airplaneMode,
                 getCurrentIconId(), contentDescription);
@@ -324,7 +324,7 @@ public class MobileSignalController extends SignalController<
                         && mCurrentState.activityOut;
         if (!mContext.getResources().getBoolean(R.bool.show_roaming_and_network_icons)) {
             showDataIcon &= mCurrentState.isDefault
-                    || mCurrentState.iconGroup == TelephonyIcons.ROAMING;
+                    || (mCurrentState.iconGroup == TelephonyIcons.ROAMING || isRoaming());
         }
         showDataIcon &= (mStyle == STATUS_BAR_STYLE_ANDROID_DEFAULT
                 || mStyle == STATUS_BAR_STYLE_EXTENDED);
@@ -363,7 +363,8 @@ public class MobileSignalController extends SignalController<
     }
 
     private int getdataNetworkTypeInRoamingId() {
-        if (mStyle == STATUS_BAR_STYLE_EXTENDED && isRoaming()) {
+        if ((mStyle == STATUS_BAR_STYLE_EXTENDED) && isRoaming()
+                && isMobileDataEnabled(mSubscriptionInfo.getSubscriptionId())) {
             int dataType = getDataNetworkType();
             if (dataType == TelephonyManager.NETWORK_TYPE_LTE) {
                 return R.drawable.stat_sys_data_fully_connected_lte_networktype_in_roam;
