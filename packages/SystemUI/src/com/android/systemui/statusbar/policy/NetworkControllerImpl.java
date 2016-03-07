@@ -403,7 +403,11 @@ public class NetworkControllerImpl extends BroadcastReceiver
             }
         } else if (action.equals(ACTION_EMBMS_STATUS)) {
             mIsEmbmsActive = intent.getBooleanExtra("ACTIVE", false);
-        } else {
+            Log.d(TAG,"EMBMS_STATUS On Receive:isEmbmsactive=" + mIsEmbmsActive);
+            for (MobileSignalController controller : mMobileSignalControllers.values()) {
+                 controller.notifyListeners();
+            }
+         } else {
             int subId = intent.getIntExtra(PhoneConstants.SUBSCRIPTION_KEY,
                     SubscriptionManager.INVALID_SUBSCRIPTION_ID);
             if (SubscriptionManager.isValidSubscriptionId(subId)) {
