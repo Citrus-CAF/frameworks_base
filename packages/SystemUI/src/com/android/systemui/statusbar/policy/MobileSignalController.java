@@ -364,7 +364,7 @@ public class MobileSignalController extends SignalController<
 
     private int getdataNetworkTypeInRoamingId() {
         if ((mStyle == STATUS_BAR_STYLE_EXTENDED) && isRoaming()
-                && isMobileDataEnabled(mSubscriptionInfo.getSubscriptionId())) {
+                && mCurrentState.dataConnected) {
             int dataType = getDataNetworkType();
             if (dataType == TelephonyManager.NETWORK_TYPE_LTE) {
                 return R.drawable.stat_sys_data_fully_connected_lte_networktype_in_roam;
