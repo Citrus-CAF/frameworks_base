@@ -4439,6 +4439,17 @@ public final class Settings {
         private static final Validator KEY_CAMERA_DOUBLE_TAP_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
+         * Whether user can swap navigation lateral keys.
+         * <p>
+         * Type: int (0 for false, 1 for true)
+         * @hide
+         */
+        public static final String SWAP_NAVIGATION_KEYS = "swap_navigation_keys";
+
+        /** @hide */
+        private static final Validator SWAP_NAVIGATION_KEYS_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
@@ -4536,6 +4547,7 @@ public final class Settings {
             KEY_APP_SWITCH_DOUBLE_TAP_ACTION,
             KEY_CAMERA_LONG_PRESS_ACTION,
             KEY_CAMERA_DOUBLE_TAP_ACTION,
+            SWAP_NAVIGATION_KEYS,
         };
 
         /**
@@ -4685,6 +4697,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(KEY_APP_SWITCH_DOUBLE_TAP_ACTION);
             PRIVATE_SETTINGS.add(KEY_CAMERA_LONG_PRESS_ACTION);
             PRIVATE_SETTINGS.add(KEY_CAMERA_DOUBLE_TAP_ACTION);
+            PRIVATE_SETTINGS.add(SWAP_NAVIGATION_KEYS);
         }
 
         /**
@@ -4808,6 +4821,7 @@ public final class Settings {
             VALIDATORS.put(KEY_APP_SWITCH_DOUBLE_TAP_ACTION, KEY_APP_SWITCH_DOUBLE_TAP_ACTION_VALIDATOR);
             VALIDATORS.put(KEY_CAMERA_LONG_PRESS_ACTION, KEY_CAMERA_LONG_PRESS_ACTION_VALIDATOR);
             VALIDATORS.put(KEY_CAMERA_DOUBLE_TAP_ACTION, KEY_CAMERA_DOUBLE_TAP_ACTION_VALIDATOR);
+            VALIDATORS.put(SWAP_NAVIGATION_KEYS, SWAP_NAVIGATION_KEYS_VALIDATOR);
         }
 
         /**
