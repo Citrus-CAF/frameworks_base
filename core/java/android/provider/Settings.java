@@ -4522,6 +4522,15 @@ public final class Settings {
         /** @hide */
         private static final Validator LOCKSCREEN_QUICK_UNLOCK_CONTROL_VALIDATOR = BOOLEAN_VALIDATOR;
 
+        /** Whether to skip music track with volume rocker
+        /**
+         * @hide
+         */
+        public static final String VOLUME_BUTTON_MUSIC_CONTROL = "volume_button_music_control";
+
+        /** @hide */
+        private static final Validator VOLUME_BUTTON_MUSIC_CONTROL_VALIDATOR = BOOLEAN_VALIDATOR;
+
         /**
          * Citrus-CAF SystemSettings additions ends
          */
@@ -4629,6 +4638,7 @@ public final class Settings {
             ANBI_ENABLED,
             LOCKSCREEN_PIN_SCRAMBLE_LAYOUT,
             LOCKSCREEN_QUICK_UNLOCK_CONTROL,
+            VOLUME_BUTTON_MUSIC_CONTROL,
         };
 
         /**
@@ -4787,6 +4797,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(ANBI_ENABLED);
             PRIVATE_SETTINGS.add(LOCKSCREEN_PIN_SCRAMBLE_LAYOUT);
             PRIVATE_SETTINGS.add(LOCKSCREEN_QUICK_UNLOCK_CONTROL);
+            PRIVATE_SETTINGS.add(VOLUME_BUTTON_MUSIC_CONTROL);
         }
 
         /**
@@ -4919,6 +4930,7 @@ public final class Settings {
             VALIDATORS.put(ANBI_ENABLED, ANBI_ENABLED_VALIDATOR);
             VALIDATORS.put(LOCKSCREEN_PIN_SCRAMBLE_LAYOUT, LOCKSCREEN_PIN_SCRAMBLE_LAYOUT_VALIDATOR);
             VALIDATORS.put(LOCKSCREEN_QUICK_UNLOCK_CONTROL, LOCKSCREEN_QUICK_UNLOCK_CONTROL_VALIDATOR);
+            VALIDATORS.put(VOLUME_BUTTON_MUSIC_CONTROL, VOLUME_BUTTON_MUSIC_CONTROL_VALIDATOR);
         }
 
         /**
