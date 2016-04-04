@@ -1072,19 +1072,48 @@ interface ITelephony {
     boolean isImsRegistered();
 
     /**
+     * Get IMS Registration status using subId
+     */
+    boolean isImsRegisteredUsingSubId(int subId);
+
+    /**
      * Returns the Status of Wi-Fi Calling
      */
     boolean isWifiCallingAvailable();
-    
+
+    /*
+     * Returns the Status of VOWIFI calling
+     * using subId
+     */
+    boolean isVoWifiCallingAvailableUsingSubId(int subId);
+
     /**
      * Returns the Status of Volte
      */
     boolean isVolteAvailable();
 
+    /**
+     * Returns the Status of Volte
+     * using subId
+     */
+    boolean isVolteAvailableUsingSubId(int subId);
+
      /**
      * Returns the Status of VT (video telephony)
      */
     boolean isVideoTelephonyAvailable();
+
+    /**
+     * Returns the Status of VT (video telephony)
+     * using subId
+     */
+    boolean isVideoTelephonyAvailableUsingSubId(int subId);
+
+    /**
+     * Returns the Status of Video telephony wifi calling
+     * using subId
+     */
+    boolean isVideoTelephonyWifiCallingAvailableUsingSubId(int subId);
 
     /**
       * Returns the unique device ID of phone, for example, the IMEI for

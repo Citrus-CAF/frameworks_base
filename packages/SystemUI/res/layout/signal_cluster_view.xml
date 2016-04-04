@@ -55,6 +55,14 @@
             systemui:hasOverlappingRendering="false"
             />
     </FrameLayout>
+     <ImageView android:id="@+id/ims_over_wifi"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_gravity="start|bottom"
+        android:layout_marginRight="2dp"
+        android:src="@drawable/vowifi"
+        />
     <FrameLayout
         android:id="@+id/wifi_combo"
         android:layout_height="wrap_content"
@@ -124,13 +132,6 @@
         android:layout_width="4dp"
         android:layout_height="4dp"
         android:visibility="gone"
-        />
-    <ImageView android:id="@+id/airplane_ims"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:src="@drawable/ims_services_hd"
         />
     <ImageView
         android:id="@+id/airplane"
