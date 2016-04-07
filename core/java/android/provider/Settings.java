@@ -4646,6 +4646,11 @@ public final class Settings {
         public static final String AMBIENT_DOZE_AUTO_BRIGHTNESS = "ambient_doze_auto_brightness";
 
         /**
+         * @hide
+         */
+        public static final String AMBIENT_DISPLAY_SHOW_BATTERY = "ambient_display_show_battery";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5344,6 +5349,7 @@ public final class Settings {
             }
             return list;
         }
+
 
         /** @hide */
         public static void getMovedToGlobalSettings(Set<String> outKeySet) {
