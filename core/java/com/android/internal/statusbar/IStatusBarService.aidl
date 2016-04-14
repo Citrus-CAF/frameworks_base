@@ -90,4 +90,7 @@ interface IStatusBarService
     void appTransitionStarting(long statusBarAnimationsStartTime, long statusBarAnimationsDuration);
 
     void startAssist(in Bundle args);
+    void toggleScreenshot();
+    void toggleLastApp();
+    void toggleKillApp();
 }

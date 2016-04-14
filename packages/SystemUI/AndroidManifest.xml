@@ -278,7 +278,6 @@
                   android:exported="false" />
 
         <!-- Screenshot Activity -->
-	<!--
         <activity
             android:name="com.android.systemui.shortcuts.Screenshot"
             android:label="@string/shortcut_screenshot"
@@ -292,7 +291,6 @@
                 <category android:name="com.android.systemui.SHORTCUT_EXTRA" />
             </intent-filter>
         </activity>
-	-->
 
         <!-- started from UsbDeviceSettingsManager -->
         <activity android:name=".usb.UsbConfirmActivity"
