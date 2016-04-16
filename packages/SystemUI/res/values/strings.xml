@@ -1153,4 +1153,6 @@
     <!-- Hotspot dialog message -->
     <string name="hotspot_apm_message">Unable to connect to mobile networks while Airplane mode is enabled. Disable Airplane mode and try again.</string>
 
+    <string name="sim1">SIM 1</string>
+    <string name="sim2">SIM 2</string>
 </resources>
