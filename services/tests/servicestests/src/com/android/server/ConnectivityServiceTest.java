@@ -57,6 +57,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.MessageQueue;
 import android.os.MessageQueue.IdleHandler;
+import android.os.SystemProperties;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.util.Log;
@@ -698,12 +699,34 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         } catch (InterruptedException e) {
         }
         verifyActiveNetwork(TRANSPORT_WIFI);
-        assertEquals(1, mCm.getAllNetworks().length);
-        assertEquals(mCm.getAllNetworks()[0], mCm.getActiveNetwork());
+        boolean keepPdpDuringNonCellular = SystemProperties.getBoolean(
+            "persist.pdp.during.noncellular", false);
+        if (keepPdpDuringNonCellular) {
+            // Test Cellular is kept
+            assertEquals(2, mCm.getAllNetworks().length);
+            if (mCm.getAllNetworks()[0].equals(mCellNetworkAgent.getNetwork())) {
+                assertTrue(mCm.getAllNetworks()[1].equals(mCm.getActiveNetwork()));
+                assertTrue(mCm.getAllNetworks()[1].equals(mWiFiNetworkAgent.getNetwork()));
+            } else {
+                assertTrue(mCm.getAllNetworks()[0].equals(mCm.getActiveNetwork()));
+                assertTrue(mCm.getAllNetworks()[0].equals(mWiFiNetworkAgent.getNetwork()));
+                assertTrue(mCm.getAllNetworks()[1].equals(mCellNetworkAgent.getNetwork()));
+            }
+            cv = waitForConnectivityBroadcasts(2);
+        } else {
+            assertEquals(1, mCm.getAllNetworks().length);
+            assertEquals(mCm.getAllNetworks()[0], mCm.getActiveNetwork());
+            cv = waitForConnectivityBroadcasts(1);
+        }
         // Test WiFi disconnect.
-        cv = waitForConnectivityBroadcasts(1);
         mWiFiNetworkAgent.disconnect();
+        if (keepPdpDuringNonCellular) {
+            // Test Cellular disconnect.
+            mCellNetworkAgent.disconnect();
+        }
         waitFor(cv);
+        // waitForIdle() is added not to fail due to timing issue.
+        mService.waitForIdle();
         verifyNoNetwork();
     }
 
