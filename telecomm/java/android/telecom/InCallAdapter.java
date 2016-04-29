@@ -286,4 +286,11 @@ public final class InCallAdapter {
         } catch (RemoteException e) {
         }
     }
+
+    public void continueCallWithVideoState(String callId, int videoState) {
+        try {
+            mAdapter.continueCallWithVideoState(callId, videoState);
+        } catch (RemoteException e) {
+        }
+    }
 }

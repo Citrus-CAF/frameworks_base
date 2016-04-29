@@ -842,6 +842,11 @@ public final class Call {
 
     }
 
+    /** {@hide} */
+    public void continueCallWithVideoState(int videoState) {
+        mInCallAdapter.continueCallWithVideoState(mTelecomCallId, videoState);
+    }
+
     /**
      * Instructs this {@code Call} to enter a conference.
      *
