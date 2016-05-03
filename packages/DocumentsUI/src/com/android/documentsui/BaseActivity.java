@@ -625,7 +625,8 @@ abstract class BaseActivity extends Activity {
         @Override
         public DocumentInfo getItem(int position) {
             State state = getDisplayState();
-            return state.stack.get(state.stack.size() - position - 1);
+            int index = state.stack.size() - position - 1;
+            return index < 0 ? null : state.stack.get(index);
         }
 
         @Override
@@ -646,7 +647,7 @@ abstract class BaseActivity extends Activity {
             if (position == 0) {
                 final RootInfo root = getCurrentRoot();
                 title.setText(root.title);
-            } else {
+            } else if (doc != null) {
                 title.setText(doc.displayName);
             }
 
@@ -668,7 +669,7 @@ abstract class BaseActivity extends Activity {
                 final RootInfo root = getCurrentRoot();
                 title.setText(root.title);
                 subdir.setVisibility(View.GONE);
-            } else {
+            } else if (doc != null) {
                 title.setText(doc.displayName);
                 subdir.setVisibility(View.VISIBLE);
             }
