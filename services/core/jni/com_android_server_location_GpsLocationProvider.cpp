@@ -609,9 +609,14 @@ static void android_location_GpsLocationProvider_delete_aiding_data(JNIEnv* /* e
         sGpsInterface->delete_aiding_data(flags);
 }
 
-static jint android_location_GpsLocationProvider_read_sv_status(JNIEnv* env, jobject /* obj */,
-        jintArray prnArray, jfloatArray snrArray, jfloatArray elevArray, jfloatArray azumArray,
-        jintArray maskArray)
+static jint android_location_GpsLocationProvider_read_sv_status(
+    JNIEnv* env, jobject /* obj */,
+    jintArray prnArray,
+    jfloatArray snrArray,
+    jfloatArray elevArray,
+    jfloatArray azumArray,
+    jintArray maskArray,
+    jlongArray gnssMaskArray)
 {
     // this should only be called from within a call to reportSvStatus
 
@@ -620,6 +625,7 @@ static jint android_location_GpsLocationProvider_read_sv_status(JNIEnv* env, job
     jfloat* elev = env->GetFloatArrayElements(elevArray, 0);
     jfloat* azim = env->GetFloatArrayElements(azumArray, 0);
     jint* mask = env->GetIntArrayElements(maskArray, 0);
+    jlong* gnssMask = env->GetLongArrayElements(gnssMaskArray, 0);
 
     int num_svs = sGpsSvStatus.num_svs;
     for (int i = 0; i < num_svs; i++) {
@@ -632,11 +638,17 @@ static jint android_location_GpsLocationProvider_read_sv_status(JNIEnv* env, job
     mask[1] = sGpsSvStatus.almanac_mask;
     mask[2] = sGpsSvStatus.used_in_fix_mask;
 
+    gnssMask[0] = sGpsSvStatus.glo_used_in_fix_mask;
+    gnssMask[1] = sGpsSvStatus.bds_used_in_fix_mask;
+    gnssMask[2] = sGpsSvStatus.gal_used_in_fix_mask;
+
     env->ReleaseIntArrayElements(prnArray, prns, 0);
     env->ReleaseFloatArrayElements(snrArray, snrs, 0);
     env->ReleaseFloatArrayElements(elevArray, elev, 0);
     env->ReleaseFloatArrayElements(azumArray, azim, 0);
     env->ReleaseIntArrayElements(maskArray, mask, 0);
+    env->ReleaseLongArrayElements(gnssMaskArray, gnssMask, 0);
+
     return (jint) num_svs;
 }
 
@@ -1453,7 +1465,7 @@ static JNINativeMethod sMethods[] = {
             "(I)V",
             (void*)android_location_GpsLocationProvider_delete_aiding_data},
     {"native_read_sv_status",
-            "([I[F[F[F[I)I",
+            "([I[F[F[F[I[J)I",
             (void*)android_location_GpsLocationProvider_read_sv_status},
     {"native_read_nmea", "([BI)I", (void*)android_location_GpsLocationProvider_read_nmea},
     {"native_inject_time", "(JJI)V", (void*)android_location_GpsLocationProvider_inject_time},

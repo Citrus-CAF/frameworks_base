@@ -109,6 +109,8 @@ public class GpsLocationProvider implements LocationProviderInterface {
             true, true, false, false, true, true, true,
             Criteria.POWER_HIGH, Criteria.ACCURACY_FINE);
 
+    private static final int MAX_SVS = 50;
+
     // these need to match GpsPositionMode enum in gps.h
     private static final int GPS_POSITION_MODE_STANDALONE = 0;
     private static final int GPS_POSITION_MODE_MS_BASED = 1;
@@ -1467,7 +1469,8 @@ public class GpsLocationProvider implements LocationProviderInterface {
      * called from native code to update SV info
      */
     private void reportSvStatus() {
-        int svCount = native_read_sv_status(mSvs, mSnrs, mSvElevations, mSvAzimuths, mSvMasks);
+        int svCount = native_read_sv_status(mSvs, mSnrs, mSvElevations,
+                                            mSvAzimuths, mSvMasks, mGnssSvMasks);
         mListenerHelper.onSvStatusChanged(
                 svCount,
                 mSvs,
@@ -1476,20 +1479,44 @@ public class GpsLocationProvider implements LocationProviderInterface {
                 mSvAzimuths,
                 mSvMasks[EPHEMERIS_MASK],
                 mSvMasks[ALMANAC_MASK],
-                mSvMasks[USED_FOR_FIX_MASK]);
+                mSvMasks[USED_FOR_FIX_MASK],
+                mGnssSvMasks);
 
         if (VERBOSE) {
             Log.v(TAG, "SV count: " + svCount +
                     " ephemerisMask: " + Integer.toHexString(mSvMasks[EPHEMERIS_MASK]) +
                     " almanacMask: " + Integer.toHexString(mSvMasks[ALMANAC_MASK]));
             for (int i = 0; i < svCount; i++) {
-                Log.v(TAG, "sv: " + mSvs[i] +
-                        " snr: " + mSnrs[i]/10 +
-                        " elev: " + mSvElevations[i] +
-                        " azimuth: " + mSvAzimuths[i] +
-                        ((mSvMasks[EPHEMERIS_MASK] & (1 << (mSvs[i] - 1))) == 0 ? "  " : " E") +
-                        ((mSvMasks[ALMANAC_MASK] & (1 << (mSvs[i] - 1))) == 0 ? "  " : " A") +
-                        ((mSvMasks[USED_FOR_FIX_MASK] & (1 << (mSvs[i] - 1))) == 0 ? "" : "U"));
+                if(mSvs[i] <= GPS_SV_PRN_MAX)
+                {
+                    Log.v(TAG, "sv: " + mSvs[i] +
+                          " snr: " + mSnrs[i]/10 +
+                          " elev: " + mSvElevations[i] +
+                          " azimuth: " + mSvAzimuths[i] +
+                          ((mSvMasks[EPHEMERIS_MASK] & (1 << (mSvs[i] - 1))) == 0 ? "  " : " E") +
+                          ((mSvMasks[ALMANAC_MASK] & (1 << (mSvs[i] - 1))) == 0 ? "  " : " A") +
+                          ((mSvMasks[USED_FOR_FIX_MASK] & (1 << (mSvs[i] - 1))) == 0 ? "" : "U"));
+                } else if(mSvs[i] >= GLONASS_SV_PRN_MIN && mSvs[i] <= GLONASS_SV_PRN_MAX) {
+                    Log.v(TAG, "sv: " + mSvs[i] +
+                          " snr: " + mSnrs[i]/10 +
+                          " elev: " + mSvElevations[i] +
+                          " azimuth: " + mSvAzimuths[i] +
+                          ((mGnssSvMasks[GLONASS_USED_FOR_FIX_MASK] & (1 << (mSvs[i] - GLONASS_SV_PRN_MIN))) == 0 ? "" : "U"));
+
+                } else if(mSvs[i] >= BDS_SV_PRN_MIN && mSvs[i] <= BDS_SV_PRN_MAX) {
+                    Log.v(TAG, "sv: " + mSvs[i] +
+                          " snr: " + mSnrs[i]/10 +
+                          " elev: " + mSvElevations[i] +
+                          " azimuth: " + mSvAzimuths[i] +
+                          ((mGnssSvMasks[BDS_USED_FOR_FIX_MASK] & (1 << (mSvs[i] - BDS_SV_PRN_MIN))) == 0 ? "" : "U"));
+                }
+                else if(mSvs[i] >= GAL_SV_PRN_MIN && mSvs[i] <= GAL_SV_PRN_MAX) {
+                    Log.v(TAG, "sv: " + mSvs[i] +
+                          " snr: " + mSnrs[i]/10 +
+                          " elev: " + mSvElevations[i] +
+                          " azimuth: " + mSvAzimuths[i] +
+                          ((mGnssSvMasks[GAL_USED_FOR_FIX_MASK] & (1 << (mSvs[i] - GAL_SV_PRN_MIN))) == 0 ? "" : "U"));
+                }
             }
         }
 
@@ -2234,10 +2261,21 @@ public class GpsLocationProvider implements LocationProviderInterface {
     }
 
     // for GPS SV statistics
-    private static final int MAX_SVS = 32;
+
     private static final int EPHEMERIS_MASK = 0;
     private static final int ALMANAC_MASK = 1;
     private static final int USED_FOR_FIX_MASK = 2;
+    private static final int GLONASS_USED_FOR_FIX_MASK = 0;
+    private static final int BDS_USED_FOR_FIX_MASK = 1;
+    private static final int GAL_USED_FOR_FIX_MASK = 2;
+    private static final int GPS_SV_PRN_MIN = 1;
+    private static final int GPS_SV_PRN_MAX = 32;
+    private static final int GLONASS_SV_PRN_MIN = 65;
+    private static final int GLONASS_SV_PRN_MAX = 96;
+    private static final int BDS_SV_PRN_MIN = 201;
+    private static final int BDS_SV_PRN_MAX = 235;
+    private static final int GAL_SV_PRN_MIN = 301;
+    private static final int GAL_SV_PRN_MAX = 336;
 
     // preallocated arrays, to avoid memory allocation in reportStatus()
     private int mSvs[] = new int[MAX_SVS];
@@ -2245,6 +2283,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
     private float mSvElevations[] = new float[MAX_SVS];
     private float mSvAzimuths[] = new float[MAX_SVS];
     private int mSvMasks[] = new int[3];
+    private long mGnssSvMasks[] = new long[3];
     private int mSvCount;
     // preallocated to avoid memory allocation in reportNmea()
     private byte[] mNmeaBuffer = new byte[120];
@@ -2265,7 +2304,9 @@ public class GpsLocationProvider implements LocationProviderInterface {
     // returns number of SVs
     // mask[0] is ephemeris mask and mask[1] is almanac mask
     private native int native_read_sv_status(int[] svs, float[] snrs,
-            float[] elevations, float[] azimuths, int[] masks);
+                                             float[] elevations,
+                                             float[] azimuths, int[] masks,
+                                             long[] gnssMasks);
     private native int native_read_nmea(byte[] buffer, int bufferSize);
     private native void native_inject_location(double latitude, double longitude, float accuracy);
 

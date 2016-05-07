@@ -20,14 +20,31 @@ import android.util.SparseArray;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
+import android.util.Log;
 
 /**
  * This class represents the current state of the GPS engine.
  * This class is used in conjunction with the {@link Listener} interface.
  */
 public final class GpsStatus {
-    private static final int NUM_SATELLITES = 255;
+
+    private static final String TAG = "GpsStatus";
+
+    private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
+    private static final boolean VERBOSE = Log.isLoggable(TAG, Log.VERBOSE);
+
+    private static final int GPS_SV_PRN_MIN = 1;
+    private static final int GPS_SV_PRN_MAX = 32;
+    private static final int GLONASS_SV_PRN_MIN = 65;
+    private static final int GLONASS_SV_PRN_MAX = 96;
+    private static final int BDS_SV_PRN_MIN = 201;
+    private static final int BDS_SV_PRN_MAX = 235;
+    private static final int GAL_SV_PRN_MIN = 301;
+    private static final int GAL_SV_PRN_MAX = 336;
+    private static final int GLONASS_USED_FOR_FIX_MASK = 0;
+    private static final int BDS_USED_FOR_FIX_MASK = 1;
+    private static final int GAL_USED_FOR_FIX_MASK = 2;
+    private static final int NUM_SATELLITES = GAL_SV_PRN_MAX;
 
     /* These package private values are modified by the LocationManager class */
     private int mTimeToFirstFix;
@@ -143,12 +160,14 @@ public final class GpsStatus {
      * Is synchronized to ensure that GPS status updates are atomic.
      */
     synchronized void setStatus(int svCount, int[] prns, float[] snrs,
-            float[] elevations, float[] azimuths, int ephemerisMask,
-            int almanacMask, int usedInFixMask) {
+                                float[] elevations, float[] azimuths,
+                                int ephemerisMask, int almanacMask,
+                                int usedInFixMask, long[] gnssUsedInFixMask) {
         clearSatellites();
+        Log.v(TAG, "Received SV Status Update: SV count: " + svCount);
+        Log.v(TAG, "Svids: ");
         for (int i = 0; i < svCount; i++) {
             int prn = prns[i];
-            int prnShift = (1 << (prn - 1));
             if (prn > 0 && prn <= NUM_SATELLITES) {
                 GpsSatellite satellite = mSatellites.get(prn);
                 if (satellite == null) {
@@ -160,9 +179,24 @@ public final class GpsStatus {
                 satellite.mSnr = snrs[i];
                 satellite.mElevation = elevations[i];
                 satellite.mAzimuth = azimuths[i];
-                satellite.mHasEphemeris = ((ephemerisMask & prnShift) != 0);
-                satellite.mHasAlmanac = ((almanacMask & prnShift) != 0);
-                satellite.mUsedInFix = ((usedInFixMask & prnShift) != 0);
+
+                if(prn <= GPS_SV_PRN_MAX) {
+                    int prnShift = (1 << (prn - GPS_SV_PRN_MIN));
+                    satellite.mHasEphemeris = ((ephemerisMask & prnShift) != 0);
+                    satellite.mHasAlmanac = ((almanacMask & prnShift) != 0);
+                    satellite.mUsedInFix = ((usedInFixMask & prnShift) != 0);
+                } else if(prn >= GLONASS_SV_PRN_MIN && prn <= GLONASS_SV_PRN_MAX) {
+                    int prnShift = (1 << (prn - (GLONASS_SV_PRN_MIN)));
+                    satellite.mUsedInFix = ((gnssUsedInFixMask[GLONASS_USED_FOR_FIX_MASK] & prnShift) != 0);
+                } else if(prn >= BDS_SV_PRN_MIN && prn <= BDS_SV_PRN_MAX) {
+                    int prnShift = (1 << (prn - (BDS_SV_PRN_MIN)));
+                    satellite.mUsedInFix = ((gnssUsedInFixMask[BDS_USED_FOR_FIX_MASK] & prnShift) != 0);
+                }
+                else if(prn >= GAL_SV_PRN_MIN && prn <= GAL_SV_PRN_MAX) {
+                    int prnShift = (1 << (prn - (GAL_SV_PRN_MIN)));
+                    satellite.mUsedInFix = ((gnssUsedInFixMask[GAL_USED_FOR_FIX_MASK] & prnShift) != 0);
+                }
+                Log.v(TAG, prn + ",");
             }
         }
     }

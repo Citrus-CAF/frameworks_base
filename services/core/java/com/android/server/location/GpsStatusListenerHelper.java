@@ -80,7 +80,8 @@ abstract class GpsStatusListenerHelper extends RemoteListenerHelper<IGpsStatusLi
             final float[] azimuths,
             final int ephemerisMask,
             final int almanacMask,
-            final int usedInFixMask) {
+            final int usedInFixMask,
+            final long[] gnssUsedInFixMask) {
         Operation operation = new Operation() {
             @Override
             public void execute(IGpsStatusListener listener) throws RemoteException {
@@ -92,7 +93,8 @@ abstract class GpsStatusListenerHelper extends RemoteListenerHelper<IGpsStatusLi
                         azimuths,
                         ephemerisMask,
                         almanacMask,
-                        usedInFixMask);
+                        usedInFixMask,
+                        gnssUsedInFixMask);
             }
         };
         foreach(operation);

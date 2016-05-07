@@ -1464,11 +1464,14 @@ public class LocationManager {
 
         @Override
         public void onSvStatusChanged(int svCount, int[] prns, float[] snrs,
-                float[] elevations, float[] azimuths, int ephemerisMask,
-                int almanacMask, int usedInFixMask) {
+                                      float[] elevations, float[] azimuths,
+                                      int ephemerisMask, int almanacMask,
+                                      int usedInFixMask,
+                                      long[] gnssUsedInFixMask) {
             if (mListener != null) {
                 mGpsStatus.setStatus(svCount, prns, snrs, elevations, azimuths,
-                        ephemerisMask, almanacMask, usedInFixMask);
+                                     ephemerisMask, almanacMask,
+                                     usedInFixMask, gnssUsedInFixMask);
 
                 Message msg = Message.obtain();
                 msg.what = GpsStatus.GPS_EVENT_SATELLITE_STATUS;
