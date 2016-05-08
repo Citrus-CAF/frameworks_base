@@ -50,4 +50,6 @@
    <!-- Screenrecord -->
   <java-symbol type="bool" name="config_enableScreenrecordChord" />
 
+  <!--Exposed Java styles for power menu -->
+  <java-symbol type="style" name="Theme.Power.Dialog" />
 </resources>
