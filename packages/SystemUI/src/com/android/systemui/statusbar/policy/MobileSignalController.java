@@ -668,7 +668,7 @@ public class MobileSignalController extends SignalController<
         }
 
         if (mStyle == STATUS_BAR_STYLE_EXTENDED) {
-            mCurrentState.imsRadioTechnology = mServiceState.getRilImsRadioTechnology();
+            mCurrentState.imsRadioTechnology = getImsRadioTechnology();
         }
 
         notifyListenersIfNecessary();
@@ -830,6 +830,13 @@ public class MobileSignalController extends SignalController<
             return TelephonyManager.NETWORK_TYPE_UNKNOWN;
         }
         return mServiceState.getDataNetworkType();
+    }
+
+    private int getImsRadioTechnology() {
+        if (mServiceState == null) {
+            return ServiceState.RIL_RADIO_TECHNOLOGY_UNKNOWN;
+        }
+        return mServiceState.getRilImsRadioTechnology();
     }
 
     private int getVoiceSignalLevel() {
