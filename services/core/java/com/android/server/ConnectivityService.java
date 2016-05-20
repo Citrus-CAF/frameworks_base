@@ -93,6 +93,7 @@ import android.os.UserManager;
 import android.provider.Settings;
 import android.security.Credentials;
 import android.security.KeyStore;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.LocalLog;
@@ -3339,7 +3340,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         title = r.getString(R.string.network_available_sign_in, 0);
                         // TODO: Change this to pull from NetworkInfo once a printable
                         // name has been added to it
-                        details = mTelephonyManager.getNetworkOperatorName();
+                        details = mTelephonyManager.getNetworkOperatorName(
+                             SubscriptionManager.getDefaultDataSubId());
                         icon = R.drawable.stat_notify_rssi_in_range;
                         break;
                     default:
