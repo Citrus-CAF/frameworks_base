@@ -382,4 +382,5 @@
         <item quantity="other">Enter SIM<xliff:g id="subid">%d</xliff:g> PIN, you have <xliff:g id="number">%d</xliff:g> remaining attempts.</item>
     </plurals>
 
+    <string name="button_lockscreen_emergency_call">Emergency call</string>
 </resources>

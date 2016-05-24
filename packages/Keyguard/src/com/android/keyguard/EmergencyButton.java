@@ -31,6 +31,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.android.internal.logging.MetricsLogger;
+import com.android.internal.telephony.CarrierAppUtils;
 import com.android.internal.telephony.IccCardConstants.State;
 import com.android.internal.widget.LockPatternUtils;
 
@@ -76,6 +77,8 @@ public class EmergencyButton extends Button {
 
     private final boolean mIsVoiceCapable;
     private final boolean mEnableEmergencyCallWhileSimLocked;
+    private static final CarrierAppUtils.CARRIER mCarrier = CarrierAppUtils.getCarrierId();
+    private final boolean mIsCarrierSupported;
 
     public EmergencyButton(Context context) {
         this(context, null);
@@ -83,6 +86,8 @@ public class EmergencyButton extends Button {
 
     public EmergencyButton(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mIsCarrierSupported = (mCarrier != null && (CarrierAppUtils.CARRIER.TELEPHONY_CARRIER_ONE
+                 == mCarrier));
         mIsVoiceCapable = context.getResources().getBoolean(
                 com.android.internal.R.bool.config_voice_capable);
         mEnableEmergencyCallWhileSimLocked = mContext.getResources().getBoolean(
@@ -173,7 +178,12 @@ public class EmergencyButton extends Button {
             if (isInCall()) {
                 textId = com.android.internal.R.string.lockscreen_return_to_call;
             } else {
-                textId = com.android.internal.R.string.lockscreen_emergency_call;
+                if (mIsCarrierSupported) {
+                    // Text "Emergency call"
+                    textId = R.string.button_lockscreen_emergency_call;
+                } else {
+                    textId = com.android.internal.R.string.lockscreen_emergency_call;
+                }
             }
             setText(textId);
         } else {
