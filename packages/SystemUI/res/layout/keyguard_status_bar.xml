@@ -60,7 +60,7 @@
             android:paddingEnd="@dimen/battery_level_padding_end"
             android:textAppearance="@style/TextAppearance.StatusBar.Clock"
             android:visibility="gone"
-            android:textSize="@dimen/battery_level_text_size"
+            android:textSize="@dimen/status_bar_clock_size"
             android:importantForAccessibility="noHideDescendants"/>
     </LinearLayout>
 
