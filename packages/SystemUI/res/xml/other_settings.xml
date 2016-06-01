@@ -28,5 +28,5 @@
             android:key="demo_mode"
             android:title="@string/demo_mode"
             android:fragment="com.android.systemui.tuner.DemoModeFragment" />
-
+            
 </PreferenceScreen>
