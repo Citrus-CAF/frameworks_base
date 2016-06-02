@@ -93,8 +93,8 @@ public:
     virtual ~AssetManager(void);
 
     static int32_t getGlobalCount();
-    
-    /*                                                                       
+
+    /*
      * Add a new source for assets.  This can be called multiple times to
      * look in multiple places for assets.  It can be either a directory (for
      * finding assets as raw files on the disk) or a ZIP file.  This newly
@@ -209,7 +209,7 @@ public:
      */
     FileType getFileType(const char* fileName);
 
-    /*                                                                       
+    /*
      * Return the complete resource table to find things in the package.
      */
     const ResTable& getResources(bool required = true) const;
@@ -244,12 +244,10 @@ public:
 private:
     struct asset_path
     {
-        asset_path() : path(""), type(kFileTypeRegular), idmap(""),
-                       isSystemOverlay(false), isSystemAsset(false) {}
+        asset_path() : path(""), type(kFileTypeRegular), idmap(""), isSystemAsset(false) {}
         String8 path;
         FileType type;
         String8 idmap;
-        bool isSystemOverlay;
         bool isSystemAsset;
     };
 
@@ -294,9 +292,6 @@ private:
 
     Asset* openIdmapLocked(const struct asset_path& ap) const;
 
-    void addSystemOverlays(const char* pathOverlaysList, const String8& targetPackagePath,
-            ResTable* sharedRes, size_t offset) const;
-
     class SharedZip : public RefBase {
     public:
         static sp<SharedZip> get(const String8& path, bool createIfNotPresent = true);
@@ -308,12 +303,9 @@ private:
 
         ResTable* getResourceTable();
         ResTable* setResourceTable(ResTable* res);
-        
+
         bool isUpToDate();
 
-        void addOverlay(const asset_path& ap);
-        bool getOverlay(size_t idx, asset_path* out) const;
-        
     protected:
         ~SharedZip();
 
@@ -327,8 +319,6 @@ private:
 
         Asset* mResourceTableAsset;
         ResTable* mResourceTable;
-
-        Vector<asset_path> mOverlays;
 
         static Mutex gLock;
         static DefaultKeyedVector<String8, wp<SharedZip> > gOpen;
@@ -363,8 +353,6 @@ private:
 
         bool isUpToDate();
 
-        void addOverlay(const String8& path, const asset_path& overlay);
-        bool getOverlay(const String8& path, size_t idx, asset_path* out) const;
         void closeZipFromPath(const String8& zip);
     private:
         void closeZip(int idx);
