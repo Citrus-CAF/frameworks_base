@@ -113,7 +113,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|start"
                 android:textAppearance="@style/TextAppearance.StatusBar.Clock"
-                android:layout_marginStart="@dimen/header_battery_margin_keyguard" />
+                android:layout_marginStart="3dp" />
 
             <com.android.systemui.statusbar.policy.Clock
                 android:id="@+id/clock"
@@ -121,7 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:singleLine="true"
-                android:paddingStart="@dimen/header_battery_margin_keyguard"
+                android:paddingStart="3dp"
                 android:gravity="center_vertical|start"
                 />
         </com.android.keyguard.AlphaOptimizedLinearLayout>
