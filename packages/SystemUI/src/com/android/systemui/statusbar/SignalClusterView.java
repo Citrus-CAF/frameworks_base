@@ -24,6 +24,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.ArraySet;
 import android.util.AttributeSet;
@@ -289,6 +290,17 @@ public class SignalClusterView
         apply();
     }
 
+    private boolean getImsOverWifiStatus(int subId) {
+        TelephonyManager tm =
+                (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        if (tm != null
+                && (tm.isVoWifiCallingAvailableUsingSubId(subId)
+                || tm.isVideoTelephonyWifiCallingAvailableUsingSubId(subId))) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void setSubs(List<SubscriptionInfo> subs) {
         if (hasCorrectSubs(subs)) {
@@ -300,9 +312,12 @@ public class SignalClusterView
             mMobileSignalGroup.removeAllViews();
         }
         final int n = subs.size();
+        boolean imsOverWiFi = false;
         for (int i = 0; i < n; i++) {
             inflatePhoneState(subs.get(i).getSubscriptionId());
+            imsOverWiFi |= getImsOverWifiStatus(subs.get(i).getSubscriptionId());
         }
+        mImsOverWifi = imsOverWiFi;
         if (isAttachedToWindow()) {
             applyIconTint();
         }
