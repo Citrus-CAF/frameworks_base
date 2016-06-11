@@ -73,6 +73,7 @@ public class BatteryMeterView extends View implements DemoMode,
     private final int mCriticalLevel;
 
     private boolean mAnimationsEnabled;
+    private boolean mChargingAnimationsEnabled;
 
     private BatteryController mBatteryController;
     private boolean mPowerSaveEnabled;
@@ -293,7 +294,17 @@ public class BatteryMeterView extends View implements DemoMode,
     public void setAnimationsEnabled(boolean enabled) {
         if (mAnimationsEnabled != enabled) {
             mAnimationsEnabled = enabled;
-            setLayerType(mAnimationsEnabled ? LAYER_TYPE_HARDWARE : LAYER_TYPE_NONE, null);
+            setLayerType(mAnimationsEnabled || mChargingAnimationsEnabled ?
+                    LAYER_TYPE_HARDWARE : LAYER_TYPE_NONE, null);
+            invalidate();
+        }
+    }
+
+    public void setChargingAnimationsEnabled(boolean enabled) {
+        if (mChargingAnimationsEnabled != enabled) {
+            mChargingAnimationsEnabled = enabled;
+            setLayerType(mAnimationsEnabled || mChargingAnimationsEnabled ?
+                    LAYER_TYPE_HARDWARE : LAYER_TYPE_NONE, null);
             invalidate();
         }
     }
@@ -473,11 +484,15 @@ public class BatteryMeterView extends View implements DemoMode,
         private BatteryMeterMode mMode;
         private int mTextGravity;
 
+        private int mLevelAlpha;
         private ValueAnimator mAnimator;
+
+        private boolean mThemeApplied;
 
         public AllInOneBatteryMeterDrawable(Resources res, BatteryMeterMode mode) {
             super();
 
+            mThemeApplied = isThemeApplied();
             loadBatteryDrawables(res, mode);
 
             mMode = mode;
@@ -529,37 +544,61 @@ public class BatteryMeterView extends View implements DemoMode,
             if (mAnimationsEnabled) {
                 // TODO: Allow custom animations to be used
             }
+            if (mChargingAnimationsEnabled && !mThemeApplied) {
+                if (tracker.level < 100 && tracker.plugged) {
+                    startChargingAnimation(true);
+                } else {
+                    cancelChargingAnimation();
+                }
+            }
         }
 
         @Override
         public void onBatteryLevelChanged(int level, boolean pluggedIn, boolean charging) {
-            if (charging && !isThemeApplied()) {
-                if (mAnimator != null) mAnimator.cancel();
+            if (charging && !mThemeApplied && !mChargingAnimationsEnabled) {
+                startChargingAnimation(false);
+            }
+        }
 
-                final int defaultAlpha = mLevelDrawable.getAlpha();
-                mAnimator = ValueAnimator.ofInt(defaultAlpha, 0, defaultAlpha);
-                mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        mLevelDrawable.setAlpha((int) animation.getAnimatedValue());
+        private void startChargingAnimation(final boolean invalidate) {
+            if (mLevelAlpha == 0 || mAnimator != null) return;
+
+            final int defaultAlpha = mLevelAlpha;
+            mAnimator = ValueAnimator.ofInt(defaultAlpha, 0, defaultAlpha);
+            mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    mLevelDrawable.setAlpha((int) animation.getAnimatedValue());
+                    invalidate();
+                }
+            });
+            mAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    mLevelDrawable.setAlpha(defaultAlpha);
+                    mAnimator = null;
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mLevelDrawable.setAlpha(defaultAlpha);
+                    mAnimator = null;
+                    if (invalidate) {
                         invalidate();
                     }
-                });
-                mAnimator.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-                        mLevelDrawable.setAlpha(defaultAlpha);
-                        mAnimator = null;
-                    }
+                }
+            });
+            mAnimator.setDuration(2000);
+            if (invalidate) {
+                mAnimator.setStartDelay(500);
+            }
+            mAnimator.start();
+        }
 
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        mLevelDrawable.setAlpha(defaultAlpha);
-                        mAnimator = null;
-                    }
-                });
-                mAnimator.setDuration(2000);
-                mAnimator.start();
+        private void cancelChargingAnimation() {
+            if (mAnimator != null) {
+                mAnimator.cancel();
+                mAnimator = null;
             }
         }
 
@@ -634,7 +673,7 @@ public class BatteryMeterView extends View implements DemoMode,
         }
 
         private void loadBatteryDrawables(Resources res, BatteryMeterMode mode) {
-            if (isThemeApplied()) {
+            if (mThemeApplied) {
                 try {
                     checkBatteryMeterDrawableValid(res, mode);
                 } catch (BatteryMeterDrawableException e) {
@@ -688,8 +727,10 @@ public class BatteryMeterView extends View implements DemoMode,
 
             // Now draw the level indicator
             // set the level and tint color of the fill drawable
+            int levelColor = getColorForLevel(level);
+            mLevelAlpha = Color.alpha(levelColor);
             mLevelDrawable.setCurrentFraction(level / 100f);
-            mLevelDrawable.setTint(getColorForLevel(level));
+            mLevelDrawable.setTint(levelColor);
             mBatteryDrawable.draw(canvas);
 
             // if chosen by options, draw percentage text in the middle

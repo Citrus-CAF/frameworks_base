@@ -19,7 +19,12 @@
 
     <item
         android:id="@+id/battery_frame"
-        android:drawable="@drawable/ic_battery_circle_frame"/>
+        android:top="1.5dp"
+        android:bottom="1.5dp"
+        android:start="1.5dp"
+        android:end="1.5dp">
+        <shape android:shape="oval"/>
+    </item>
 
     <item
         android:id="@+id/battery_fill"
