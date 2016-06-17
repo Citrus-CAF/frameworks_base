@@ -565,7 +565,7 @@ public class ThemeService extends IThemeService.Stub {
     }
 
     private boolean updateBootAnim(String pkgName) {
-        if (SYSTEM_DEFAULT.equals(pkgName)) {
+        if (TextUtils.isEmpty(pkgName) || SYSTEM_DEFAULT.equals(pkgName)) {
             clearBootAnimation();
             return true;
         }
