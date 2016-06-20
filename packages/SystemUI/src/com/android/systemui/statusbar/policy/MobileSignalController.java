@@ -371,8 +371,9 @@ public class MobileSignalController extends SignalController<
     }
 
     private int getImsIconId() {
-        if (mStyle != STATUS_BAR_STYLE_EXTENDED
-                || isRoaming()) {
+        if (mStyle != STATUS_BAR_STYLE_EXTENDED || mServiceState == null ||
+                (mServiceState.getVoiceRegState() != ServiceState.STATE_IN_SERVICE) ||
+                isRoaming()) {
             return 0;
         }
 
@@ -833,7 +834,8 @@ public class MobileSignalController extends SignalController<
     }
 
     private int getImsRadioTechnology() {
-        if (mServiceState == null) {
+        if (mServiceState == null || (mServiceState.getVoiceRegState() !=
+                ServiceState.STATE_IN_SERVICE) || isRoaming()) {
             return ServiceState.RIL_RADIO_TECHNOLOGY_UNKNOWN;
         }
         return mServiceState.getRilImsRadioTechnology();
