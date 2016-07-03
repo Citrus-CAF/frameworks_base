@@ -744,6 +744,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mCurrentTheme = (ThemeConfig)currentTheme.clone();
         } else {
             mCurrentTheme = ThemeConfig.getBootTheme(mContext.getContentResolver());
+        }
 
         // let's move it here and get it fired up nice and early and far away from statusbar recreation
         if (mNavigationController == null) {
@@ -1015,22 +1016,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mNetworkController.addEmergencyListener(mHeader);
         }
 
-        mCarrierLabel = (TextView)mStatusBarWindow.findViewById(R.id.carrier_label);
-        final boolean showCarrierLabel = mContext.getResources().getBoolean(
-                R.bool.config_showCarrierLabel);
-        mShowCarrierInPanel = showCarrierLabel && (mCarrierLabel != null);
-        if (DEBUG) Log.v(TAG, "carrierlabel=" + mCarrierLabel + " show=" + mShowCarrierInPanel);
-        if (mShowCarrierInPanel) {
-            mCarrierLabel.setVisibility(mShowCarrierInPanel ? View.VISIBLE : View.INVISIBLE);
-        }
-
         // make sure carrier label is not covered by navigation bar
         if (mCarrierLabel != null && mNavigationBarView != null) {
-            MarginLayoutParams mlp = (MarginLayoutParams) mCarrierLabel.getLayoutParams();
-            if (mlp != null && mlp.bottomMargin < mNavigationBarView.mBarSize) {
-                mlp.bottomMargin = mNavigationBarView.mBarSize;
-                mCarrierLabel.setLayoutParams(mlp);
-            }
+        Resources navRes = mContext.getResources();
+           int mBarSize = navRes.getDimensionPixelSize(R.dimen.navigation_bar_size);
+               MarginLayoutParams mlp = (MarginLayoutParams) mCarrierLabel.getLayoutParams();
+                   if (mlp != null && mlp.bottomMargin < mBarSize) {
+                   mlp.bottomMargin = mBarSize;
+                   mCarrierLabel.setLayoutParams(mlp);
+               }
         }
         mFlashlightController = new FlashlightController(mContext);
         mKeyguardBottomArea.setFlashlightController(mFlashlightController);
@@ -1314,17 +1308,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         return lp;
     }
 
+     private Resources getNavbarThemedResources() { 
         String pkgName = mCurrentTheme.getOverlayForNavBar();
-        Resources res = null;
+        Resources res = mContext.getResources();
         try {
             res = mContext.getPackageManager().getThemedResourcesForApplication(
                     mContext.getPackageName(), pkgName);
         } catch (PackageManager.NameNotFoundException e) {
             res = mContext.getResources();
         }
-
-    private Resources getNavbarThemedResources() {
-        Resources res = mContext.getResources();
 
         return res;
     }
@@ -3373,12 +3365,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (mNotificationPanel != null) {
             mNotificationPanel.updateResources();
         }
+
         if (mBrightnessMirrorController != null) {
             mBrightnessMirrorController.updateResources();
-        }
-
-        if (mNavigationBarView != null && updateNavBar)  {
-            mNavigationBarView.updateResources(getNavbarThemedResources());
         }
 
         if (mNavigationBarView != null)  {
