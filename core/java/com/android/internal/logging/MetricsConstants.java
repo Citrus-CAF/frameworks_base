@@ -265,6 +265,13 @@ public interface MetricsConstants {
     public static final int FUELGAUGE_INACTIVE_APPS = 238; 
     public static final int QS_NAVBAR_TOGGLE = 239;
 
+    // Citrus-CAF
+    public static final int CITRUS_SETTINGS = 240;
+  
+    // Notifcation and battery settings
+    public static final int NOTIFICATION_LIGHT_SETTINGS = 241;
+    public static final int BATTERY_LIGHT_SETTINGS = 242;
+
     // These constants must match those in the analytic pipeline, do not edit.
     // Add temporary values to the top of MetricsLogger instead.
 
