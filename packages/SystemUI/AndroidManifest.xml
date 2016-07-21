@@ -226,14 +226,8 @@
                   android:theme="@android:style/Theme.Material.Settings"
                   android:label="@string/systemui_tuner_qs_title"
                   android:process=":tuner"
-                  android:parentActivityName="com.dirtyunicorns.dutweaks.DirtyTweaks"
+                  android:parentActivityName="com.citrus.settings.CitrusSettings"
                   android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <meta-data android:name="com.android.settings.category"
-                    android:value="com.android.settings.category.system" />
         </activity>
 
         <activity android:name=".tuner.TunerActivity"
@@ -242,12 +236,6 @@
                   android:label="@string/systemui_tuner_statusbar_title"
                   android:process=":tuner"
                   android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <meta-data android:name="com.android.settings.category"
-                    android:value="com.android.settings.category.system" />
         </activity>
 
         <!-- Alternate Recents -->
