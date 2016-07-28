@@ -35,4 +35,15 @@
     <color name="choose_account_type_background_color">#323232</color>
     <color name="alert_dialog_micro_background_color">@android:color/white</color>
     <color name="lockscreen_middle_button_tint_color">#666666</color>
+
+    <color name="citrus_green">#7CB342</color>
+
+    <!-- Boot dexopt layout -->
+    <color name="dexopt_background">@color/black</color>
+    <color name="dexopt_bottom">#212121</color>
+    <color name="dexopt_text_primary">#deffffff</color>
+    <color name="dexopt_text_secondary">#8affffff</color>
+    <color name="dexopt_logo">#212121</color>
+    <color name="dexopt_device_bg">@color/citrus_green</color>
+    <color name="dexopt_obscured_bg">#455a64</color>
 </resources>
