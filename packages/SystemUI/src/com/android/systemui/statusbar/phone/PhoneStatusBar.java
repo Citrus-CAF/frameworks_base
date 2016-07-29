@@ -265,9 +265,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     public static final int FADE_KEYGUARD_START_DELAY = 100;
     public static final int FADE_KEYGUARD_DURATION = 300;
-
-    public static final int FADE_KEYGUARD_START_DELAY = 50;
-    public static final int FADE_KEYGUARD_DURATION = 150;
     public static final int FADE_KEYGUARD_DURATION_PULSING = 96;
 
     private static final float BRIGHTNESS_CONTROL_PADDING = 0.15f;
