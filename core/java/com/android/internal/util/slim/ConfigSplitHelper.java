@@ -16,6 +16,8 @@
 
 package com.android.internal.util.slim;
 
+import com.android.internal.util.du.AppHelper;
+
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;

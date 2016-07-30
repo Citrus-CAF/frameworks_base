@@ -16,6 +16,7 @@
 
 package com.android.internal.util.slim;
 
+import com.android.internal.util.du.ImageHelper;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
