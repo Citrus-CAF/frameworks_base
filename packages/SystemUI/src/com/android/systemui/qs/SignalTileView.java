@@ -66,7 +66,9 @@ public final class SignalTileView extends QSTileView {
         mSignal = new ImageView(mContext);
         mIconFrame.addView(mSignal);
         mOverlay = new ImageView(mContext);
-        if (getContext().getResources().getBoolean(R.bool.show_roaming_and_network_icons)) {
+
+        if (getContext().getResources().getBoolean(R.bool.show_roaming_and_network_icons)
+                || mStyle == STATUS_BAR_STYLE_EXTENDED) {
             mRoaming = new ImageView(mContext);
             mRoaming.setImageResource(R.drawable.ic_qs_signal_r);
             mRoaming.setVisibility(View.GONE);
@@ -136,10 +138,13 @@ public final class SignalTileView extends QSTileView {
         final boolean shown = isShown();
         setVisibility(mIn, shown, s.activityIn);
         setVisibility(mOut, shown, s.activityOut);
-        if (getContext().getResources().getBoolean(R.bool.show_roaming_and_network_icons)) {
-            TelephonyManager tm =
-                    (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-            mRoaming.setVisibility(tm.isNetworkRoaming()? View.VISIBLE : View.GONE);
+        if ((mRoaming != null)
+                && (getContext().getResources().getBoolean(R.bool.show_roaming_and_network_icons)
+                        || mStyle == STATUS_BAR_STYLE_EXTENDED)) {
+            TelephonyManager tm = (TelephonyManager) mContext
+                    .getSystemService(Context.TELEPHONY_SERVICE);
+            mRoaming.setVisibility(
+                    tm.isNetworkRoaming(s.subId) && s.isShowRoaming ? View.VISIBLE : View.GONE);
         }
     }
 

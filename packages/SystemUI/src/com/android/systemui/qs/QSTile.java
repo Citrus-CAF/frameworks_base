@@ -500,6 +500,8 @@ public abstract class QSTile<TState extends State> implements Listenable {
         public int overlayIconId;
         public boolean filter;
         public boolean isOverlayIconWide;
+        public boolean isShowRoaming;
+        public int subId;
 
         @Override
         public boolean copyTo(State other) {
@@ -508,7 +510,9 @@ public abstract class QSTile<TState extends State> implements Listenable {
                     || o.connected != connected || o.activityIn != activityIn
                     || o.activityOut != activityOut
                     || o.overlayIconId != overlayIconId
-                    || o.isOverlayIconWide != isOverlayIconWide;
+                    || o.isOverlayIconWide != isOverlayIconWide
+                    || o.isShowRoaming != isShowRoaming
+                    || o.subId != subId;
             o.enabled = enabled;
             o.connected = connected;
             o.activityIn = activityIn;
@@ -516,6 +520,8 @@ public abstract class QSTile<TState extends State> implements Listenable {
             o.overlayIconId = overlayIconId;
             o.filter = filter;
             o.isOverlayIconWide = isOverlayIconWide;
+            o.isShowRoaming = isShowRoaming;
+            o.subId = subId;
             return super.copyTo(other) || changed;
         }
 
@@ -529,6 +535,9 @@ public abstract class QSTile<TState extends State> implements Listenable {
             rt.insert(rt.length() - 1, ",overlayIconId=" + overlayIconId);
             rt.insert(rt.length() - 1, ",filter=" + filter);
             rt.insert(rt.length() - 1, ",wideOverlayIcon=" + isOverlayIconWide);
+            rt.insert(rt.length() - 1, ",isShowRoaming=" + isShowRoaming);
+            rt.insert(rt.length() - 1, ",subId=" + subId);
+
             return rt;
         }
     }

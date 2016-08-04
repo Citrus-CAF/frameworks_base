@@ -36,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
+import com.android.internal.telephony.CarrierAppUtils;
 import com.android.systemui.FontSizeUtils;
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile.AnimationIcon;
@@ -68,10 +69,21 @@ public class QSTileView extends ViewGroup {
     private Drawable mTileBackground;
     private RippleDrawable mRipple;
 
+    private final int STATUS_BAR_STYLE_ANDROID_DEFAULT = 0;
+    protected final int STATUS_BAR_STYLE_EXTENDED = 4;
+
+    protected int mStyle = STATUS_BAR_STYLE_ANDROID_DEFAULT;
+
     public QSTileView(Context context) {
         super(context);
 
         mContext = context;
+        CarrierAppUtils.CARRIER carrier = CarrierAppUtils.getCarrierId();
+        if (carrier != null && (CarrierAppUtils.CARRIER.TELEPHONY_CARRIER_ONE == carrier)) {
+            mStyle = mContext.getResources().getInteger(R.integer.status_bar_style_extended);
+        } else {
+            mStyle = mContext.getResources().getInteger(R.integer.status_bar_style);
+        }
         final Resources res = context.getResources();
         mIconSizePx = res.getDimensionPixelSize(R.dimen.qs_tile_icon_size);
         mTileSpacingPx = res.getDimensionPixelSize(R.dimen.qs_tile_spacing);
