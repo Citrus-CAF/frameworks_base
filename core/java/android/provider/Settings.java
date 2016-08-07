@@ -6982,6 +6982,12 @@ public final class Settings {
                 "camera_double_twist_to_flip_enabled";
 
         /**
+         * Disable hw buttons - actions, brightness, haptic feedback, overflow menu
+         * @hide
+         */
+        public static final String HARDWARE_KEYS_DISABLE = "hardware_keys_disable";
+
+        /**
          * Control whether Night display is currently activated.
          * @hide
          */
