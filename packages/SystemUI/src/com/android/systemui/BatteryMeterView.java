@@ -243,7 +243,8 @@ public class BatteryMeterView extends View implements DemoMode,
     }
 
     private void updateShowPercent() {
-        mShowPercent = mContext.getResources().getBoolean(R.bool.config_showBatteryPercentage);
+        mShowPercent = 0 != Settings.System.getInt(getContext().getContentResolver(),
+                SHOW_PERCENT_SETTING, 0);
     }
 
     private int getColorForLevel(int percent) {
