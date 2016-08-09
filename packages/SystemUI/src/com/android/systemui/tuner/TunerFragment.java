@@ -43,9 +43,13 @@ public class TunerFragment extends PreferenceFragment {
 
     private static final String STATUS_BAR_CITRUS_LOGO = "status_bar_citrus_logo";
 
+    private static final String BLUETOOTH_SHOW_BATTERY = "bluetooth_show_battery";
+
     private SwitchPreference mCitrusLogo;
 
     private static final String SHOW_LTE_FOURGEE = "show_lte_fourgee";
+
+    private SwitchPreference mBluetoothBattery;
 
     private SwitchPreference mShowLteFourGee;
 
@@ -68,6 +72,11 @@ public class TunerFragment extends PreferenceFragment {
         mShowLteFourGee.setChecked((Settings.System.getInt(resolver,
                 Settings.System.SHOW_LTE_FOURGEE, 0) == 1));
         }
+
+        mBluetoothBattery = (SwitchPreference) findPreference(BLUETOOTH_SHOW_BATTERY);
+        mBluetoothBattery.setChecked((Settings.System.getInt(resolver,
+                Settings.System.BLUETOOTH_SHOW_BATTERY, 0) == 1));
+
     }
 
     @Override
@@ -122,7 +131,12 @@ public class TunerFragment extends PreferenceFragment {
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.SHOW_LTE_FOURGEE, checked ? 1:0);
             return true;
-          }
+        } else if  (preference == mBluetoothBattery) {
+            boolean checked = ((SwitchPreference)preference).isChecked();
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.BLUETOOTH_SHOW_BATTERY, checked ? 1:0);
+            return true;
+        }
         return super.onPreferenceTreeClick(preference);
     }
 }
