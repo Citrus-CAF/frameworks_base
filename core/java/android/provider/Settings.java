@@ -6680,6 +6680,13 @@ public final class Settings {
         public static final String ADB_PORT = "adb_port";
 
         /**
+         * width of Fling trails stroke, in density pixels
+         *
+         * @hide
+         */
+        public static final String FLING_TRAILS_WIDTH = "fling_trails_width";
+
+        /**
          * Navbar buttons transparency
          * @hide
          */
