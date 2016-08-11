@@ -103,8 +103,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="false"
-            tools:progress="10"
-	    android:progressTint="@color/dexopt_progressTint"
-	    android:progressBackgroundTint="@color/dexopt_progressBackgroundTint" />
+            tools:progress="10" />
     </LinearLayout>
 </LinearLayout>
