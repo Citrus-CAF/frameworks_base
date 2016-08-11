@@ -36,7 +36,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.CompatibilityInfo;
@@ -137,7 +136,6 @@ import com.android.internal.view.RotationPolicy;
 import com.android.internal.widget.PointerLocationView;
 import com.android.server.GestureLauncherService;
 import com.android.server.LocalServices;
-import org.broken.internal.BootDexoptDialog;
 import com.android.server.policy.keyguard.KeyguardServiceDelegate;
 import com.android.server.policy.keyguard.KeyguardServiceDelegate.DrawnListener;
 
@@ -309,7 +307,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private final Object mLock = new Object();
 
     Context mContext;
-    WindowManager mWm;
     IWindowManager mWindowManager;
     WindowManagerFuncs mWindowManagerFuncs;
     WindowManagerInternal mWindowManagerInternal;
@@ -1680,7 +1677,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     public void init(Context context, IWindowManager windowManager,
             WindowManagerFuncs windowManagerFuncs) {
         mContext = context;
-        mWm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         mWindowManager = windowManager;
         mWindowManagerFuncs = windowManagerFuncs;
         mWindowManagerInternal = LocalServices.getService(WindowManagerInternal.class);
@@ -2347,8 +2343,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
             lp.format = PixelFormat.TRANSLUCENT;
             lp.setTitle("PointerLocation");
+            WindowManager wm = (WindowManager)
+                    mContext.getSystemService(Context.WINDOW_SERVICE);
             lp.inputFeatures |= WindowManager.LayoutParams.INPUT_FEATURE_NO_INPUT_CHANNEL;
-            mWm.addView(mPointerLocationView, lp);
+            wm.addView(mPointerLocationView, lp);
             mWindowManagerFuncs.registerPointerEventListener(mPointerLocationView);
         }
     }
@@ -2356,7 +2354,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private void disablePointerLocation() {
         if (mPointerLocationView != null) {
             mWindowManagerFuncs.unregisterPointerEventListener(mPointerLocationView);
-            mWm.removeView(mPointerLocationView);
+            WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+            wm.removeView(mPointerLocationView);
             mPointerLocationView = null;
         }
     }
@@ -2840,14 +2839,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             // flag because we do know that the next window will take input
             // focus, so we want to get the IME window up on top of us right away.
             win.setFlags(
-                    windowFlags |
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE |
-                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
-                    WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
-                    windowFlags |
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE |
-                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
-                    WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                windowFlags|
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|
+                WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
+                windowFlags|
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|
+                WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
 
             win.setDefaultIcon(icon);
             win.setDefaultLogo(logo);
@@ -2870,6 +2869,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
             params.setTitle("Starting " + packageName);
 
+            wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
             view = win.getDecorView();
 
             if (win.isFloating()) {
@@ -2887,7 +2887,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 + " / " + appToken + ": "
                 + (view.getParent() != null ? view : null));
 
-            mWm.addView(view, params);
+            wm.addView(view, params);
 
             // Only return the view if it was successfully added to the
             // window manager... which we can tell by it having a parent.
@@ -2904,7 +2904,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         } finally {
             if (view != null && view.getParent() == null) {
                 Log.w(TAG, "view not successfully added to wm, removing view");
-                mWm.removeViewImmediate(view);
+                wm.removeViewImmediate(view);
             }
         }
 
@@ -2918,7 +2918,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 + window + " Callers=" + Debug.getCallers(4));
 
         if (window != null) {
-            mWm.removeView(window);
+            WindowManager wm = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
+            wm.removeView(window);
         }
     }
 
@@ -7311,18 +7312,68 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         screenTurnedOn();
     }
 
-    BootDexoptDialog mBootMsgDialog = null;
+    ProgressDialog mBootMsgDialog = null;
 
     /** {@inheritDoc} */
     @Override
-    public void showBootMessage(final ApplicationInfo info, final int current, final int total,
-            final boolean always) {
+    public void showBootMessage(final CharSequence msg, final boolean always) {
         mHandler.post(new Runnable() {
             @Override public void run() {
                 if (mBootMsgDialog == null) {
-                    mBootMsgDialog = BootDexoptDialog.create(mContext);
+                    int theme;
+                    if (mContext.getPackageManager().hasSystemFeature(
+                            PackageManager.FEATURE_WATCH)) {
+                        theme = com.android.internal.R.style.Theme_Micro_Dialog_Alert;
+                    } else if (mContext.getPackageManager().hasSystemFeature(
+                            PackageManager.FEATURE_TELEVISION)) {
+                        theme = com.android.internal.R.style.Theme_Leanback_Dialog_Alert;
+                    } else {
+                        theme = 0;
+                    }
+
+                    mBootMsgDialog = new ProgressDialog(mContext, theme) {
+                        // This dialog will consume all events coming in to
+                        // it, to avoid it trying to do things too early in boot.
+                        @Override public boolean dispatchKeyEvent(KeyEvent event) {
+                            return true;
+                        }
+                        @Override public boolean dispatchKeyShortcutEvent(KeyEvent event) {
+                            return true;
+                        }
+                        @Override public boolean dispatchTouchEvent(MotionEvent ev) {
+                            return true;
+                        }
+                        @Override public boolean dispatchTrackballEvent(MotionEvent ev) {
+                            return true;
+                        }
+                        @Override public boolean dispatchGenericMotionEvent(MotionEvent ev) {
+                            return true;
+                        }
+                        @Override public boolean dispatchPopulateAccessibilityEvent(
+                                AccessibilityEvent event) {
+                            return true;
+                        }
+                    };
+                    if (mContext.getPackageManager().isUpgrade()) {
+                        mBootMsgDialog.setTitle(R.string.android_upgrading_title);
+                    } else {
+                        mBootMsgDialog.setTitle(R.string.android_start_title);
+                    }
+                    mBootMsgDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    mBootMsgDialog.setIndeterminate(true);
+                    mBootMsgDialog.getWindow().setType(
+                            WindowManager.LayoutParams.TYPE_BOOT_PROGRESS);
+                    mBootMsgDialog.getWindow().addFlags(
+                            WindowManager.LayoutParams.FLAG_DIM_BEHIND
+                            | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+                    mBootMsgDialog.getWindow().setDimAmount(1);
+                    WindowManager.LayoutParams lp = mBootMsgDialog.getWindow().getAttributes();
+                    lp.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_NOSENSOR;
+                    mBootMsgDialog.getWindow().setAttributes(lp);
+                    mBootMsgDialog.setCancelable(false);
+                    mBootMsgDialog.show();
                 }
-                mBootMsgDialog.setProgress(info, current, total);
+                mBootMsgDialog.setMessage(msg);
             }
         });
     }
