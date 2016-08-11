@@ -71,7 +71,7 @@ public class BootDexoptDialog extends Dialog {
             theme = com.android.internal.R.style.Theme_Leanback_Dialog_Alert;
         } else {
             // set theme to material light to show a full screen dialog
-            theme = com.android.internal.R.style.Theme_Material_Light;
+            theme = com.android.internal.R.style.Theme_Material_DayNight;
         }
 
         return new BootDexoptDialog(context, theme, windowType);
