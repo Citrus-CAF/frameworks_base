@@ -620,7 +620,7 @@ public class ThemeUtils {
 
     // Returns a mutable list of all theme components
     public static List<String> getAllComponents() {
-        List<String> components = new ArrayList<String>(12);
+        List<String> components = new ArrayList<String>(13);
         components.add(ThemesColumns.MODIFIES_FONTS);
         components.add(ThemesColumns.MODIFIES_LAUNCHER);
         components.add(ThemesColumns.MODIFIES_ALARMS);
