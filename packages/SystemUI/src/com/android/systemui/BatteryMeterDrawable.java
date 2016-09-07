@@ -129,7 +129,12 @@ public class BatteryMeterDrawable extends Drawable implements
     private boolean mForceChargeBatteryText;
     private int  mTextChargingSymbol;
     private boolean mListening;
-    private boolean mIsAnimating; // stores charge-animation status to remove callbacks
+
+    private static final int ADD_LEVEL = 10;
+    private static final int ANIM_DURATION = 500;
+    private int mAnimOffset;
+    private boolean mCharging;
+    private boolean mBatteryPct;
 
     private float mTextX, mTextY; // precalculated position for drawText() to appear centered
 
@@ -227,6 +232,8 @@ public class BatteryMeterDrawable extends Drawable implements
 
         mIntrinsicWidth = context.getResources().getDimensionPixelSize(R.dimen.battery_width);
         mIntrinsicHeight = context.getResources().getDimensionPixelSize(R.dimen.battery_height);
+
+        mBatteryPct = context.getResources().getBoolean(R.bool.config_showBatteryPercentage);
     }
 
     @Override
@@ -341,8 +348,8 @@ public class BatteryMeterDrawable extends Drawable implements
     }
 
     private void updateShowPercent() {
-        mShowPercent = Settings.Secure.getInt(mContext.getContentResolver(),
-                STATUS_BAR_SHOW_BATTERY_PERCENT, 0);
+        mShowPercent = (0 != Settings.System.getInt(mContext.getContentResolver(),
+                SHOW_PERCENT_SETTING, 0)) && !mBatteryPct;
     }
 
     private void updateChargeColor() {
