@@ -62,8 +62,4 @@
     <style name="Theme.Material.Light.DialogWhenLarge.GrantCredentialsPermissionActivity" />
     <style name="Theme.Material.Light.Dialog.SyncActivityTooManyDeletes" />
     <style name="Theme.Material.Light.Dialog.Alert.NetInitiatedActivity" />
-
-  <!-- HwKeys in CitrusSettings -->
-  <java-symbol type="bool" name="config_showHwKeys" />
-
 </resources>
