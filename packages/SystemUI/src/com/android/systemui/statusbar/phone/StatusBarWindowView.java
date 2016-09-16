@@ -100,6 +100,8 @@ public class StatusBarWindowView extends FrameLayout {
     private boolean mDozeWakeupDoubleTap;
     private GestureDetector mDozeWakeupDoubleTapGesture;
 
+    private boolean mDoubleTapToSleepLockScreen;
+
     public StatusBarWindowView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setMotionEventSplittingEnabled(false);
@@ -294,11 +296,20 @@ public class StatusBarWindowView extends FrameLayout {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         boolean intercept = false;
+        final int h = getMeasuredHeight();
         if (mDoubleTapToSleepEnabled
                 && ev.getY() < mStatusBarHeaderHeight) {
             if (DEBUG) Log.w(TAG, "logging double tap gesture");
             mDoubleTapGesture.onTouchEvent(ev);
         }
+
+        if (mDoubleTapToSleepLockScreen && mService.getBarState() == StatusBarState.KEYGUARD
+                && (ev.getY() < (h / 3) ||
+                ev.getY() > (h - mStatusBarHeaderHeight))) {
+            if (DEBUG) Log.w(TAG, "logging lock screen double tap gesture");
+                mDoubleTapGesture.onTouchEvent(ev);
+        }
+
         if (mNotificationPanel.isFullyExpanded()
                 && mStackScrollLayout.getVisibility() == View.VISIBLE
                 && mService.getBarState() == StatusBarState.KEYGUARD
@@ -746,6 +757,8 @@ public class StatusBarWindowView extends FrameLayout {
                     Settings.System.DOUBLE_TAP_SLEEP_GESTURE), false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_WAKE_DOZE), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCK_SCREEN), false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -770,6 +783,8 @@ public class StatusBarWindowView extends FrameLayout {
                     Settings.System.DOUBLE_TAP_SLEEP_GESTURE, 1, UserHandle.USER_CURRENT) == 1;
             mDozeWakeupDoubleTap = Settings.System.getIntForUser(resolver,
                     Settings.System.DOUBLE_TAP_WAKE_DOZE, 0, UserHandle.USER_CURRENT) == 1;
+            mDoubleTapToSleepLockScreen = Settings.System.getIntForUser(
+                    resolver, Settings.System.DOUBLE_TAP_SLEEP_LOCK_SCREEN, 0, UserHandle.USER_CURRENT) == 1;
         }
     }
 }
