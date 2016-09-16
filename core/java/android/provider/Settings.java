@@ -4449,6 +4449,12 @@ public final class Settings {
          */
         public static final String STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE = "battery_bar_blend_color_reverse";
 
+       /**
+         * Enable double tap gesture anywhere on the lock screen put device to sleep
+         * @hide
+         */
+        public static final String DOUBLE_TAP_SLEEP_LOCK_SCREEN = "double_tap_sleep_lock_screen";
+
         /**
          * Whether the user has enabled headsup (Default 1)
          * HeadsUp is enabled by default within its Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED
