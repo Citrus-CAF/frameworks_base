@@ -4278,6 +4278,12 @@ public final class Settings {
         public static final String CUSTOM_LOGO_STYLE = "custom_logo_style";
 
         /**
+         * Whether to allow one finger quick settings expansion on the left or right side of the statusbar.
+         * @hide
+         */
+        public static final String STATUS_BAR_QUICK_QS_PULLDOWN = "status_bar_quick_qs_pulldown";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
