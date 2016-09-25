@@ -21,4 +21,9 @@
     <integer name="recents_animate_fab_enter_delay">275</integer>
     <integer name="recents_animate_fab_exit_duration">125</integer>
 
+    <!-- The default tiles to display in QuickSettings -->
+    <string name="quick_settings_tiles_extra" translatable="false">
+        hotspot,inversion,saver,work,cast,night,screenshot,sync,music,ime,caffeine,navigation_bar,reboot,heads_up,nfc,usb_tether
+    </string>
+
 </resources>
