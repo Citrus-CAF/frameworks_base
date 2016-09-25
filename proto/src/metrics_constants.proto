@@ -4574,6 +4574,8 @@ message MetricsEvent {
 
     // Citrus-CAF CONSTANTS
     CUSTOM_SQUASH = 1500;
+    QUICK_SETTINGS = 1501;
+  
     // END OF Citrus-CAF CONSTANTS
   }
 }
