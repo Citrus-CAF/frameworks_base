@@ -34,6 +34,7 @@ import com.android.systemui.qs.tiles.ColorInversionTile;
 import com.android.systemui.qs.tiles.CompassTile;
 import com.android.systemui.qs.tiles.DataSaverTile;
 import com.android.systemui.qs.tiles.DndTile;
+import com.android.systemui.qs.tiles.ExpandedDesktopTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
@@ -89,6 +90,7 @@ public class QSFactoryImpl implements QSFactory {
         else if (tileSpec.equals("compass")) return new CompassTile(mHost);
         else if (tileSpec.equals("screenshot")) return new ScreenshotTile(mHost);
         else if (tileSpec.equals("weather")) return new WeatherTile(mHost);
+        else if (tileSpec.equals("expanded_desktop")) return new ExpandedDesktopTile(mHost);
         // Intent tiles.
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(mHost, tileSpec);
         else if (tileSpec.startsWith(CustomTile.PREFIX)) return CustomTile.create(mHost, tileSpec);
