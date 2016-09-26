@@ -129,4 +129,8 @@
    <string name="stream_title_notification">Notification</string>
    <string name="stream_title_bluetooth">Bluetooth</string>
 
+   <!-- Adb over network -->
+   <string name="quick_settings_adb_network">ADB network</string>
+   <string name="quick_settings_network_adb_enabled_label">Enabled</string>
+   <string name="quick_settings_network_adb_disabled_label">Disabled</string>
 </resources>
