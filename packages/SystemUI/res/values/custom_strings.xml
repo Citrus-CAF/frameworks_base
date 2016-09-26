@@ -193,4 +193,8 @@
     <!-- Play queue -->
     <string name="play_queue_extension">Show play queue</string>
 
+    <!-- Expanded Desktop Tile -->
+    <string name="quick_settings_expanded_desktop_label">Expanded desktop</string>
+    <string name="quick_settings_expanded_desktop">Expanded</string>
+    <string name="quick_settings_expanded_desktop_off">Normal</string>
 </resources>
