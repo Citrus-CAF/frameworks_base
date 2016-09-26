@@ -25,4 +25,8 @@
     <!-- Label for area where tiles can be added by drag or tap [CHAR LIMIT=60] -->
     <string name="drag_or_tap_to_add_tiles">Hold and drag or tap to add tiles</string>
 
+    <!-- QS Tiles -->
+    <!-- ADB network tile -->
+    <string name="quick_settings_adb_network_label">ADB over network</string>
+    <string name="quick_settings_adb_network_toast">USB debugging is not enabled</string>
 </resources>
