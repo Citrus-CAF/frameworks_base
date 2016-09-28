@@ -54,6 +54,7 @@ import android.system.ErrnoException;
 import android.system.Os;
 
 import com.android.internal.telephony.ITelephony;
+import com.android.internal.util.custom.CustomUtils;
 import com.android.server.pm.PackageManagerService;
 
 import android.util.Log;
@@ -82,6 +83,8 @@ public final class ShutdownThread extends Thread {
     private static final int PACKAGE_MANAGER_STOP_PERCENT = 6;
     private static final int RADIO_STOP_PERCENT = 18;
     private static final int MOUNT_SERVICE_STOP_PERCENT = 20;
+
+    private static final String SYSTEMUI_REBOOT = "systemui_reboot";
 
     // length of vibration before shutting down
     private static final int SHUTDOWN_VIBRATE_MS = 500;
@@ -203,10 +206,12 @@ public final class ShutdownThread extends Thread {
 
                                     String actions[] = context.getResources().getStringArray(
                                             com.android.internal.R.array.shutdown_reboot_actions);
-
                                     if (actions != null && which < actions.length) {
                                         mReason = actions[which];
-                                        if (actions[which].equals(HOT_REBOOT)) {
+                                    if (actions[which].equals(SYSTEMUI_REBOOT)) {
+                                        doSystemUIReboot(context);
+                                        return;
+                                    } else if (actions[which].equals(HOT_REBOOT)) {
                                             mRebootHot = true;
                                         } else {
                                             mRebootHot = false;
@@ -283,6 +288,10 @@ public final class ShutdownThread extends Thread {
     private static int getAdvancedReboot(Context context) {
         return Settings.Secure.getInt(context.getContentResolver(),
                 Settings.Secure.ADVANCED_REBOOT, 1);
+    }
+
+    private static void doSystemUIReboot(Context context) {
+        CustomUtils.restartSystemUI(context);
     }
 
     private static class CloseDialogReceiver extends BroadcastReceiver
