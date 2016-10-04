@@ -7280,8 +7280,15 @@ public final class Settings {
         /**
          * Whether to use one tap tile action to enable or disable data 
          * @hide
+         * 
          */
         public static final String QS_DATA_ADVANCED = "qs_data_advanced";
+
+        /**
+         * Enable single click to turn Bluetooth on or off.
+         * @hide
+         */
+        public static final String QS_BT_EASY_TOGGLE = "qs_bt_easy_toggle";
 
         /**
          * This are the settings to be backed up.
