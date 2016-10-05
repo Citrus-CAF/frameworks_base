@@ -2777,6 +2777,7 @@
   <java-symbol type="bool" name="config_emergencyCallOnPowerkeyTapGestureEnabled" />
   <java-symbol type="bool" name="config_usb_data_unlock" />
   <java-symbol type="bool" name="config_volte_preferred" />
+
   <java-symbol type="bool" name="operator_custom_sim_icon" />
   <!-- config softap extention feature -->
   <java-symbol type="bool" name="config_softap_extention" />
@@ -2844,4 +2845,5 @@
   <!-- Screen-size-dependent modes for picker dialogs. -->
   <java-symbol type="integer" name="time_picker_mode" />
   <java-symbol type="integer" name="date_picker_mode" />
+  <java-symbol type="bool" name="config_useSystemClockforRotationSensor" />
 </resources>
