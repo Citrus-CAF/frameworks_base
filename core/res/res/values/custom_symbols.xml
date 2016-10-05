@@ -27,4 +27,9 @@
   <!-- Package Manager -->
   <java-symbol type="array" name="config_disabledComponents" />
   <java-symbol type="array" name="config_forceEnabledComponents" />
+
+  <!-- Older rotation sensors are not setting event.timestamp correctly. Setting to
+  true will use SystemClock.elapsedRealtimeNanos() to set timestamp. -->
+  <java-symbol type="bool" name="config_useSystemClockforRotationSensor" />
+
 </resources>
