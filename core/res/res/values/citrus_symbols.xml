@@ -35,5 +35,9 @@
 
   <!-- LED pulse -->
   <java-symbol type="bool" name="config_ledCanPulse" />
+  
+  <!-- HwKeys in CustomSquash -->
+  <java-symbol type="bool" name="config_showHwKeys" />
+
 
 </resources>
