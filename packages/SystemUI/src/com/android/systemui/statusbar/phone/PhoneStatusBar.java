@@ -403,6 +403,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     // settings
     private QSPanel mQSPanel;
 
+    // show lte/4g switch
+    private boolean mShowLteFourGee;
+
     // top bar
     BaseStatusBarHeader mHeader;
     protected KeyguardStatusBarView mKeyguardStatusBar;
@@ -570,6 +573,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.QS_ROWS_LANDSCAPE),
                   false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.SHOW_LTE_FOURGEE),
+                  false, this, UserHandle.USER_ALL);
             update();
        }
 
@@ -585,6 +591,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_ROWS_LANDSCAPE))) {
                     updateResources();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.SHOW_LTE_FOURGEE))) {
+                    mShowLteFourGee = Settings.System.getIntForUser(
+                            mContext.getContentResolver(),
+                            Settings.System.SHOW_LTE_FOURGEE,
+                            0, UserHandle.USER_CURRENT) == 1;
+                    mNetworkController.onConfigurationChanged();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_TICKER))) {
                 mTickerEnabled = Settings.System.getIntForUser(
@@ -619,6 +632,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
             mQsLayoutColumns = Settings.System.getIntForUser(resolver,
                     Settings.System.QS_LAYOUT_COLUMNS, 3, mCurrentUserId);
+
+            boolean mShowLteFourGee = Settings.System.getIntForUser(resolver,
+                    Settings.System.SHOW_LTE_FOURGEE, 0, UserHandle.USER_CURRENT) == 1;
 
             if (mNotificationPanel != null) {
                 mNotificationPanel.update();
