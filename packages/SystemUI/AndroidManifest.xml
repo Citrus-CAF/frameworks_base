@@ -259,7 +259,7 @@
                   android:theme="@style/TunerSettings"
                   android:label="@string/statusbar_icons_blacklist"
                   android:process=":tuner"
-                  android:parentActivityName="com.citrus.settings"
+                  android:parentActivityName="com.citrus.settings.tabs.StatusBar"
                   android:exported="true">
         </activity>
 
@@ -280,7 +280,7 @@
                   android:theme="@style/TunerSettings"
                   android:label="@string/navbar_tuner_title"
                   android:process=":tuner"
-                  android:parentActivityName="com.citrus.settings"
+                  android:parentActivityName="com.citrus.settings.tabs.Buttons"
                   android:exported="true">
         </activity>
 
@@ -288,7 +288,7 @@
                   android:theme="@style/TunerSettings"
                   android:label="@string/tuner_display_color"
                   android:process=":tuner"
-                  android:parentActivityName="com.citrus.settings"
+                  android:parentActivityName="com.citrus.settings.tabs.Ui"
                   android:exported="true">
         </activity>
 
@@ -296,7 +296,7 @@
                   android:theme="@style/TunerSettings"
                   android:label="@string/tuner_notification_control"
                   android:process=":tuner"
-                  android:parentActivityName="com.citrus.settings"
+                  android:parentActivityName="com.citrus.settings.tabs.StatusBar"
                   android:exported="true">
         </activity>
 
