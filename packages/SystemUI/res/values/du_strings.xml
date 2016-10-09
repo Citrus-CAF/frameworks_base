@@ -55,4 +55,7 @@
     <string name="quick_settings_fling">Fling</string>
     <string name="quick_settings_fling_off">Fling off</string>
 
+    <!-- DU Logo -->
+    <string name="status_bar_citrus_logo_title">Citrus-CAF logo</string>
+    <string name="status_bar_citrus_logo_summary">Enable to show Citrus-CAF logo on the left side of the statusbar</string>
 </resources>
