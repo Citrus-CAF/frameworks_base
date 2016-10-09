@@ -4030,6 +4030,18 @@ public final class Settings {
         public static final String QS_ROWS_LANDSCAPE = "qs_rows_landscape";
 
         /**
+          * Custom Settings activity custom summary text
+          * @hide
+          */
+        public static final String CUSTOM_SETTINGS_SUMMARY= "custom_settings_summary";
+
+       /**
+         * Random summary text
+         * @hide
+         */
+        public static final String CUSTOM_SETTINGS_RANDOM_SUMMARY= "custom_settings_random_summary";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
