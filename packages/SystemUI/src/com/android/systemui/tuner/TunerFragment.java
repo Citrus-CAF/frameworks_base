@@ -15,6 +15,7 @@
  */
 package com.android.systemui.tuner;
 
+import android.content.ContentResolver;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,10 +38,21 @@ public class TunerFragment extends PreferenceFragment {
 
     private static final String TAG = "TunerFragment";
 
+    private static final String STATUS_BAR_CITRUS_LOGO = "status_bar_citrus_logo";
+
+    private SwitchPreference mCitrusLogo;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        final ContentResolver resolver = getActivity().getContentResolver();
+
+
+        mCitrusLogo = (SwitchPreference) findPreference(STATUS_BAR_CITRUS_LOGO);
+        mCitrusLogo.setChecked((Settings.System.getInt(resolver,
+                Settings.System.STATUS_BAR_CITRUS_LOGO, 0) == 1));
     }
 
     @Override
@@ -83,4 +95,14 @@ public class TunerFragment extends PreferenceFragment {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onPreferenceTreeClick(Preference preference) {
+        if  (preference == mCitrusLogo) {
+            boolean checked = ((SwitchPreference)preference).isChecked();
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.STATUS_BAR_CITRUS_LOGO, checked ? 1:0);
+            return true;
+          }
+        return super.onPreferenceTreeClick(preference);
+    }
 }
