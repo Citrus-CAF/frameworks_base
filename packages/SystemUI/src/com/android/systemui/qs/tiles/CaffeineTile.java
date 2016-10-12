@@ -152,7 +152,7 @@ public class CaffeineTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public Intent getLongClickIntent() {
-        return null;
+        return new Intent(Settings.ACTION_DISPLAY_SETTINGS);
     }
 
     @Override
