@@ -73,4 +73,19 @@
       <item name="android:textColor">@color/status_bar_clock_color</item>
     </style>
 
+    <!-- Fonts used in the MediaQueue -->
+    <style name="TextAppearance.MediaQueue">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">roboto-regular</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+    <style name="TextAppearance.MediaQueue.Title">
+        <item name="android:alpha">.87</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="TextAppearance.MediaQueue.Subtitle">
+        <item name="android:alpha">.38</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>
