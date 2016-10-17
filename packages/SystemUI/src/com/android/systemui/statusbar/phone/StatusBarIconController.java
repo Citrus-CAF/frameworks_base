@@ -42,6 +42,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.internal.statusbar.StatusBarIcon;
+import com.android.systemui.BatteryLevelTextView;
 import com.android.systemui.BatteryMeterView;
 import com.android.systemui.BatteryLevelTextView;
 import com.android.systemui.FontSizeUtils;
@@ -123,6 +124,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 
     private final ArraySet<String> mIconBlacklist = new ArraySet<>();
 
+    private BatteryLevelTextView mBatteryLevelView;
+
     private final Runnable mTransitionDeferringDoneRunnable = new Runnable() {
         @Override
         public void run() {
@@ -173,6 +176,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mClock.setStatusBarIconController(this);
         mCenterClock.setStatusBarIconController(this);
         mLeftClock.setStatusBarIconController(this);
+        mBatteryLevelView = (BatteryLevelTextView) statusBar.findViewById(R.id.battery_level);
 
         TunerService.get(mContext).addTunable(this, ICON_BLACKLIST);
     }
@@ -613,17 +617,17 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                UserHandle.USER_CURRENT);
 	    int mCustomlogoColor = 
 Settings.System.getIntForUser(mContext.getContentResolver(),
-		       Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, 
+		       Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF,
                UserHandle.USER_CURRENT);
-        if (mCustomlogoColor == 0xFFFFFFFF) { 
+        if (mCustomlogoColor == 0xFFFFFFFF) {
 	    // we cant set imagetintlist on the last one. It is non colorable. Hence use a condition.
                 if (mCustomLogo == 37) {
 		        mCLogo.setColorFilter(mCustomlogoColor, Mode.MULTIPLY);
                 } else {
          	    mCLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
-                }	
+                }
         }
-        
+
         mSignalCluster.setIconTint(mIconTint, mDarkIntensity, mTintArea);
         mBatteryMeterView.setDarkIntensity(
                 isInArea(mTintArea, mBatteryMeterView) ? mDarkIntensity : 0);
@@ -641,6 +645,8 @@ Settings.System.getIntForUser(mContext.getContentResolver(),
             mCitrusLogoRight.setImageTintList(ColorStateList.valueOf(mIconTint));
             mCitrusLogoLeft.setImageTintList(ColorStateList.valueOf(mIconTint));
         }
+        mCitrusLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
+        mBatteryLevelView.setTextColor(getTint(mTintArea, mBatteryLevelView, mIconTint));
     }
 
     public void appTransitionPending() {
