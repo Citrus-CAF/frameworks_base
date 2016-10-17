@@ -6979,9 +6979,6 @@ public final class Settings {
                 "camera_double_tap_power_gesture_disabled";
 
         /**
-         * Whether the camera double twist gesture to flip between front and back mode should be
-         * enabled.
-         *
          * @hide
          */
         public static final String CAMERA_DOUBLE_TWIST_TO_FLIP_ENABLED =
@@ -7018,6 +7015,15 @@ public final class Settings {
          * @hide
          */
         public static final String NIGHT_DISPLAY_CUSTOM_END_TIME = "night_display_custom_end_time";
+
+       /**
+         * Status bar battery %
+         * 0: Hide the battery percentage
+         * 1: Display the battery percentage inside the icon
+         * 2: Display the battery percentage next to the icon
+         * @hide
+         */
+        public static final String STATUS_BAR_SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
 
         /**
          * Names of the service components that the current user has explicitly allowed to
@@ -7247,7 +7253,8 @@ public final class Settings {
             DOZE_ENABLED,
             DOZE_PULSE_ON_PICK_UP,
             DOZE_PULSE_ON_DOUBLE_TAP,
-            NFC_PAYMENT_DEFAULT_COMPONENT
+            NFC_PAYMENT_DEFAULT_COMPONENT,
+            STATUS_BAR_SHOW_BATTERY_PERCENT
         };
 
         /**
