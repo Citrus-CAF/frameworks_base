@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.os.PowerManager;
 import android.os.RemoteException;
@@ -29,6 +30,7 @@ import android.os.ServiceManager;
 import android.os.SystemClock; 
 import android.os.UserHandle;
 import java.util.List;
+import java.util.Locale;
 
 import com.android.internal.statusbar.IStatusBarService;
 
@@ -139,5 +141,11 @@ public class CustomUtils {
         keyguardIntent.setPackage(SYSTEMUI_PACKAGE_NAME);
         keyguardIntent.putExtra(DISMISS_KEYGUARD_EXTRA_INTENT, launchIntent);
         context.sendBroadcastAsUser(keyguardIntent, user);
+    }
+    
+    // Check for Chinese language
+    public static boolean isChineseLanguage() {
+       return Resources.getSystem().getConfiguration().locale.getLanguage().startsWith(
+               Locale.CHINESE.getLanguage());
     }
 }

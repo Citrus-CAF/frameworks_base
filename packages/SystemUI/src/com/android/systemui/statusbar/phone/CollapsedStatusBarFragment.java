@@ -80,6 +80,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private final Handler mHandler = new Handler();
     private int mTickerEnabled;
     private ContentResolver mContentResolver;
+    // Custom Carrier
+    private View mCustomCarrierLabel;
+    private int mShowCarrierLabel;
 
     private class CustomSettingsObserver extends ContentObserver {
         CustomSettingsObserver(Handler handler) {
@@ -96,14 +99,15 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             getContext().getContentResolver().registerContentObserver(
                     Settings.System.getUriFor(Settings.System.STATUS_BAR_SHOW_TICKER),
                     false, this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.STATUS_BAR_CARRIER),
+                    false, this, UserHandle.USER_ALL);
+                    
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
-            if (uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_CUSTOM_LOGO))
-                    || uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_CUSTOM_LOGO_STYLE))) {
-                updateSettings(true);
-            }
+            updateSettings(true);
         }
     }
 
@@ -147,6 +151,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mCustomLogo = mStatusBar.findViewById(R.id.status_bar_custom_logo);
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mCustomLogo);      
         mCustomSettingsObserver.observe();
+        mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);        
         updateSettings(false);
         // initTickerView() already called above from updateSettings(false) 
         // Default to showing until we know otherwise.
@@ -373,6 +378,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                 Settings.System.STATUS_BAR_CUSTOM_LOGO_STYLE, 0,
                 UserHandle.USER_CURRENT);
         updateCustomLogo();
+
+        mShowCarrierLabel = Settings.System.getIntForUser(mContentResolver,
+                Settings.System.STATUS_BAR_CARRIER, 1,
+                UserHandle.USER_CURRENT);
     }
 
 

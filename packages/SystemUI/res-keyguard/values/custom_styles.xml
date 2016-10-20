@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2015 The LiquidSmooth Project
+<!-- Copyright (C) 2017 Citrus-CAF Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,7 +14,12 @@
      limitations under the License.
 -->
 <resources>
-    <!-- Keyguard weather colors -->
-    <color name="keyguard_default_primary_text_color">#ffffffff</color>
+
+    <!-- Custom Carrier Label -->
+    <style name="TextAppearance.StatusBar.CarrierLabel" parent="@*android:style/TextAppearance.StatusBar.Icon">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/status_bar_clock_color</item>
+    </style>
 
 </resources>
