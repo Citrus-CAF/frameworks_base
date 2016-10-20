@@ -367,6 +367,13 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 Settings.System.SHOW_CUSTOM_LOGO, 0) == 1) {
        animateHide(mCLogo, animate);
        }
+
+        if ((Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_SHOW_CARRIER,  0,
+                UserHandle.USER_CURRENT) == 2) ||
+		      	(Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_SHOW_CARRIER,  0,
+                UserHandle.USER_CURRENT) == 3)) {
         animateHide(mCarrierLabel,animate);
        }
     }
@@ -386,7 +393,15 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 Settings.System.SHOW_CUSTOM_LOGO, 0) == 1 ) {
         animateShow(mCLogo, animate);
         }
+
+        if ((Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_SHOW_CARRIER,  0,
+                UserHandle.USER_CURRENT) == 2) ||
+		      	(Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_SHOW_CARRIER,  0,
+                UserHandle.USER_CURRENT) == 3)) {
         animateShow(mCarrierLabel,animate);
+        }
     }
 
     public void hideNotificationIconArea(boolean animate) {
