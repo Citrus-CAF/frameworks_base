@@ -365,6 +365,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     View mExpandedContents;
     TextView mNotificationPanelDebugText;
 
+    // Custom Carrier Label
+    private int mShowCarrierLabel;
+    private TextView mCustomCarrierLabel;
+
     // settings
     private QSPanel mQSPanel;
 
@@ -400,7 +404,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
      private ImageView mCitrusLogoRight;
      private ImageView mCitrusLogoLeft;
      private int mCitrusLogoStyle;
- 
+
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
 
     private int mStatusBarHeaderHeight;
@@ -522,6 +526,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CITRUS_LOGO_STYLE), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_CARRIER), false, this,
+                    UserHandle.USER_ALL);
             update();
         }
 
@@ -536,6 +543,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             } else if (uri.equals(Settings.Secure.getUriFor(
                     Settings.Secure.QS_COLUMNS))) {
                     updateResources();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_CARRIER))) {
+                update();
+                updateCarrier();
             }
             update();
         }
@@ -561,6 +572,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mCitrusLogoLeft = (ImageView) mStatusBarView.findViewById(R.id.left_citrus_logo);
             mCitrusLogoRight = (ImageView) mStatusBarView.findViewById(R.id.citrus_logo);
             showCitrusLogo(mCitrusLogo, mCitrusLogoColor, mCitrusLogoStyle);
+            mShowCarrierLabel = Settings.System.getIntForUser(resolver,
+                    Settings.System.STATUS_BAR_SHOW_CARRIER, 1, UserHandle.USER_CURRENT);
         }
     }
 
@@ -858,7 +871,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mSettingsObserver = new SettingsObserver(new Handler());
         }
          mSettingsObserver.observe();
- 
+
         // Lastly, call to the icon policy to install/update all the icons.
         mIconPolicy = new PhoneStatusBarPolicy(mContext, mIconController, mCastController,
                 mHotspotController, mUserInfoController, mBluetoothController,
@@ -1086,6 +1099,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 mCarrierLabel.setLayoutParams(mlp);
             }
         }
+
+        mCustomCarrierLabel = (TextView) mStatusBarWindow.findViewById(R.id.statusbar_carrier_text);
+        if (mCustomCarrierLabel != null) {
+            updateCarrier();
+        }
+
         mFlashlightController = new FlashlightController(mContext);
         mKeyguardBottomArea.setFlashlightController(mFlashlightController);
         mKeyguardBottomArea.setPhoneStatusBar(this);
@@ -2096,6 +2115,18 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
 
             mCarrierLabel.setVisibility(makeVisible ? View.VISIBLE : View.INVISIBLE);
+        }
+    }
+
+    private void updateCarrier() {
+        if (mCustomCarrierLabel != null) {
+            if (mShowCarrierLabel == 2) {
+                mCustomCarrierLabel.setVisibility(View.VISIBLE);
+            } else if (mShowCarrierLabel == 3) {
+                mCustomCarrierLabel.setVisibility(View.VISIBLE);
+            } else {
+                mCustomCarrierLabel.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -3698,7 +3729,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mCitrusLogoRight.setVisibility(View.VISIBLE);
         }
     }
-    
+
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             if (DEBUG) Log.v(TAG, "onReceive: " + intent);
@@ -4500,6 +4531,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         updateNotifications();
         checkBarModes();
         updateCarrierLabelVisibility();
+        updateCarrier();
         updateMediaMetaData(false, mState != StatusBarState.KEYGUARD);
         mKeyguardMonitor.notifyKeyguardState(mStatusBarKeyguardViewManager.isShowing(),
                 mStatusBarKeyguardViewManager.isSecure());
