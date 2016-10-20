@@ -218,4 +218,8 @@ public class NotificationIconAreaController {
         mClockLocation = mode;
         mShowClock = enabled;
     }
+
+    public int getNotificationIconsCount() {
+        return mNotificationIcons.getChildCount();
+    }
 }
