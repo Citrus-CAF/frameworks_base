@@ -4226,6 +4226,26 @@ public final class Settings {
         public static final String STATUSBAR_BATTERY_BAR_ANIMATE = "statusbar_battery_bar_animate";
 
         /**
+         * Statusbar Citrus-CAF logo
+         * @hide
+         */
+        public static final String STATUS_BAR_CITRUS_LOGO = "status_bar_citrus_logo";
+ 
+        /**
+         * Statusbar Citrus-CAF logo color setting
+         * @hide
+         */
+        public static final String STATUS_BAR_CITRUS_LOGO_COLOR = "status_bar_citrus_logo_color";
+ 
+         /**
+         * Style of Status bar logo
+         * 0 - Left (default)
+         * 1 - Right
+         * @hide
+         */
+        public static final String STATUS_BAR_CITRUS_LOGO_STYLE = "status_bar_citrus_logo_style";
+        
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
