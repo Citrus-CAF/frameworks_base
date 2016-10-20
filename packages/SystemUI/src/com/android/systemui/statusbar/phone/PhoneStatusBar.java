@@ -440,9 +440,16 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private boolean mShowCarrierInPanel = false;
     boolean mExpandedVisible;
 
-
     private int mQsLayoutColumns;
 
+    // Citrus-CAF logo
+    private boolean mCitrusLogo;
+    private int mCitrusLogoColor;
+    private ImageView citrusLogo;
+    private ImageView citrusLogoright;
+    private ImageView citrusLogoleft;
+    private int mCitrusLogoStyle;
+ 
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
 
     private int mStatusBarHeaderHeight;
@@ -582,6 +589,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.STATUS_BAR_CUSTOM_HEADER),
                   false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CITRUS_LOGO), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CITRUS_LOGO_COLOR), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CITRUS_LOGO_STYLE), false, this,
+                    UserHandle.USER_ALL);
             update();
         }
 
@@ -625,6 +641,19 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mBrightnessControl = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
+
+            mCitrusLogoStyle = Settings.System.getIntForUser(
+                    resolver, Settings.System.STATUS_BAR_CITRUS_LOGO_STYLE, 0,
+                    UserHandle.USER_CURRENT);
+            mCitrusLogo = Settings.System.getIntForUser(resolver,
+                    Settings.System.STATUS_BAR_CITRUS_LOGO, 0, mCurrentUserId) == 1;
+            mCitrusLogoColor = Settings.System.getIntForUser(resolver,
+                    Settings.System.STATUS_BAR_CITRUS_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
+            citrusLogo = (ImageView) mStatusBarView.findViewById(R.id.citrus_logo);
+            citrusLogoleft = (ImageView) mStatusBarView.findViewById(R.id.left_citrus_logo);
+            citrusLogoright = (ImageView) mStatusBarView.findViewById(R.id.right_citrus_logo);
+            showCitrusLogo(mCitrusLogo, mCitrusLogoColor, mCitrusLogoStyle);
+
             mShowCarrierLabel = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_SHOW_CARRIER, 1, UserHandle.USER_CURRENT);
             mClockLocation = Settings.System.getIntForUser(
@@ -955,7 +984,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mSettingsObserver = new SettingsObserver(new Handler());
         }
         mSettingsObserver.observe();
- 
+
         // Lastly, call to the icon policy to install/update all the icons.
         mIconPolicy = new PhoneStatusBarPolicy(mContext, mIconController, mCastController,
                 mHotspotController, mUserInfoController, mBluetoothController,
@@ -4156,6 +4185,38 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 return deferred;
             }
         }, cancelAction, afterKeyguardGone);
+    }
+
+    public void showCitrusLogo(boolean show, int color, int style) {
+        if (mStatusBarView == null) return;
+         if (!show) {
+            citrusLogo.setVisibility(View.GONE);
+            citrusLogoright.setVisibility(View.GONE);
+            citrusLogoleft.setVisibility(View.GONE);
+            return;
+        }
+        if (color != 0xFFFFFFFF) {
+            citrusLogo.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            citrusLogoright.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            citrusLogoleft.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+        } else {
+            citrusLogo.clearColorFilter();
+            citrusLogoright.clearColorFilter();
+            citrusLogoleft.clearColorFilter();
+        }
+        if (style == 0) {
+            citrusLogo.setVisibility(View.VISIBLE);
+            citrusLogoright.setVisibility(View.GONE);
+            citrusLogoleft.setVisibility(View.GONE);
+        } else if (style == 1) {
+            citrusLogo.setVisibility(View.GONE);
+            citrusLogoright.setVisibility(View.VISIBLE);
+            citrusLogoleft.setVisibility(View.GONE);
+        } else if (style == 2) {
+            citrusLogo.setVisibility(View.GONE);
+            citrusLogoright.setVisibility(View.GONE);
+            citrusLogoleft.setVisibility(View.VISIBLE);
+        }
     }
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
