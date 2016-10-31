@@ -4450,6 +4450,40 @@ public final class Settings {
         private static final Validator SWAP_NAVIGATION_KEYS_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * @hide
+         */
+        public static final String QS_COLUMNS_PORTRAIT = "qs_columns_portrait";
+
+        /** @hide */
+        private static final Validator QS_COLUMNS_PORTRAIT_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * Number of qs columns on landscape orientation
+         * @hide
+         */
+        public static final String QS_COLUMNS_LANDSCAPE = "qs_columns_landscape";
+
+        /** @hide */
+        private static final Validator QS_COLUMNS_LANDSCAPE_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String QS_ROWS_PORTRAIT = "qs_rows_portrait";
+
+        /** @hide */
+        private static final Validator QS_ROWS_PORTRAIT_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * Number of qs columns on landscape orientation
+         * @hide
+         */
+        public static final String QS_ROWS_LANDSCAPE = "qs_rows_landscape";
+
+        /** @hide */
+        private static final Validator QS_ROWS_LANDSCAPE_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
@@ -4548,6 +4582,10 @@ public final class Settings {
             KEY_CAMERA_LONG_PRESS_ACTION,
             KEY_CAMERA_DOUBLE_TAP_ACTION,
             SWAP_NAVIGATION_KEYS,
+            QS_COLUMNS_PORTRAIT,
+            QS_COLUMNS_LANDSCAPE,
+            QS_ROWS_PORTRAIT,
+            QS_ROWS_LANDSCAPE,
         };
 
         /**
@@ -4698,6 +4736,10 @@ public final class Settings {
             PRIVATE_SETTINGS.add(KEY_CAMERA_LONG_PRESS_ACTION);
             PRIVATE_SETTINGS.add(KEY_CAMERA_DOUBLE_TAP_ACTION);
             PRIVATE_SETTINGS.add(SWAP_NAVIGATION_KEYS);
+            PRIVATE_SETTINGS.add(QS_COLUMNS_PORTRAIT);
+            PRIVATE_SETTINGS.add(QS_COLUMNS_LANDSCAPE);
+            PRIVATE_SETTINGS.add(QS_ROWS_PORTRAIT);
+            PRIVATE_SETTINGS.add(QS_ROWS_LANDSCAPE);
         }
 
         /**
@@ -4822,6 +4864,10 @@ public final class Settings {
             VALIDATORS.put(KEY_CAMERA_LONG_PRESS_ACTION, KEY_CAMERA_LONG_PRESS_ACTION_VALIDATOR);
             VALIDATORS.put(KEY_CAMERA_DOUBLE_TAP_ACTION, KEY_CAMERA_DOUBLE_TAP_ACTION_VALIDATOR);
             VALIDATORS.put(SWAP_NAVIGATION_KEYS, SWAP_NAVIGATION_KEYS_VALIDATOR);
+            VALIDATORS.put(QS_COLUMNS_PORTRAIT, QS_COLUMNS_PORTRAIT_VALIDATOR);
+            VALIDATORS.put(QS_COLUMNS_LANDSCAPE, QS_COLUMNS_LANDSCAPE_VALIDATOR);
+            VALIDATORS.put(QS_ROWS_PORTRAIT, QS_ROWS_PORTRAIT_VALIDATOR);
+            VALIDATORS.put(QS_ROWS_LANDSCAPE, QS_ROWS_LANDSCAPE_VALIDATOR);
         }
 
         /**

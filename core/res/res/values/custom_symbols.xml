@@ -48,9 +48,9 @@
     <java-symbol type="string" name="adb_both_active_notification_title" />
     <java-symbol type="string" name="adb_active_generic_notification_message" />
 
-    <!-- Whether device has screen with higher aspect ratio --> 
+    <!-- Whether device has screen with higher aspect ratio -->
     <java-symbol type="bool" name="config_haveHigherAspectRatioScreen" />
-    <!-- Aspect ratio of screen --> 
+    <!-- Aspect ratio of screen -->
     <java-symbol type="dimen" name="config_screenAspectRatio" />
 
     <!-- Minimum screen brightness setting allowed by the power manager.
@@ -97,4 +97,10 @@
     <!-- camera -->
     <java-symbol type="integer" name="config_doubleTapOnCameraKeyBehavior" />
     <java-symbol type="integer" name="config_longPressOnCameraKeyBehavior" />
+
+    <!-- The number of columns in the QuickSettings -->
+    <java-symbol type="integer" name="quick_settings_num_columns" />
+    <!-- The number of rows in the QuickSettings -->
+    <java-symbol type="integer" name="quick_settings_num_rows" />
+
 </resources>

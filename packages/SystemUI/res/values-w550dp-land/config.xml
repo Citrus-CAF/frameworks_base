@@ -24,5 +24,4 @@
     <!-- Whether QuickSettings is in a phone landscape -->
     <bool name="quick_settings_wide">true</bool>
 
-    <integer name="quick_settings_num_columns">4</integer>
 </resources>
