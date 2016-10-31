@@ -2581,6 +2581,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if ((diff2 & StatusBarManager.DISABLE2_QUICK_SETTINGS) != 0) {
             updateQsExpansionEnabled();
         }
+        showOperatorName();
     }
 
     @Override
