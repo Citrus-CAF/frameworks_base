@@ -256,6 +256,14 @@
                 android:permission="android.permission.BIND_WALLPAPER"
                 android:exported="true" />
 
+        <activity android:name=".custom.LockscreenShortcutsActivity"
+                  android:icon="@drawable/tuner"
+                  android:label="@string/lockscreen_targets_message"
+                  android:theme="@android:style/Theme.Material.Settings"
+                  android:parentActivityName="com.citrus.settings.CustomSquash"
+                  android:exported="true">
+        </activity>
+
         <activity android:name=".tuner.TunerActivity"
                   android:icon="@drawable/tuner"
                   android:theme="@style/TunerSettings"
