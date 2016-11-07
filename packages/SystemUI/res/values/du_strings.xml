@@ -55,7 +55,12 @@
     <string name="quick_settings_fling">Fling</string>
     <string name="quick_settings_fling_off">Fling off</string>
 
-    <!-- DU Logo -->
+    <!-- Citrus Logo -->
     <string name="status_bar_citrus_logo_title">Citrus-CAF logo</string>
     <string name="status_bar_citrus_logo_summary">Enable to show Citrus-CAF logo on the left side of the statusbar</string>
+
+    <!-- Screenshot action -->
+    <string name="screenshot_abort_title">No screenshot taken</string>
+    <string name="screenshot_abort_text">Operation aborted</string>
+
 </resources>
