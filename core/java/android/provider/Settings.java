@@ -4119,6 +4119,60 @@ public final class Settings {
         private static final Validator SENSOR_BLOCK_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * some devices have a extra hw button e.g. n3 on the back on the
+         * fingerprint sensor. allow mapping button to key
+         *
+         * @hide
+         */
+        public static final String BUTTON_EXTRA_KEY_MAPPING = "button_extra_mapping";
+
+        /** @hide */
+        private static final Validator BUTTON_EXTRA_KEY_MAPPING_VALIDATOR =
+                ANY_STRING_VALIDATOR;
+
+        /**
+         * Disable hw buttons - actions, brightness, haptic feedback, overflow menu
+         * @hide
+         */
+        public static final String HARDWARE_KEYS_DISABLE = "hardware_keys_disable";
+
+        /** @hide */
+        private static final Validator HARDWARE_KEYS_DISABLE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * Enable proxi check for wake keys - must be implemented in a device
+         * KeyHandler
+         * @hide
+         */
+        public static final String DEVICE_PROXI_CHECK_ENABLED = "device_proxi_check_enabled";
+
+        /** @hide */
+        private static final Validator DEVICE_PROXI_CHECK_ENABLED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * Enable Gesture Haptic feedback
+         * KeyHandler
+         * @hide
+         */
+        public static final String DEVICE_GESTURE_FEEDBACK_ENABLED =
+                "device_gesture_feedback_enabled";
+
+        /** @hide */
+        private static final Validator DEVICE_GESTURE_FEEDBACK_ENABLED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String DEVICE_FEATURE_SETTINGS = "device_feature_settings";
+
+        /** @hide */
+        private static final Validator DEVICE_FEATURE_SETTINGS_VALIDATOR =
+                ANY_STRING_VALIDATOR;
+
+        /**
          * Whether to show the IME switcher in the status bar
          * @hide
          */
@@ -4616,6 +4670,11 @@ public final class Settings {
             QS_TILE_TITLE_VISIBILITY,
             ANBI_ENABLED,
             SYSTEM_PROXI_CHECK_ENABLED,
+            BUTTON_EXTRA_KEY_MAPPING,
+            HARDWARE_KEYS_DISABLE,
+            DEVICE_PROXI_CHECK_ENABLED,
+            DEVICE_GESTURE_FEEDBACK_ENABLED,
+            DEVICE_FEATURE_SETTINGS,
         };
 
         /**
@@ -4773,6 +4832,11 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_TILE_TITLE_VISIBILITY);
             PRIVATE_SETTINGS.add(ANBI_ENABLED);
             PRIVATE_SETTINGS.add(SYSTEM_PROXI_CHECK_ENABLED);
+            PRIVATE_SETTINGS.add(BUTTON_EXTRA_KEY_MAPPING);
+            PRIVATE_SETTINGS.add(HARDWARE_KEYS_DISABLE);
+            PRIVATE_SETTINGS.add(DEVICE_PROXI_CHECK_ENABLED);
+            PRIVATE_SETTINGS.add(DEVICE_GESTURE_FEEDBACK_ENABLED);
+            PRIVATE_SETTINGS.add(DEVICE_FEATURE_SETTINGS);
         }
 
         /**
@@ -4905,7 +4969,15 @@ public final class Settings {
             VALIDATORS.put(ANBI_ENABLED, ANBI_ENABLED_VALIDATOR);
             VALIDATORS.put(SYSTEM_PROXI_CHECK_ENABLED,
                     SYSTEM_PROXI_CHECK_ENABLED_VALIDATOR);
-
+            VALIDATORS.put(BUTTON_EXTRA_KEY_MAPPING,
+                    BUTTON_EXTRA_KEY_MAPPING_VALIDATOR);
+            VALIDATORS.put(HARDWARE_KEYS_DISABLE, HARDWARE_KEYS_DISABLE_VALIDATOR);
+            VALIDATORS.put(DEVICE_PROXI_CHECK_ENABLED,
+                    DEVICE_PROXI_CHECK_ENABLED_VALIDATOR);
+            VALIDATORS.put(DEVICE_GESTURE_FEEDBACK_ENABLED,
+                    DEVICE_GESTURE_FEEDBACK_ENABLED_VALIDATOR);
+            VALIDATORS.put(DEVICE_FEATURE_SETTINGS,
+                    DEVICE_FEATURE_SETTINGS_VALIDATOR);
         }
 
         /**
