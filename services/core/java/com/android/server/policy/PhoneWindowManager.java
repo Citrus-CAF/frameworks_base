@@ -743,6 +743,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // use the same delay values as for screenshot
     private boolean mScreenrecordChordEnabled;
     private boolean mScreenrecordChordVolumeUpKeyConsumed;
+    private boolean mScreenrecordChordType;
 
     /* The number of steps between min and max brightness */
     private static final int BRIGHTNESS_STEPS = 10;
@@ -981,6 +982,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.KEYGUARD_TOGGLE_TORCH), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SCREENRECORD_CHORD_TYPE), false, this,
                     UserHandle.USER_ALL);
             updateSettings();
         }
@@ -1515,7 +1519,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mScreenrecordChordVolumeUpKeyConsumed = true;
                 cancelPendingPowerKeyAction();
 
-                mHandler.postDelayed(mScreenrecordRunnable, getScreenshotChordLongPressDelay());
+                if (mScreenrecordChordType) {
+                    mScreenshotRunnable.setScreenshotType(TAKE_SCREENSHOT_SELECTED_REGION);
+                    mHandler.postDelayed(mScreenshotRunnable, getScreenshotChordLongPressDelay());
+                } else {
+                    mHandler.postDelayed(mScreenrecordRunnable, getScreenshotChordLongPressDelay());
+                }
             }
         }
     }
@@ -2253,6 +2262,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
             mTorchEnabled = (Settings.System.getIntForUser(resolver,
                     Settings.System.KEYGUARD_TOGGLE_TORCH, 0, UserHandle.USER_CURRENT) == 1);
+
+            mScreenrecordChordType = (Settings.System.getIntForUser(resolver,
+                    Settings.System.SCREENRECORD_CHORD_TYPE, 0, UserHandle.USER_CURRENT) == 1);
         }
         synchronized (mWindowManagerFuncs.getWindowManagerLock()) {
             WindowManagerPolicyControl.reloadFromSetting(mContext);
