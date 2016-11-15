@@ -89,8 +89,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     private int mClockLocation;
     private LinearLayout mCenterClockLayout;
     private NetworkTraffic mNetworkTraffic;
-    private ImageView mCitrusLogoRight;
-    private ImageView mCitrusLogoLeft;
+
     private TextView mCarrierLabel;
 
     private int mIconSize;
@@ -152,8 +151,6 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mCenterClock = (Clock) statusBar.findViewById(R.id.center_clock);
         mLeftClock = (Clock) statusBar.findViewById(R.id.left_clock);
         mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
-        mCitrusLogoRight = (ImageView) statusBar.findViewById(R.id.citrus_logo);
-        mCitrusLogoLeft = (ImageView) statusBar.findViewById(R.id.left_citrus_logo);
         mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
         mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
@@ -344,19 +341,11 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     public void hideSystemIconArea(boolean animate) {
         animateHide(mSystemIconArea, animate);
         animateHide(mCenterClockLayout, animate);
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_CITRUS_LOGO, 0) == 1) {
-            animateHide(mCitrusLogoLeft, animate);
-        }
     }
 
     public void showSystemIconArea(boolean animate) {
         animateShow(mSystemIconArea, animate);
         animateShow(mCenterClockLayout, animate);
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_CITRUS_LOGO, 0) == 1) {
-            animateShow(mCitrusLogoLeft, animate);
-        }
     }
 
     public void hideNotificationIconArea(boolean animate) {
@@ -593,12 +582,6 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mCenterClock.setTextColor(getTint(mTintArea, mCenterClock, mIconTint));
         mLeftClock.setTextColor(getTint(mTintArea, mLeftClock, mIconTint));
         mNetworkTraffic.setDarkIntensity(mDarkIntensity);
-        if (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_CITRUS_LOGO_COLOR, 0xFFFFFFFF,
-                UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
-            mCitrusLogoRight.setImageTintList(ColorStateList.valueOf(mIconTint));
-            mCitrusLogoLeft.setImageTintList(ColorStateList.valueOf(mIconTint));
-        }
         mCarrierLabel.setTextColor(getTint(mTintArea, mCarrierLabel, mIconTint));
     }
 
