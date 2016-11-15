@@ -1,4 +1,4 @@
- /*
+/*
  * Copyright (C) 2006 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -3962,26 +3962,6 @@ public final class Settings {
          * @hide
          */
         public static final String FINGERPRINT_SUCCESS_VIB = "fingerprint_success_vib";
-
-        /**
-         * Statusbar Citrus-CAF logo
-         * @hide
-         */
-        public static final String STATUS_BAR_CITRUS_LOGO = "status_bar_citrus_logo";
- 
-        /**
-         * Statusbar Citrus-CAF logo color setting
-         * @hide
-         */
-        public static final String STATUS_BAR_CITRUS_LOGO_COLOR = "status_bar_citrus_logo_color";
- 
-         /**
-         * Style of Status bar logo
-         * 0 - Left (default)
-         * 1 - Right
-         * @hide
-         */
-        public static final String STATUS_BAR_CITRUS_LOGO_STYLE = "status_bar_citrus_logo_style";
 
         /**
          * Status bar carrier label
