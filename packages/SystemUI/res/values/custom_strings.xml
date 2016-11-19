@@ -120,4 +120,13 @@
     <string name="quick_settings_compass_W">W</string>
     <string name="quick_settings_compass_NW">NW</string>
 
+   <!-- Volume stream title names -->
+   <string name="stream_title_call">Call</string>
+   <string name="stream_title_system">System</string>
+   <string name="stream_title_ring">Ring</string>
+   <string name="stream_title_media">Media</string>
+   <string name="stream_title_alarm">Alarm</string>
+   <string name="stream_title_notification">Notification</string>
+   <string name="stream_title_bluetooth">Bluetooth</string>
+
 </resources>

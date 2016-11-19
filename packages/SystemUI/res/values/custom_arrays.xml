@@ -33,6 +33,21 @@
         <item>@string/quick_settings_compass_SW</item> <!-- South west -->
         <item>@string/quick_settings_compass_W</item>  <!-- West -->
         <item>@string/quick_settings_compass_NW</item> <!-- North west -->
+
+    <!-- Volume stream name titles -->
+    <string-array name="volume_stream_titles_new" trabslatable="false" >
+        <item>@string/stream_title_call</item> <!-- STREAM_VOICE_CALL -->
+        <item>@string/stream_title_system</item> <!-- STREAM_SYSTEM -->
+        <item>@string/stream_title_ring</item> <!-- STREAM_RING -->
+        <item>@string/stream_title_media</item> <!-- STREAM_MEDIA -->
+        <item>@string/stream_title_alarm</item> <!-- STREAM_ALARM -->
+        <item>@string/stream_title_notification</item> <!-- STREAM_NOTIFICATION -->
+        <item>@string/stream_title_bluetooth</item> <!-- STREAM_BLUETOOTH_SCO -->
+        <item></item> <!-- STREAM_SYSTEM_ENFORCED -->
+        <item></item> <!-- STREAM_DTMF -->
+        <item></item> <!-- STREAM_TTS -->
+    </string-array>
+
     </string-array>
 
 </resources>
