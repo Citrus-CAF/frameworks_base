@@ -31,6 +31,8 @@ import android.net.Uri;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.Vibrator;
+import android.os.UserHandle;
+import android.os.UserManager;
 import android.provider.AlarmClock;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
@@ -51,6 +53,7 @@ import android.widget.Toast;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.MetricsProto;
+import com.android.internal.utils.du.UserContentObserver;
 import com.android.keyguard.KeyguardStatusView;
 import com.android.systemui.FontSizeUtils;
 import com.android.systemui.R;
@@ -190,7 +193,6 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         }
     }
 
-    @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         updateResources();
@@ -491,7 +493,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
             }
         }
     }
-
+    
     @Override
     public void setMobileDataIndicators(IconState statusIcon, IconState qsIcon, int statusType,
             int qsType, boolean activityIn, boolean activityOut, int dataActivityId,
