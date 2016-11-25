@@ -7003,6 +7003,12 @@ public final class Settings {
          */
         public static final String STATUS_BAR_BATTERY_STYLE_TILE = "status_bar_battery_style_tile";
 
+       /**
+        * battery icon color when charging
+        *
+        * @hide
+        */
+       public static final String STATUS_BAR_CHARGE_COLOR = "status_bar_charge_color";
 
         /**
          * Control whether Night display is currently activated.
