@@ -7353,6 +7353,13 @@ public final class Settings {
         public static final String QS_NIGHT_BRIGHTNESS_VALUE = "qs_night_brightness_value";
 
         /**
+          * Whether to force percentage text out of the battery icon when charging
+          *
+          * @hide
+          */
+         public static final String FORCE_CHARGE_BATTERY_TEXT = "force_charge_battery_text";
+
+        /**
          * Control whether Night display is currently activated.
          * @hide
          */
