@@ -549,7 +549,17 @@ public class QSPanel extends LinearLayout implements Tunable, Callback {
         void removeTile(TileRecord tile);
         int getOffsetTop(TileRecord tile);
         boolean updateResources();
+        void update();
 
         void setListening(boolean listening);
+    }
+
+    public void update() {
+        if (mTileLayout != null) {
+            mTileLayout.update();
+        }
+        if (mCustomizePanel != null) {
+            mCustomizePanel.update();
+        }
     }
 }
