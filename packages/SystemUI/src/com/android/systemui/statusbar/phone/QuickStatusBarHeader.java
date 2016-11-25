@@ -479,4 +479,14 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     public void onUserInfoChanged(String name, Drawable picture) {
         mMultiUserAvatar.setImageDrawable(picture);
     }
+
+   @Override
+   public void update() {
+       if (mQsPanel != null) {
+           mQsPanel.update();
+       }
+       if (mHeaderQsPanel != null) {
+           mHeaderQsPanel.update();
+       }
+   }
 }
