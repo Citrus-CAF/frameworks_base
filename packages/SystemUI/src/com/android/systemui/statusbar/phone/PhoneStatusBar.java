@@ -435,6 +435,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private boolean mCitrusLogo;
     private ImageView citrusLogo;
 
+    private int mQsLayoutColumns;
+
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
 
     private int mStatusBarHeaderHeight;
@@ -556,6 +558,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CITRUS_LOGO), false, this,
                     UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_LAYOUT_COLUMNS), false, this,
+                    UserHandle.USER_ALL);
             update();
        }
 
@@ -597,7 +602,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mClockLocation = Settings.System.getIntForUser(
                 resolver, Settings.System.STATUSBAR_CLOCK_STYLE, 0,
                 UserHandle.USER_CURRENT);
+
+            mQsLayoutColumns = Settings.System.getIntForUser(resolver,
+                    Settings.System.QS_LAYOUT_COLUMNS, 3, mCurrentUserId);
+
+            if (mHeader != null) {
+                mHeader.update();
         }
+      }
     }
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
