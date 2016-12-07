@@ -32,4 +32,9 @@
     </style>
 
     <color name="system_primary_color">#ff263238</color><!--blue grey 900 -->
+
+    <!-- Clear-All recents FAB -->
+    <color name="fab_color">@*android:color/material_deep_teal_500</color>
+    <color name="floating_action_button_icon_color">#FFFFFFFF</color>
+
 </resources>
