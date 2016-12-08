@@ -59,6 +59,10 @@ public class RecentsConfiguration {
     public boolean fakeShadows;
     public int svelteLevel;
 
+    public int fabEnterAnimDuration;
+    public int fabEnterAnimDelay;
+    public int fabExitAnimDuration;
+
     // Whether this product supports Grid-based Recents. If this is field is set to true, then
     // Recents will layout task views in a grid mode when there's enough space in the screen.
     public boolean isGridEnabled;
@@ -71,12 +75,19 @@ public class RecentsConfiguration {
         Resources res = appContext.getResources();
         fakeShadows = res.getBoolean(R.bool.config_recents_fake_shadows);
         svelteLevel = res.getInteger(R.integer.recents_svelte_level);
-        isGridEnabled = SystemProperties.getBoolean("ro.recents.grid", false);
+        isGridEnabled = SystemProperties.getBoolean("sys.recents.grid", false);
 
         float screenDensity = context.getResources().getDisplayMetrics().density;
         smallestWidth = ssp.getDeviceSmallestWidth();
         isLargeScreen = smallestWidth >= (int) (screenDensity * LARGE_SCREEN_MIN_DP);
         isXLargeScreen = smallestWidth >= (int) (screenDensity * XLARGE_SCREEN_MIN_DP);
+
+        fabEnterAnimDuration =
+                res.getInteger(R.integer.recents_animate_fab_enter_duration);
+        fabEnterAnimDelay =
+                res.getInteger(R.integer.recents_animate_fab_enter_delay);
+        fabExitAnimDuration =
+                res.getInteger(R.integer.recents_animate_fab_exit_duration);
     }
 
     /**
