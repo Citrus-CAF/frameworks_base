@@ -43,7 +43,7 @@
 
         <activity
             android:name=".LauncherActivity"
-            android:label="@string/downloads_label"
+            android:label="@string/custom_downloads_label"
             android:icon="@mipmap/ic_launcher_downloads"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
@@ -54,7 +54,7 @@
 
         <activity
             android:name=".FilesActivity"
-            android:label="@string/downloads_label"
+            android:label="@string/custom_downloads_label"
             android:icon="@mipmap/ic_launcher_downloads"
             android:documentLaunchMode="intoExisting"
             android:theme="@style/DocumentsTheme">
