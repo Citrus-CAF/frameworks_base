@@ -121,4 +121,7 @@
     <string name="lockscreen_choose_action_title">Choose action</string>
     <string name="lockscreen_none_target">None</string>
 
+    <!-- pnc -->
+    <string name="systemui_tuner_pnc_title">Power notification controls</string>
+
 </resources>
