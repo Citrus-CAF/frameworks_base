@@ -298,7 +298,7 @@ public class BatteryMeterDrawable extends Drawable implements
 
     private void updateForceChargeBatteryText() {
         mForceChargeBatteryText = Settings.Secure.getInt(mContext.getContentResolver(),
-                FORCE_CHARGE_BATTERY_TEXT, 0) == 1;
+                FORCE_CHARGE_BATTERY_TEXT, 0) == 1 ? true : false;
     }
 
     private void updateCustomChargingSymbol() {
