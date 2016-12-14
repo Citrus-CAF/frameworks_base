@@ -122,4 +122,11 @@
   <java-symbol type="drawable" name="ic_lock_assist" />
   <java-symbol type="drawable" name="ic_lock_voice" />
 
+  <!-- Extended Boosts for QPerformance -->
+
+  <!-- cpu boost on boot -->
+  <java-symbol type="bool" name="config_enableCpuBoostOnBoot" />
+  <java-symbol type="integer" name="onbootboost_duration" />
+  <java-symbol type="array" name="onbootboost_param_value" />
+
 </resources>
