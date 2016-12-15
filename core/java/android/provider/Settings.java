@@ -7262,6 +7262,13 @@ public final class Settings {
          */
         public static final String TEXT_CHARGING_SYMBOL = "text_charging_symbol";
 
+
+        /**
+         * Wheter to automatically change brightness when enabling night mode tile
+         * @hide
+         */
+        public static final String QS_NIGHT_BRIGHTNESS_TOGGLE = "qs_night_brightness_toggle";
+
         /**
          * Low brightness level for the advanced night mode tile
          * @hide
