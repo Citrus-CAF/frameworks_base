@@ -7124,6 +7124,13 @@ public final class Settings {
          */
         public static final String TEXT_CHARGING_SYMBOL = "text_charging_symbol";
 
+
+        /**
+         * Wheter to automatically change brightness when enabling night mode tile
+         * @hide
+         */
+        public static final String QS_NIGHT_BRIGHTNESS_TOGGLE = "qs_night_brightness_toggle";
+
         /**
          * Names of the service components that the current user has explicitly allowed to
          * be a VR mode listener, separated by ':'.
