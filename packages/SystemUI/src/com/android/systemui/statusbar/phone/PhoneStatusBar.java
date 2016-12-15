@@ -612,7 +612,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.QS_QUICKBAR_SCROLL_ENABLED),
                   false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NAV_BAR_DYNAMIC),
+                    false, this, UserHandle.USER_ALL);
            update();
+
         }
 
         @Override
@@ -647,7 +651,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             		mCustomlogoColor = Settings.System.getIntForUser(resolver,
             		Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
 				    showmCustomlogo(mCustomlogo,mCustomlogoColor);
-           }
+            } else if (uri.equals(Settings.System.getUriFor(
+                      Settings.System.NAV_BAR_DYNAMIC))) {
+            }
             update();
         }
 
