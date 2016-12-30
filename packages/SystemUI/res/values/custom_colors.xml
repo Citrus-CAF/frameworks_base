@@ -19,4 +19,8 @@
 
     <!-- Status bar battery level text color -->
     <color name="status_bar_battery_level_text_color">#ffffff</color>
+
+
+    <color name="system_primary_color">#ff263238</color><!--blue grey 900 -->
+
 </resources>
