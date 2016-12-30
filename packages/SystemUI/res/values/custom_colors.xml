@@ -19,4 +19,6 @@
     <!-- Status bar battery level text color -->
     <color name="status_bar_battery_level_text_color">#ffffff</color>
     <color name="batterymeter_frame_color_darkintensity">@color/dark_mode_icon_color_dual_tone_background</color>
+
+    <color name="system_primary_color">#ff263238</color><!--blue grey 900 -->
 </resources>
