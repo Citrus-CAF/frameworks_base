@@ -31,4 +31,5 @@
         <item name="android:textSize">14dp</item>
     </style>
 
+    <color name="system_primary_color">#ff263238</color><!--blue grey 900 -->
 </resources>
