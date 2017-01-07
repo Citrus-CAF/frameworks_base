@@ -20,5 +20,4 @@
 
     <!-- Nav bar button default ordering/layout -->
     <string name="config_navBarLayout" translatable="false">back,home;space;menu_ime,recent</string>
-
 </resources>
