@@ -23,6 +23,9 @@
        The user is forbidden from setting the brightness below this level. -->
   <integer name="config_buttonBrightnessSettingMinimum">10</integer>
 
+  <!-- sRGB sysfs path -->
+  <string name="config_srgb_path"></string>
+
   <!-- Extended Boosts for QPerformance -->
 
   <!-- Whether cpu boost is enabled right after boot -->
