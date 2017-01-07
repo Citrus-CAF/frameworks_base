@@ -77,10 +77,7 @@
   <java-symbol type="drawable" name="ic_audio_notification_mute_new" />
   <java-symbol type="drawable" name="ic_audio_notification_mute_alpha" />
 
-
-
-
-
-
+  <!-- sRGB mode -->
+  <java-symbol type="string" name="config_srgb_path" />
 
 </resources>
