@@ -144,4 +144,8 @@
     <string name="accessibility_quick_settings_anbi_changed_off">Accidental touch turned off</string>
     <string name="accessibility_quick_settings_anbi_changed_on">Accidental touch turned on</string>
 
+    <!-- Ambient Display -->
+    <string name="quick_settings_doze_notifications_label">Doze notifications</string>
+    <string name="quick_settings_doze_notifications_user">Doze notifications</string>
+    <string name="quick_settings_doze_notifications_off">No doze notifications</string>
 </resources>

@@ -54,7 +54,7 @@
     <string name="quick_settings_smartbar_off">SmartBar off</string>
     <string name="quick_settings_fling">Fling</string>
     <string name="quick_settings_fling_off">Fling off</string>
-
+    
     <!-- LocationTile Advanced -->
     <string name="accessibility_quick_settings_location_battery_saving">Location reporting: battery saving mode.</string>
     <string name="accessibility_quick_settings_location_gps_only">Location reporting: sensors only mode.</string>
