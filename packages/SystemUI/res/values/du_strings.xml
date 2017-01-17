@@ -68,4 +68,7 @@
     <string name="show_lte_fourgee_summary">Replaces LTE statusbar indicator with 4G</string>
     <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
 
+    <!-- Recents memory bar -->
+    <string name="recents_free_ram">FREE RAM</string>
+
 </resources>
