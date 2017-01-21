@@ -4496,6 +4496,12 @@ public final class Settings {
         public static final String DISABLE_DASHBOARD_CONDITIONS = "disable_dashboard_conditions";
 
         /**
+         * Whether to show dashboard summaries in a single line or not
+         * @hide
+         */
+        public static final String DASHBOARD_SUMMARY_DOUBLE_LINES = "dashboard_summary_double_lines";
+
+        /**
          * Remove dashboard tile summaries in Settings
          * @hide
          */
