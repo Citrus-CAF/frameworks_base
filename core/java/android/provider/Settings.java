@@ -4037,7 +4037,12 @@ public final class Settings {
         public static final String STATUS_BAR_TICKER_ICON_COLOR = "status_bar_ticker_icon_color";
 
         /**
-         * Ticker Font Style
+         * Dashboard columns in settings
+         * @hide
+         */
+        public static final String DASHBOARD_COLUMNS = "dashboard_columns";
+
+        /**
          * @hide
          */
         public static final String STATUS_BAR_TICKER_FONT_STYLE = "status_bar_ticker_font_style";
