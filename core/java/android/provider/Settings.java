@@ -4036,11 +4036,16 @@ public final class Settings {
         public static final String STATUS_BAR_TICKER_ICON_COLOR = "status_bar_ticker_icon_color";
 
         /**
-         * Dashboard columns in settings
+         * Dashboard portrait columns in settings
          * @hide
          */
-        public static final String DASHBOARD_COLUMNS = "dashboard_columns";
+        public static final String DASHBOARD_PORTRAIT_COLUMNS = "dashboard_portrait_columns";
 
+        /**
+         * Dashboard landscape columns in settings
+         * @hide
+         */
+        public static final String DASHBOARD_LANDSCAPE_COLUMNS = "dashboard_landscape_columns";
         /**
          * @hide
          */
