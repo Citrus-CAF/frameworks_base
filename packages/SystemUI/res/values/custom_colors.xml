@@ -17,6 +17,9 @@
 
 <resources>
 
+    <!-- Alarm status color -->
+    <color name="alarm_status_color">#E0E0E0</color>
+
     <!-- Status bar battery level text color -->
     <color name="status_bar_battery_level_text_color">#ffffff</color>
 
