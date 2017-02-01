@@ -24,6 +24,8 @@ import android.app.Fragment;
 import android.app.StatusBarManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.database.ContentObserver;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,7 +39,6 @@ import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.android.internal.utils.du.UserContentObserver;
 import com.android.systemui.Dependency;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
@@ -73,8 +74,11 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     // Citrus additions start
     private ImageView mCitrusLogo;
+    private ImageView mCustomLogo; 
+    private int mCustomlogoStyle; 
     private View mTickerViewFromStub;    
     private boolean mShowLogo;
+    private boolean mShowCustomLogo;    
     private final Handler mHandler = new Handler();
     private int mTickerEnabled;
     private ContentResolver mContentResolver;
@@ -88,6 +92,12 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_LOGO),
                     false, this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CUSTOM_LOGO),
+                    false, this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CUSTOM_LOGO_STYLE),
+                    false, this, UserHandle.USER_ALL);
             getContext().getContentResolver().registerContentObserver(
                     Settings.System.getUriFor(Settings.System.STATUS_BAR_SHOW_TICKER),
                     false, this, UserHandle.USER_ALL);
@@ -97,6 +107,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         public void onChange(boolean selfChange, Uri uri) {
             if (uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_LOGO))) {
                 updateSettings(true);
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_CUSTOM_LOGO))
+                    || uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_CUSTOM_LOGO_STYLE))) {
+                updateSettings(true);
+                updateCustomLogo();
             }
         }
     }
@@ -139,7 +153,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mSignalClusterView = mStatusBar.findViewById(R.id.signal_cluster);
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mSignalClusterView);
         mCitrusLogo = mStatusBar.findViewById(R.id.status_bar_logo);
-        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mCitrusLogo);        
+        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mCitrusLogo);
+        mCustomLogo = mStatusBar.findViewById(R.id.status_bar_custom_logo);
+        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mCustomLogo);      
         mCustomSettingsObserver.observe();
         updateSettings(false);
         // initTickerView() already called above from updateSettings(false) 
@@ -172,6 +188,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(mSignalClusterView);
         Dependency.get(StatusBarIconController.class).removeIconGroup(mDarkIconManager);
         Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(mCitrusLogo);
+        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(mCustomLogo);        
         if (mNetworkController.hasEmergencyCryptKeeperText()) {
             mNetworkController.removeCallback(mSignalCallback);
         }
@@ -254,12 +271,20 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mShowLogo) {
             animateHide(mCitrusLogo, animate, true);
         }
+
+        if (mShowCustomLogo) {
+            animateHide(mCustomLogo, animate, true);
+        }
     }
 
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
         if (mShowLogo) {
             animateShow(mCitrusLogo, animate);
+        }
+        
+        if (mShowCustomLogo) {
+            animateShow(mCustomLogo, animate);            
         }
     }
 
@@ -358,9 +383,136 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         }
     }
 
+        mShowCustomLogo = Settings.System.getIntForUser(mContentResolver,
+                Settings.System.STATUS_BAR_CUSTOM_LOGO, 0,
+                UserHandle.USER_CURRENT) == 1;
+        if (mNotificationIconAreaInner != null) {
+            if (mShowCustomLogo) {
+                if (mNotificationIconAreaInner.getVisibility() == View.VISIBLE) {
+                    animateShow(mCustomLogo, animate);
+                }
+            } else {
+                animateHide(mCustomLogo, animate, false);
+        }
+    }
+    
         mTickerEnabled = Settings.System.getIntForUser(mContentResolver,
                 Settings.System.STATUS_BAR_SHOW_TICKER, 0,
                 UserHandle.USER_CURRENT);
         initTickerView();
+
+        mCustomlogoStyle = Settings.System.getIntForUser(mContentResolver,
+                Settings.System.STATUS_BAR_CUSTOM_LOGO_STYLE, 0,
+                UserHandle.USER_CURRENT);
     }
+
+
+    public void updateCustomLogo() {
+        if (getContext() == null) {
+            return;
+        }
+
+        Drawable d = null;
+        
+        if (!mShowCustomLogo) {
+            mCustomLogo.setImageDrawable(null);
+            mCustomLogo.setVisibility(View.GONE);
+            return;
+        } else {
+            mCustomLogo.setVisibility(View.VISIBLE);            
+        }
+
+        int style = mCustomlogoStyle;
+        if ( style == 0) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_cardinal);
+        } else if ( style == 1) {
+            d = getContext().getResources().getDrawable(R.drawable.bugdroid);
+		} else if ( style == 2) {
+            d = getContext().getResources().getDrawable(R.drawable.drupal);
+		} else if ( style == 3) {
+            d = getContext().getResources().getDrawable(R.drawable.cool_smile);
+		} else if ( style == 4) {
+            d = getContext().getResources().getDrawable(R.drawable.ghost);
+		} else if ( style == 5) {
+            d = getContext().getResources().getDrawable(R.drawable.windows);
+        } else if ( style == 6) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_pcmr);
+        } else if ( style == 7) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_playstation);
+		} else if ( style == 8) {
+            d = getContext().getResources().getDrawable(R.drawable.xbox);
+		} else if ( style == 9) {
+            d = getContext().getResources().getDrawable(R.drawable.emoji);
+		} else if ( style == 10) {
+            d = getContext().getResources().getDrawable(R.drawable.happy_smile);
+		} else if ( style == 11) {
+            d = getContext().getResources().getDrawable(R.drawable.blender);
+		} else if ( style == 12) {
+            d = getContext().getResources().getDrawable(R.drawable.guitar_electric);
+		} else if ( style == 13) {
+            d = getContext().getResources().getDrawable(R.drawable.radioactive);
+		} else if ( style == 14) {
+            d = getContext().getResources().getDrawable(R.drawable.professional_hexagon);
+		} else if ( style == 15) {
+            d = getContext().getResources().getDrawable(R.drawable.pokeball);
+		} else if ( style == 16) {
+            d = getContext().getResources().getDrawable(R.drawable.cat);
+		} else if ( style == 17) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_batman);
+        } else if ( style == 18) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_batman_2k16);
+        } else if ( style == 19) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_captain_america);
+        } else if ( style == 20) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_daredevil);
+        } else if ( style == 21) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_deadpool);
+        } else if ( style == 22) {
+            d = getContext().getResources().getDrawable(R.drawable.flash);
+        } else if ( style == 23) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_fsociety);
+        } else if ( style == 24) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_ironman);
+        } else if ( style == 25) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_justice_league);
+		} else if ( style == 26) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_green_lantern);
+        } else if ( style == 27) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_punisher);
+        } else if ( style == 28) {
+            d = getContext().getResources().getDrawable(R.drawable.spider1);
+        } else if ( style == 29) {
+            d = getContext().getResources().getDrawable(R.drawable.spider2);
+		} else if ( style == 30) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_superman);
+		} else if ( style == 31) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_wonder_women);
+		} else if ( style == 32) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_ac_milan);
+		} else if ( style == 33) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_barcelona);
+		} else if ( style == 34) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_bayern);
+		} else if ( style == 35) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_chelsea);
+		} else if ( style == 36) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_juventus);
+		} else if ( style == 37) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_liverpool);
+		} else if ( style == 38) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_man_city);
+		} else if ( style == 39) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_man_utd);
+		} else if ( style == 40) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_real_madrid);
+		} else if ( style == 41) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_tottenham);
+        } else if ( style == 42) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_mi);
+        } else if ( style == 43) {
+            d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_oneplus);
+    }
+	    mCustomLogo.setImageDrawable(null);
+	    mCustomLogo.setImageDrawable(d);
+   }
 }

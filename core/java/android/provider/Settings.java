@@ -4398,6 +4398,18 @@ public final class Settings {
         public static final String STATUS_BAR_LOGO = "status_bar_logo";
 
         /**
+         * Statusbar Custom logos
+         * @hide
+         */
+        public static final String STATUS_BAR_CUSTOM_LOGO = "status_bar_custom_logo";
+        
+        /**
+         * Take your Pick 
+         * @hide
+         */
+        public static final String STATUS_BAR_CUSTOM_LOGO_STYLE = "status_bar_custom_logo_style";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4612,6 +4624,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREEN_STATE_ON_DELAY);
             PRIVATE_SETTINGS.add(FORCE_AMBIENT_FOR_MEDIA);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO);
+            PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_LOGO);
+            PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_LOGO_STYLE);            
         }
 
         /**
