@@ -436,9 +436,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private boolean mShowCarrierInPanel = false;
     boolean mExpandedVisible;
 
-    // Citrus-CAF logo
-    private boolean mCitrusLogo;
-    private ImageView citrusLogo;
 
     private int mQsLayoutColumns;
 
@@ -560,9 +557,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUSBAR_CLOCK_STYLE), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CITRUS_LOGO), false, this,
-                    UserHandle.USER_ALL);
            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_LAYOUT_COLUMNS), false, this,
                     UserHandle.USER_ALL);
@@ -585,7 +579,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                   Settings.System.STATUS_BAR_CUSTOM_HEADER),
                   false, this, UserHandle.USER_ALL);
             update();
-       }
+        }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
@@ -627,11 +621,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mBrightnessControl = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
-
-            mCitrusLogo = Settings.System.getIntForUser(resolver,
-                    Settings.System.STATUS_BAR_CITRUS_LOGO, 0, mCurrentUserId) == 1;
-            showCitrusLogo(mCitrusLogo);
-
             mShowCarrierLabel = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_SHOW_CARRIER, 1, UserHandle.USER_CURRENT);
             mClockLocation = Settings.System.getIntForUser(
@@ -965,7 +954,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mSettingsObserver = new SettingsObserver(new Handler());
         }
         mSettingsObserver.observe();
-
+ 
         // Lastly, call to the icon policy to install/update all the icons.
         mIconPolicy = new PhoneStatusBarPolicy(mContext, mIconController, mCastController,
                 mHotspotController, mUserInfoController, mBluetoothController,
@@ -4132,15 +4121,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
         }, cancelAction, afterKeyguardGone);
     }
-
-    public void showCitrusLogo(boolean show) {
-          if (mStatusBarView == null) return;
-          ContentResolver resolver = mContext.getContentResolver();
-          citrusLogo = (ImageView) mStatusBarView.findViewById(R.id.citrus_logo);
-          if (citrusLogo != null) {
-              citrusLogo.setVisibility(show ? (mCitrusLogo ? View.VISIBLE : View.GONE) : View.GONE);
-          }
-     }
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
