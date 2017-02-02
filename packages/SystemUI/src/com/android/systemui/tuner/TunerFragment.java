@@ -41,11 +41,7 @@ public class TunerFragment extends PreferenceFragment {
 
     private static final String TAG = "TunerFragment";
 
-    private static final String STATUS_BAR_CITRUS_LOGO = "status_bar_citrus_logo";
-
     private static final String BLUETOOTH_SHOW_BATTERY = "bluetooth_show_battery";
-
-    private SwitchPreference mCitrusLogo;
 
     private static final String SHOW_LTE_FOURGEE = "show_lte_fourgee";
 
@@ -60,10 +56,6 @@ public class TunerFragment extends PreferenceFragment {
 
         PreferenceScreen prefSet = getPreferenceScreen();
         final ContentResolver resolver = getActivity().getContentResolver();
-
-        mCitrusLogo = (SwitchPreference) findPreference(STATUS_BAR_CITRUS_LOGO);
-        mCitrusLogo.setChecked((Settings.System.getInt(resolver,
-                Settings.System.STATUS_BAR_CITRUS_LOGO, 0) == 1));
 
         mShowLteFourGee = (SwitchPreference) findPreference(SHOW_LTE_FOURGEE);
         if (CustomUtils.isWifiOnly(getActivity())) {
@@ -121,12 +113,7 @@ public class TunerFragment extends PreferenceFragment {
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
-        if  (preference == mCitrusLogo) {
-            boolean checked = ((SwitchPreference)preference).isChecked();
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.STATUS_BAR_CITRUS_LOGO, checked ? 1:0);
-            return true;
-        } else if  (preference == mShowLteFourGee) {
+        if  (preference == mShowLteFourGee) {
             boolean checked = ((SwitchPreference)preference).isChecked();
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.SHOW_LTE_FOURGEE, checked ? 1:0);
