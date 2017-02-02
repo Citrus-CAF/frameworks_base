@@ -4053,12 +4053,6 @@ public final class Settings {
          */
         public static final String STATUS_BAR_TICKER_FONT_SIZE = "status_bar_ticker_font_size";
 
-        /**
-         * Statusbar Citrus logo
-         * @hide
-         */
-        public static final String STATUS_BAR_CITRUS_LOGO = "status_bar_citrus_logo";
-
          /**
          * Quick Settings number of columns
          * @hide
