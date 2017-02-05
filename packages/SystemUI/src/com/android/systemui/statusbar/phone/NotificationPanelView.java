@@ -295,6 +295,7 @@ public class NotificationPanelView extends PanelView implements
                 mNotificationStackScroller.setQsContainer(mQsContainer);
             }
         });
+    }
 
     @Override
     protected void loadDimens() {
