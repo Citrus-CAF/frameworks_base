@@ -36,10 +36,6 @@
     <!-- Button to Restart SystemUI, within the Reboot Options dialog -->
     <string name="reboot_systemui">Restart SystemUI</string>
 
-    <!-- Reboot Confirmation Dialog. -->
-    <string name="reboot_confirm" product="tablet">Your tablet will reboot.</string>
-    <string name="reboot_confirm" product="default">Your phone will reboot.</string>
-
     <!-- Reboot Progress Dialog. This is shown if the user chooses to reboot the phone. -->
     <string name="reboot_progress">Rebooting\u2026</string>
 
