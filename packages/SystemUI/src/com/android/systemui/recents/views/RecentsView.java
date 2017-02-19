@@ -446,19 +446,16 @@ public class RecentsView extends FrameLayout {
                     params.gravity = Gravity.TOP | Gravity.RIGHT;
                     break;
                 case 1:
-                    params.gravity = Gravity.TOP | Gravity.LEFT;
-                    break;
-                case 2:
                     params.gravity = Gravity.TOP | Gravity.CENTER;
                     break;
-                case 3:
+                case 2:
                 default:
                     params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
                     break;
-                case 4:
+                case 3:
                     params.gravity = Gravity.BOTTOM | Gravity.LEFT;
                     break;
-                case 5:
+                case 4:
                     params.gravity = Gravity.BOTTOM | Gravity.CENTER;
                     break;
             }
