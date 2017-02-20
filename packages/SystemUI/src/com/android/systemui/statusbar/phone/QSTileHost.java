@@ -450,7 +450,6 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("reboot")) return new RebootTile(this);
         else if (tileSpec.equals("navigation_bar")) return new NavigationBarTile(this);
         else if (tileSpec.equals("heads_up")) return new HeadsUpTile(this);
-        else if (tileSpec.equals("nfc")) return new NfcTile(this);
         else if (tileSpec.equals("usb_tether")) return new UsbTetherTile(this);
 
         // Intent tiles.
