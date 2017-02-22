@@ -181,8 +181,9 @@ public class InputManagerService extends IInputManager.Stub
 
     // State for the currently installed input filter.
     final Object mInputFilterLock = new Object();
-    IInputFilter mInputFilter; // guarded by mInputFilterLock
-    InputFilterHost mInputFilterHost; // guarded by mInputFilterLock
+    ChainedInputFilterHost mInputFilterHost; // guarded by mInputFilterLock
+    ArrayList<ChainedInputFilterHost> mInputFilterChain =
+            new ArrayList<ChainedInputFilterHost>(); // guarded by mInputFilterLock
 
     private static native long nativeInit(InputManagerService service,
             Context context, MessageQueue messageQueue);
@@ -544,20 +545,9 @@ public class InputManagerService extends IInputManager.Stub
      */
     public void setInputFilter(IInputFilter filter) {
         synchronized (mInputFilterLock) {
-            final IInputFilter oldFilter = mInputFilter;
-            if (oldFilter == filter) {
-                return; // nothing to do
-            }
-
-            if (oldFilter != null) {
-                mInputFilter = null;
+            if (mInputFilterHost != null) {
                 mInputFilterHost.disconnectLocked();
                 mInputFilterHost = null;
-                try {
-                    oldFilter.uninstall();
-                } catch (RemoteException re) {
-                    /* ignore */
-                }
             }
 
             if (filter != null) {

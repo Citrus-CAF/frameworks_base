@@ -126,6 +126,7 @@ import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManagerInternal;
 
 import com.android.internal.R;
+import com.android.internal.app.ActivityTrigger;
 import com.android.internal.app.IAssistScreenshotReceiver;
 import com.android.internal.os.IResultReceiver;
 import com.android.internal.policy.IShortcutService;
@@ -265,7 +266,10 @@ public class WindowManagerService extends IWindowManager.Stub
 
     static final boolean PROFILE_ORIENTATION = false;
     static final boolean localLOGV = DEBUG;
-
+    static final boolean mEnableAnimCheck = SystemProperties.getBoolean("persist.animcheck.enable", false);
+    static ActivityTrigger mActivityTrigger = new ActivityTrigger();
+    static WindowState mFocusingWindow;
+    String mFocusingActivity;
     /** How much to multiply the policy's type layer, to reserve room
      * for multiple windows of the same type and Z-ordering adjustment
      * with TYPE_LAYER_OFFSET. */
@@ -349,6 +353,11 @@ public class WindowManagerService extends IWindowManager.Stub
     private static final float DRAG_SHADOW_ALPHA_TRANSPARENT = .7071f;
 
     private static final String PROPERTY_BUILD_DATE_UTC = "ro.build.date.utc";
+
+    /*define misc. activty trigger function*/
+    static final int START_PROCESS = 1;
+    static final int NETWORK_OPTS = 2;
+    static final int ANIMATION_SCALE = 3;
 
     // Enums for animation scale update types.
     @Retention(RetentionPolicy.SOURCE)
@@ -1073,6 +1082,7 @@ public class WindowManagerService extends IWindowManager.Stub
         mSfHwRotation = android.os.SystemProperties.getInt("ro.sf.hwrotation",0) / 90;
 
         showEmulatorDisplayOverlayIfNeeded();
+        mUiHandler = UiThread.getHandler();
     }
 
     public InputMonitor getInputMonitor() {
@@ -1887,6 +1897,7 @@ public class WindowManagerService extends IWindowManager.Stub
         long origId;
         final int callingUid = Binder.getCallingUid();
         final int type = attrs.type;
+        mFocusingActivity = attrs.getTitle().toString();
 
         synchronized(mWindowMap) {
             if (!mDisplayReady) {
@@ -3970,7 +3981,13 @@ public class WindowManagerService extends IWindowManager.Stub
                 Slog.w(TAG_WM, "Attempted to set orientation of non-existing app token: " + token);
                 return;
             }
-
+            if(requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                  || requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+                  || requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+                  || requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE) {
+                Slog.i(TAG, "setAppOrientation token: "+token+" requestedOrientation: "+requestedOrientation);
+                Settings.Global.putString(mContext.getContentResolver(), Settings.Global.SINGLE_HAND_MODE, "");
+            }
             atoken.requestedOrientation = requestedOrientation;
         }
     }
@@ -4019,6 +4036,16 @@ public class WindowManagerService extends IWindowManager.Stub
             }
 
             final boolean changed = mFocusedApp != newFocus;
+            if (changed && newFocus != null) {
+                int requestedOrientation = newFocus.requestedOrientation;
+                if(requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                         || requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+                         || requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+                         || requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE) {
+                    Slog.i(TAG, "setFocusedApp token: "+token+" requestedOrientation: "+requestedOrientation);
+                    Settings.Global.putString(mContext.getContentResolver(), Settings.Global.SINGLE_HAND_MODE, "");
+                }
+            }
             if (changed) {
                 mFocusedApp = newFocus;
                 mInputMonitor.setFocusedAppLw(newFocus);
@@ -5731,12 +5758,38 @@ public class WindowManagerService extends IWindowManager.Stub
         ValueAnimator.setDurationScale(scale);
     }
 
+    private float animationScalesCheck (int which) {
+        float value = -1.0f;
+        if (!mAnimationsDisabled) {
+            if (mEnableAnimCheck) {
+                if (mFocusingActivity != null) {
+                    if (mActivityTrigger == null) {
+                        mActivityTrigger = new ActivityTrigger();
+                    }
+                    if (mActivityTrigger != null) {
+                        value = mActivityTrigger.activityMiscTrigger(ANIMATION_SCALE, mFocusingActivity, which, 0);
+                    }
+               }
+            }
+            if (value == -1.0f) {
+                switch (which) {
+                    case WINDOW_ANIMATION_SCALE: value = mWindowAnimationScaleSetting; break;
+                    case TRANSITION_ANIMATION_SCALE: value = mTransitionAnimationScaleSetting; break;
+                    case ANIMATION_DURATION_SCALE: value = mAnimatorDurationScaleSetting; break;
+                }
+            }
+        } else {
+            value = 0;
+        }
+        return value;
+    }
+
     public float getWindowAnimationScaleLocked() {
-        return mAnimationsDisabled ? 0 : mWindowAnimationScaleSetting;
+        return animationScalesCheck(WINDOW_ANIMATION_SCALE);
     }
 
     public float getTransitionAnimationScaleLocked() {
-        return mAnimationsDisabled ? 0 : mTransitionAnimationScaleSetting;
+        return animationScalesCheck(TRANSITION_ANIMATION_SCALE);
     }
 
     @Override
@@ -5758,7 +5811,7 @@ public class WindowManagerService extends IWindowManager.Stub
     @Override
     public float getCurrentAnimatorScale() {
         synchronized(mWindowMap) {
-            return mAnimationsDisabled ? 0 : mAnimatorDurationScaleSetting;
+            return animationScalesCheck(ANIMATION_DURATION_SCALE);
         }
     }
 
@@ -8228,6 +8281,11 @@ public class WindowManagerService extends IWindowManager.Stub
 
     public void systemReady() {
         mPolicy.systemReady();
+        mSingleHandSwitch = judgeSingleHandSwitchBySize() ? 1 : 0;
+        if (mSingleHandSwitch > 0) {
+            mSingleHandAdapter = new SingleHandAdapter(mContext, mH, mUiHandler, this);
+            mSingleHandAdapter.registerLocked();
+        }
     }
 
     // -------------------------------------------------------------
@@ -10040,6 +10098,12 @@ public class WindowManagerService extends IWindowManager.Stub
                             // No focus for you!!!
                             if (localLOGV || DEBUG_FOCUS_LIGHT) Slog.v(TAG_WM,
                                     "findFocusedWindow: Reached focused app=" + mFocusedApp);
+                            if (mFocusedApp.hasWindowsAlive()) {
+                                mFocusingWindow = mFocusedApp.findMainWindow();
+                                if (mFocusingWindow != null) {
+                                    mFocusingActivity = mFocusingWindow.mAttrs.getTitle().toString();
+                                }
+                            }
                             return null;
                         }
                     }
@@ -11799,5 +11863,45 @@ public class WindowManagerService extends IWindowManager.Stub
                 return getDefaultDisplayContentLocked().getDockedDividerController().isResizing();
             }
         }
+    }
+
+    public int mSingleHandMode = 0;
+    private SingleHandAdapter mSingleHandAdapter;
+    private final Handler mUiHandler;
+
+    private static int mSingleHandSwitch;
+    public int getSingleHandMode() {
+        return mSingleHandMode;
+    }
+    public void setSingleHandMode(int singleHandMode) {
+        Slog.i(TAG, "cur: "+mSingleHandMode+" to: "+singleHandMode);
+        if(mSingleHandMode == singleHandMode) return;
+        mSingleHandMode = singleHandMode;
+    }
+
+    /**
+     * Freeze rotation changes.  (Enable "rotation lock".)
+     * not persists across reboots.
+     * @param rotation The desired rotation to freeze to, or -1 to thaw rotation
+     * changes
+     */
+    public void freezeOrThawRotation(int rotation) {
+        if (!checkCallingPermission(android.Manifest.permission.SET_ORIENTATION,
+                "freezeRotation()")) {
+            throw new SecurityException("Requires SET_ORIENTATION permission");
+        }
+        if (rotation < -1 || rotation > Surface.ROTATION_270) {
+            throw new IllegalArgumentException("Rotation argument must be -1 or a valid "
+                    + "rotation constant.");
+        }
+
+        Slog.i(TAG, "freezeRotationTemporarily: mRotation=" + mRotation);
+
+        mPolicy.freezeOrThawRotation(rotation);
+        updateRotationUnchecked(false, false);
+    }
+
+    private boolean judgeSingleHandSwitchBySize() {
+        return true;
     }
 }

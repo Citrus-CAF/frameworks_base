@@ -44,7 +44,6 @@ import android.database.ContentObserver;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
-import com.android.systemui.recents.RecentsActivity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -114,11 +113,9 @@ import com.android.systemui.statusbar.policy.RemoteInputView;
 import com.android.systemui.statusbar.stack.NotificationStackScrollLayout;
 import com.android.systemui.statusbar.stack.StackStateAnimator;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -128,8 +125,7 @@ import static android.service.notification.NotificationListenerService.Ranking.I
 public abstract class BaseStatusBar extends SystemUI implements
         CommandQueue.Callbacks, ActivatableNotificationView.OnActivatedListener,
         ExpandableNotificationRow.ExpansionLogger, NotificationData.Environment,
-        ExpandableNotificationRow.OnExpandClickListener,
-        OnGutsClosedListener {
+        ExpandableNotificationRow.OnExpandClickListener {
     public static final String TAG = "StatusBar";
     public static final boolean DEBUG = false;
     public static final boolean MULTIUSER_DEBUG = false;
@@ -173,7 +169,7 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected H mHandler = createHandler();
 
     // all notifications
-    public static NotificationData mNotificationData;
+    protected NotificationData mNotificationData;
     protected NotificationStackScrollLayout mStackScroller;
 
     protected NotificationGroupManager mGroupManager = new NotificationGroupManager();
@@ -271,8 +267,6 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected AssistManager mAssistManager;
 
     protected boolean mVrMode;
-    
-    private static final HashMap<String, Field> fieldCache = new HashMap<String, Field>();
 
     private Set<String> mNonBlockablePkgs;
 
@@ -1082,7 +1076,12 @@ public abstract class BaseStatusBar extends SystemUI implements
         PackageManager pmUser = getPackageManagerForUser(mContext, sbn.getUser().getIdentifier());
         row.setTag(sbn.getPackageName());
         final NotificationGuts guts = row.getGuts();
-        guts.setClosedListener(this);
+        guts.setClosedListener((NotificationGuts g) -> {
+            if (!row.isRemoved()) {
+                mStackScroller.onHeightChanged(row, !isPanelFullyCollapsed() /* needsAnimation */);
+            }
+            mNotificationGutsExposed = null;
+        });
         final String pkg = sbn.getPackageName();
         String appname = pkg;
         Drawable pkgicon = null;
@@ -1220,7 +1219,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                         guts.setExposed(true /* exposed */,
                                 mState == StatusBarState.KEYGUARD /* needsFalsingProtection */);
                         row.closeRemoteInput();
-                        mStackScroller.onHeightChanged(null, true /* needsAnimation */);
+                        mStackScroller.onHeightChanged(row, true /* needsAnimation */);
                         mNotificationGutsExposed = guts;
                     }
                 });
@@ -1254,12 +1253,6 @@ public abstract class BaseStatusBar extends SystemUI implements
     }
 
     @Override
-    public void onGutsClosed(NotificationGuts guts) {
-        mStackScroller.onHeightChanged(null, true /* needsAnimation */);
-        mNotificationGutsExposed = null;
-    }
-
-    @Override
     public void showRecentApps(boolean triggeredFromAltTab, boolean fromHome) {
         int msg = MSG_SHOW_RECENT_APPS;
         mHandler.removeMessages(msg);
@@ -1276,7 +1269,6 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     @Override
     public void toggleRecentApps() {
-        RecentsActivity.startBlurTask();
         toggleRecents();
     }
 
@@ -1535,78 +1527,6 @@ public abstract class BaseStatusBar extends SystemUI implements
                     notification.getUserId());
         } catch (android.os.RemoteException ex) {
             // oh well
-        }
-    }
-    
-    public static void updatePreferences() {
-
-        if (mNotificationData == null)
-            return;
-
-        for (Entry entry : mNotificationData.getActiveNotifications()) {
-            NotificationBackgroundView mBackgroundNormal = (NotificationBackgroundView) getObjectField(entry.row, "mBackgroundNormal");
-            NotificationBackgroundView mBackgroundDimmed = (NotificationBackgroundView) getObjectField(entry.row, "mBackgroundDimmed");
-
-            mBackgroundNormal.postInvalidate();
-            mBackgroundDimmed.postInvalidate();
-        }
-    }
-
-
-    public static Object getObjectField(Object obj, String fieldName) {
-        try {
-            return findField(obj.getClass(), fieldName).get(obj);
-        } catch (IllegalAccessException e) {
-            throw new IllegalAccessError(e.getMessage());
-        } catch (IllegalArgumentException e) {
-            throw e;
-        }
-    }
-
-
-    /**
-     * Look up a field in a class and set it to accessible. The result is cached.
-     * If the field was not found, a {@link NoSuchFieldError} will be thrown.
-     */
-    public static Field findField(Class<?> clazz, String fieldName) {
-        StringBuilder sb = new StringBuilder(clazz.getName());
-        sb.append('#');
-        sb.append(fieldName);
-        String fullFieldName = sb.toString();
-
-        if (fieldCache.containsKey(fullFieldName)) {
-            Field field = fieldCache.get(fullFieldName);
-            if (field == null)
-                throw new NoSuchFieldError(fullFieldName);
-            return field;
-        }
-
-        try {
-            Field field = findFieldRecursiveImpl(clazz, fieldName);
-            field.setAccessible(true);
-            fieldCache.put(fullFieldName, field);
-            return field;
-        } catch (NoSuchFieldException e) {
-            fieldCache.put(fullFieldName, null);
-            throw new NoSuchFieldError(fullFieldName);
-        }
-    }
-
-    private static Field findFieldRecursiveImpl(Class<?> clazz, String fieldName) throws NoSuchFieldException {
-        try {
-            return clazz.getDeclaredField(fieldName);
-        } catch (NoSuchFieldException e) {
-            while (true) {
-                clazz = clazz.getSuperclass();
-                if (clazz == null || clazz.equals(Object.class))
-                    break;
-
-                try {
-                    return clazz.getDeclaredField(fieldName);
-                } catch (NoSuchFieldException ignored) {
-                }
-            }
-            throw e;
         }
     }
 

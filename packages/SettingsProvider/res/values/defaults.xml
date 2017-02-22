@@ -82,6 +82,10 @@
     <string name="def_wireless_charging_started_sound" translatable="false">/system/media/audio/ui/WirelessChargingStarted.ogg</string>
     <bool name="def_volume_adjust_sounds_enabled">true</bool>
 
+    <bool name="def_power_notifications_enabled">false</bool>
+    <bool name="def_power_notifications_vibrate">false</bool>
+    <string name="def_power_notifications_ringtone" translatable="false">content://settings/system/notification_sound</string>
+
     <bool name="def_lockscreen_disabled">false</bool>
     <bool name="def_device_provisioned">false</bool>
     <integer name="def_dock_audio_media_enabled">1</integer>
@@ -298,4 +302,8 @@
     <integer name="def_captive_portal_detection_enabled" translatable="false">1</integer>
     <!-- Default for Settings.Global.TETHER_DUN_REQUIRED -->
     <integer name="def_tether_dun_required">0</integer>
+
+    <!-- Default for Settings.System.STATUS_BAR_NOTIF_COUNT. -->
+    <integer name="def_notif_count">0</integer>
+
 </resources>
