@@ -153,3 +153,4 @@ public class BatteryLevelTextView extends TextView implements
         }
     }
 }
+
