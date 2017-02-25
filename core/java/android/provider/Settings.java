@@ -7494,9 +7494,9 @@ public final class Settings {
         public static final String QQS_COUNT = "sysui_qqs_count";
 
         /**
-         * Whether to use one tap tile action to enable or disable data 
+         * Whether to use one tap tile action to enable or disable data
          * @hide
-         * 
+         *
          */
         public static final String QS_DATA_ADVANCED = "qs_data_advanced";
 
@@ -7511,6 +7511,12 @@ public final class Settings {
          * @hide
          */
         public static final String ONE_HANDED_MODE_UI = "one_handed_mode_ui";
+
+        /**
+         * Force authorize Substratum (or equivalent) frontend calling packages by Masquerade
+         * @hide
+         */
+        public static final String FORCE_AUTHORIZE_SUBSTRATUM_PACKAGES = "force_authorize_substratum_packages";
 
         /**
          * This are the settings to be backed up.
