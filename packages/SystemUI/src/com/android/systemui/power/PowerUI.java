@@ -16,8 +16,6 @@
 
 package com.android.systemui.power;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -77,9 +75,7 @@ public class PowerUI extends SystemUI {
     private long mNextLogTime;
 
     // For filtering ACTION_POWER_DISCONNECTED on boot
-    boolean mIgnoreFirstPowerEvent = true;
-
-    private static final String POWER_NOTIFICATIONS_SILENT_URI = "silent";
+    private boolean mIgnoredFirstPowerBroadcast;
 
     public void start() {
         mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
@@ -186,8 +182,8 @@ public class PowerUI extends SystemUI {
                 final boolean plugged = mPlugType != 0;
                 final boolean oldPlugged = oldPlugType != 0;
 
-                if (mIgnoreFirstPowerEvent && plugged) {
-                    mIgnoreFirstPowerEvent = false;
+                if (!mIgnoredFirstPowerBroadcast && plugged) {
+                    mIgnoredFirstPowerBroadcast = true;
                 }
 
                 int oldBucket = findBatteryLevelBucket(oldBatteryLevel);
@@ -239,15 +235,13 @@ public class PowerUI extends SystemUI {
                 mWarnings.userSwitched();
             } else if (Intent.ACTION_POWER_CONNECTED.equals(action)
                     || Intent.ACTION_POWER_DISCONNECTED.equals(action)) {
-                final ContentResolver cr = mContext.getContentResolver();
-
-                if (mIgnoreFirstPowerEvent) {
-                    mIgnoreFirstPowerEvent = false;
-                } else {
-                    if (Settings.Global.getInt(cr,
-                            Settings.Global.POWER_NOTIFICATIONS_ENABLED, 0) == 1) {
+                if (mIgnoredFirstPowerBroadcast) {
+                    if (Settings.Global.getInt(mContext.getContentResolver(),
+                            Settings.Global.CHARGING_SOUNDS_ENABLED, 0) == 1) {
                         playPowerNotificationSound();
                     }
+                } else {
+                    mIgnoredFirstPowerBroadcast = true;
                 }
             } else {
                 Slog.w(TAG, "unknown intent: " + intent);
@@ -255,119 +249,18 @@ public class PowerUI extends SystemUI {
         }
     };
 
-    private void initTemperatureWarning() {
-        ContentResolver resolver = mContext.getContentResolver();
-        Resources resources = mContext.getResources();
-        if (Settings.Global.getInt(resolver, Settings.Global.SHOW_TEMPERATURE_WARNING,
-                resources.getInteger(R.integer.config_showTemperatureWarning)) == 0) {
-            return;
-        }
+    private void playPowerNotificationSound() {
+        String soundPath = Settings.Global.getString(mContext.getContentResolver(),
+                Settings.Global.POWER_NOTIFICATIONS_RINGTONE);
 
-        mThresholdTemp = Settings.Global.getFloat(resolver, Settings.Global.WARNING_TEMPERATURE,
-                resources.getInteger(R.integer.config_warningTemperature));
-
-        if (mThresholdTemp < 0f) {
-            // Get the throttling temperature. No need to check if we're not throttling.
-            float[] throttlingTemps = mHardwarePropertiesManager.getDeviceTemperatures(
-                    HardwarePropertiesManager.DEVICE_TEMPERATURE_SKIN,
-                    HardwarePropertiesManager.TEMPERATURE_THROTTLING);
-            if (throttlingTemps == null
-                    || throttlingTemps.length == 0
-                    || throttlingTemps[0] == HardwarePropertiesManager.UNDEFINED_TEMPERATURE) {
-                return;
-            }
-            mThresholdTemp = throttlingTemps[0];
-        }
-        setNextLogTime();
-
-        // We have passed all of the checks, start checking the temp
-        updateTemperatureWarning();
-    }
-
-    private void updateTemperatureWarning() {
-        float[] temps = mHardwarePropertiesManager.getDeviceTemperatures(
-                HardwarePropertiesManager.DEVICE_TEMPERATURE_SKIN,
-                HardwarePropertiesManager.TEMPERATURE_CURRENT);
-        if (temps.length != 0) {
-            float temp = temps[0];
-            mRecentTemps[mNumTemps++] = temp;
-
-            PhoneStatusBar phoneStatusBar = getComponent(PhoneStatusBar.class);
-            if (phoneStatusBar != null && !phoneStatusBar.isDeviceInVrMode()
-                    && temp >= mThresholdTemp) {
-                logAtTemperatureThreshold(temp);
-                mWarnings.showTemperatureWarning();
-            } else {
-                mWarnings.dismissTemperatureWarning();
-            }
-        }
-
-        logTemperatureStats();
-
-        mHandler.postDelayed(this::updateTemperatureWarning, TEMPERATURE_INTERVAL);
-    }
-
-    private void logAtTemperatureThreshold(float temp) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("currentTemp=").append(temp)
-                .append(",thresholdTemp=").append(mThresholdTemp)
-                .append(",batteryStatus=").append(mBatteryStatus)
-                .append(",recentTemps=");
-        for (int i = 0; i < mNumTemps; i++) {
-            sb.append(mRecentTemps[i]).append(',');
-        }
-        Slog.i(TAG, sb.toString());
-    }
-
-    /**
-     * Calculates and logs min, max, and average
-     * {@link HardwarePropertiesManager#DEVICE_TEMPERATURE_SKIN} over the past
-     * {@link #TEMPERATURE_LOGGING_INTERVAL}.
-     */
-    private void logTemperatureStats() {
-        if (mNextLogTime > System.currentTimeMillis() && mNumTemps != MAX_RECENT_TEMPS) {
-            return;
-        }
-
-        if (mNumTemps > 0) {
-            float sum = mRecentTemps[0], min = mRecentTemps[0], max = mRecentTemps[0];
-            for (int i = 1; i < mNumTemps; i++) {
-                float temp = mRecentTemps[i];
-                sum += temp;
-                if (temp > max) {
-                    max = temp;
-                }
-                if (temp < min) {
-                    min = temp;
-                }
-            }
-
-            float avg = sum / mNumTemps;
-            Slog.i(TAG, "avg=" + avg + ",min=" + min + ",max=" + max);
-            MetricsLogger.histogram(mContext, "device_skin_temp_avg", (int) avg);
-            MetricsLogger.histogram(mContext, "device_skin_temp_min", (int) min);
-            MetricsLogger.histogram(mContext, "device_skin_temp_max", (int) max);
-        }
-        setNextLogTime();
-        mNumTemps = 0;
-    }
-
-    private void setNextLogTime() {
-        mNextLogTime = System.currentTimeMillis() + TEMPERATURE_LOGGING_INTERVAL;
-    }
-
-    void playPowerNotificationSound() {
-        final ContentResolver cr = mContext.getContentResolver();
-        final String soundPath =
-                Settings.Global.getString(cr, Settings.Global.POWER_NOTIFICATIONS_RINGTONE);
-
-        if (soundPath != null && !soundPath.equals(POWER_NOTIFICATIONS_SILENT_URI) ) {
+        if (soundPath != null && !soundPath.equals("silent")) {
             Ringtone powerRingtone = RingtoneManager.getRingtone(mContext, Uri.parse(soundPath));
             if (powerRingtone != null) {
                 powerRingtone.play();
             }
         }
-        if (Settings.Global.getInt(cr,
+
+        if (Settings.Global.getInt(mContext.getContentResolver(),
                 Settings.Global.POWER_NOTIFICATIONS_VIBRATE, 0) == 1) {
             Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
             if (vibrator != null) {
