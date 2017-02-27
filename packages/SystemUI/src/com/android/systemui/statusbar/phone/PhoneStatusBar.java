@@ -442,7 +442,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     // Custom Logos
     private boolean mCustomlogo;
     private ImageView mCLogo;
-    private int mCustomlogoColor;	
+    private int mCustomlogoColor;
     private int mCustomlogoStyle;
 
     private int mQsLayoutColumns;
@@ -594,23 +594,23 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.STATUS_BAR_CUSTOM_HEADER),
                   false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor( 
-                  Settings.System.STATUS_BAR_CITRUS_LOGO), false, this, 
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.STATUS_BAR_CITRUS_LOGO), false, this,
                   UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.STATUS_BAR_CITRUS_LOGO_COLOR), false, this,
                   UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor( 
+            resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.STATUS_BAR_CITRUS_LOGO_STYLE), false, this,
                   UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.SHOW_CUSTOM_LOGO), false, this,
                   UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.CUSTOM_LOGO_COLOR), false, this, 
+                  Settings.System.CUSTOM_LOGO_COLOR), false, this,
                   UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.CUSTOM_LOGO_STYLE), false, this, 
+                 Settings.System.CUSTOM_LOGO_STYLE), false, this,
                  UserHandle.USER_ALL);
             update();
         }
@@ -1022,7 +1022,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mSettingsObserver = new SettingsObserver(new Handler());
         }
         mSettingsObserver.observe();
- 
+
         // Lastly, call to the icon policy to install/update all the icons.
         mIconPolicy = new PhoneStatusBarPolicy(mContext, mIconController, mCastController,
                 mHotspotController, mUserInfoController, mBluetoothController,
@@ -4283,7 +4283,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     };
 
 
- public void showmCustomlogo(boolean show,int color) { 
+ public void showmCustomlogo(boolean show,int color) {
         if (!show) {
             mCLogo.setVisibility(View.GONE);
             return;

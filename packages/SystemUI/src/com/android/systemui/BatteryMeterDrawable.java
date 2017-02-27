@@ -129,7 +129,6 @@ public class BatteryMeterDrawable extends Drawable implements
     private boolean mForceChargeBatteryText;
     private int  mTextChargingSymbol;
     private boolean mListening;
-
     private boolean mIsAnimating; // stores charge-animation status to remove callbacks
 
     private float mTextX, mTextY; // precalculated position for drawText() to appear centered

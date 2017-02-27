@@ -42,7 +42,6 @@ import com.android.systemui.statusbar.policy.KeyguardUserSwitcher;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.tuner.TunerService;
-
 import java.text.NumberFormat;
 
 /**
@@ -66,7 +65,6 @@ public class KeyguardStatusBarView extends RelativeLayout
     private View mSystemIconsSuperContainer;
     private MultiUserSwitch mMultiUserSwitch;
     private ImageView mMultiUserAvatar;
-    private TextView mBatteryLevel;
 
     private BatteryController mBatteryController;
     private KeyguardUserSwitcher mKeyguardUserSwitcher;
@@ -204,8 +202,7 @@ public class KeyguardStatusBarView extends RelativeLayout
 
         boolean showBatteryLevel = getResources().getBoolean(R.bool.config_showBatteryPercentage);
         mBatteryLevel.setVisibility(
-                mBatteryCharging || showBatteryLevel ? View.VISIBLE : View.GONE);
-    }
+               mBatteryCharging || showBatteryLevel ? View.VISIBLE : View.GONE);    }
 
     private void updateSystemIconsLayoutParams() {
         RelativeLayout.LayoutParams lp =
