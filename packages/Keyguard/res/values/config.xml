@@ -37,7 +37,4 @@
 
     <!-- Whether to show no sim on CarrierText for India RJIL -->
     <bool name="config_carrier_display_no_sim">false</bool>
-
-    <!-- Whether to show no sim on CarrierText for India RJIL -->
-    <bool name="config_carrier_display_no_sim">false</bool>
 </resources>
