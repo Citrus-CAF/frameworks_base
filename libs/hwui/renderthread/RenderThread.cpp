@@ -336,7 +336,9 @@ void RenderThread::queueAndWait(RenderTask* task) {
 
     AutoMutex _lock(mutex);
     queue(&syncTask);
-    condition.wait(mutex);
+    while (!syncTask.hasRun()) {
+        condition.wait(mutex);
+    }
 }
 
 void RenderThread::queueAtFront(RenderTask* task) {
