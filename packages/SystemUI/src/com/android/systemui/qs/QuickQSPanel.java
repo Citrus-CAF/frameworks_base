@@ -126,6 +126,9 @@ public class QuickQSPanel extends QSPanel {
             // No Brightness for you.
             super.onTuningChanged(key, "0");
         }
+        if(mIsCarrierOneSupported && key.equals(QS_SHOW_SIMSWICHER)){
+            super.onTuningChanged(key, "0");
+        }
     }
 
     @Override
