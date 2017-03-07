@@ -237,7 +237,7 @@ public class PowerUI extends SystemUI {
                     || Intent.ACTION_POWER_DISCONNECTED.equals(action)) {
                 if (mIgnoredFirstPowerBroadcast) {
                     if (Settings.Global.getInt(mContext.getContentResolver(),
-                            Settings.Global.CHARGING_SOUNDS_ENABLED, 0) == 1) {
+                            Settings.Global.CHARGING_SOUNDS_ENABLED, 1) == 1) {
                         playPowerNotificationSound();
                     }
                 } else {
