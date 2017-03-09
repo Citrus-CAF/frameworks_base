@@ -578,6 +578,9 @@
     <protected-broadcast android:name="com.qti.dpmframework.DPM_INTERNET_CONNECTED" />
     <protected-broadcast android:name="com.qti.dpmframework.DPM_PREFERENCE_CHANGED" />
 
+    <!-- Substratum -->
+    <protected-broadcast android:name="projekt.substratum.APP_CRASHED" />
+
     <!-- ====================================================================== -->
     <!--                          RUNTIME PERMISSIONS                           -->
     <!-- ====================================================================== -->
