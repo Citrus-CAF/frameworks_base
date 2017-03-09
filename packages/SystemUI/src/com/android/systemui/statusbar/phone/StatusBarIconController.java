@@ -101,6 +101,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     private ImageView mCLogo;
     private TextView mCarrierLabel;
     private int mCarrierLabelMode;
+    private TextView mWeatherTextView;
+    private ImageView mWeatherImageView;
 
     private int mIconSize;
     private int mIconHPadding;
@@ -176,6 +178,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
         carrierLabelVisibility();
+        mWeatherTextView = (TextView) statusBar.findViewById(R.id.weather_temp);
+        mWeatherImageView = (ImageView) statusBar.findViewById(R.id.weather_image);
         loadDimens();
 
         mClock.setStatusBarIconController(this);
@@ -680,6 +684,8 @@ Settings.System.getIntForUser(mContext.getContentResolver(),
         mCarrierLabel.setTextColor(mIconTint);
         }
         mPhoneStatusBar.setTickerTint(mIconTint);
+        mWeatherTextView.setTextColor(mIconTint);
+        mWeatherImageView.setImageTintList(ColorStateList.valueOf(mIconTint));
     }
 
     public void appTransitionPending() {
