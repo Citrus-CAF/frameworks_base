@@ -583,6 +583,9 @@
     <!-- cardinal additions start -->
     <protected-broadcast android:name="android.settings.SHOW_INPUT_METHOD_PICKER" />
 
+    <!-- SubstratumService -->
+    <protected-broadcast android:name="projekt.substratum.APP_CRASHED" />
+
     <!-- ====================================================================== -->
     <!--                          RUNTIME PERMISSIONS                           -->
     <!-- ====================================================================== -->
