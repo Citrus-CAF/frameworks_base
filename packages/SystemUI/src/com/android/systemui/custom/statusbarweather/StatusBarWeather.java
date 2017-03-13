@@ -118,7 +118,6 @@ public class StatusBarWeather extends TextView implements
         } else {
             setVisibility(View.GONE);
         }
-    }
 
     @Override
     public void weatherError(int errorReason) {
@@ -141,7 +140,9 @@ public class StatusBarWeather extends TextView implements
                         } else {
                             setText(mWeatherData.temp + mWeatherData.tempUnits);
                         }
+                        if (mStatusBarWeatherEnabled != 0 && mStatusBarWeatherEnabled != 5) {
                         setVisibility(View.VISIBLE);
+                        }
                     }
                 } else {
                     setVisibility(View.GONE);
