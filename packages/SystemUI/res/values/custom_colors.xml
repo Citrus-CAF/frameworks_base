@@ -29,4 +29,8 @@
     <!-- Clear-All recents FAB -->
     <color name="fab_color">@*android:color/material_deep_teal_500</color>
     <color name="floating_action_button_icon_color">#FFFFFFFF</color>
+
+    <!-- OmniJaws detailed view temperature text -->
+    <color name="omni_jaws_detailed_temperature_color">@android:color/white</color>
+
 </resources>
