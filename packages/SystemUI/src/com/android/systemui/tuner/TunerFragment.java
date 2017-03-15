@@ -45,9 +45,13 @@ public class TunerFragment extends PreferenceFragment {
 
     private static final String SHOW_LTE_FOURGEE = "show_lte_fourgee";
 
+    private static final String ROAMING_INDICATOR_ICON = "roaming_indicator_icon";
+
     private SwitchPreference mBluetoothBattery;
 
     private SwitchPreference mShowLteFourGee;
+
+    private SwitchPreference mShowRoamingIcon;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,14 @@ public class TunerFragment extends PreferenceFragment {
         } else {
         mShowLteFourGee.setChecked((Settings.System.getInt(resolver,
                 Settings.System.SHOW_LTE_FOURGEE, 0) == 1));
+        }
+
+        mShowRoamingIcon = (SwitchPreference) findPreference(ROAMING_INDICATOR_ICON);
+        if (CustomUtils.isWifiOnly(getActivity())) {
+            prefSet.removePreference(mShowRoamingIcon);
+        } else {
+        mShowRoamingIcon.setChecked((Settings.System.getInt(resolver,
+                 Settings.System.ROAMING_INDICATOR_ICON, 1) == 1));
         }
 
         mBluetoothBattery = (SwitchPreference) findPreference(BLUETOOTH_SHOW_BATTERY);
@@ -118,6 +130,11 @@ public class TunerFragment extends PreferenceFragment {
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.SHOW_LTE_FOURGEE, checked ? 1:0);
             return true;
+        } else if  (preference == mShowRoamingIcon) {
+            boolean checked = ((SwitchPreference)preference).isChecked();
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.ROAMING_INDICATOR_ICON, checked ? 0:1);
+            return true;            
         } else if  (preference == mBluetoothBattery) {
             boolean checked = ((SwitchPreference)preference).isChecked();
             Settings.System.putInt(getActivity().getContentResolver(),
