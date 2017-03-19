@@ -679,6 +679,7 @@ Settings.System.getIntForUser(mContext.getContentResolver(),
                 getColor(R.color.status_bar_clock_color)) {
         mCarrierLabel.setTextColor(mIconTint);
         }
+        mPhoneStatusBar.setTickerTint(mIconTint);
     }
 
     public void appTransitionPending() {
