@@ -4146,6 +4146,54 @@ public final class Settings {
         private static final Validator FINGERPRINT_SUCCESS_VIB_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * @hide
+         */
+        public static final String START_SCREEN_STATE_SERVICE = "start_screen_state_service";
+
+        /** @hide */
+        private static final Validator START_SCREEN_STATE_SERVICE_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_TWOG = "screen_state_twog";
+
+        /** @hide */
+        private static final Validator SCREEN_STATE_TWOG_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_GPS = "screen_state_gps";
+
+        /** @hide */
+        private static final Validator SCREEN_STATE_GPS_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_MOBILE_DATA = "screen_state_mobile_data";
+
+        /** @hide */
+        private static final Validator SCREEN_STATE_MOBILE_DATA_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_OFF_DELAY = "screen_state_off_delay";
+
+        /** @hide */
+        private static final Validator SCREEN_STATE_OFF_DELAY_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_ON_DELAY = "screen_state_on_delay";
+
+        /** @hide */
+        private static final Validator SCREEN_STATE_ON_DELAY_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
@@ -4214,6 +4262,12 @@ public final class Settings {
             STATUS_BAR_IME_SWITCHER,
             BLUETOOTH_ACCEPT_ALL_FILES,
             FINGERPRINT_SUCCESS_VIB,
+            START_SCREEN_STATE_SERVICE,
+            SCREEN_STATE_TWOG,
+            SCREEN_STATE_GPS,
+            SCREEN_STATE_MOBILE_DATA,
+            SCREEN_STATE_OFF_DELAY,
+            SCREEN_STATE_ON_DELAY,
         };
 
         /**
@@ -4334,6 +4388,12 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUS_BAR_IME_SWITCHER);
             PRIVATE_SETTINGS.add(BLUETOOTH_ACCEPT_ALL_FILES);
             PRIVATE_SETTINGS.add(FINGERPRINT_SUCCESS_VIB);
+            PRIVATE_SETTINGS.add(START_SCREEN_STATE_SERVICE);
+            PRIVATE_SETTINGS.add(SCREEN_STATE_TWOG);
+            PRIVATE_SETTINGS.add(SCREEN_STATE_GPS);
+            PRIVATE_SETTINGS.add(SCREEN_STATE_MOBILE_DATA);
+            PRIVATE_SETTINGS.add(SCREEN_STATE_OFF_DELAY);
+            PRIVATE_SETTINGS.add(SCREEN_STATE_ON_DELAY);
         }
 
         /**
@@ -4428,6 +4488,12 @@ public final class Settings {
             VALIDATORS.put(STATUS_BAR_IME_SWITCHER, STATUS_BAR_IME_SWITCHER_VALIDATOR);
             VALIDATORS.put(BLUETOOTH_ACCEPT_ALL_FILES, BLUETOOTH_ACCEPT_ALL_FILES_VALIDATOR);
             VALIDATORS.put(FINGERPRINT_SUCCESS_VIB, FINGERPRINT_SUCCESS_VIB_VALIDATOR);
+            VALIDATORS.put(START_SCREEN_STATE_SERVICE, START_SCREEN_STATE_SERVICE_VALIDATOR);
+            VALIDATORS.put(SCREEN_STATE_TWOG, SCREEN_STATE_TWOG_VALIDATOR);
+            VALIDATORS.put(SCREEN_STATE_GPS, SCREEN_STATE_GPS_VALIDATOR);
+            VALIDATORS.put(SCREEN_STATE_MOBILE_DATA, SCREEN_STATE_MOBILE_DATA_VALIDATOR);
+            VALIDATORS.put(SCREEN_STATE_OFF_DELAY, SCREEN_STATE_OFF_DELAY_VALIDATOR);
+            VALIDATORS.put(SCREEN_STATE_ON_DELAY, SCREEN_STATE_ON_DELAY_VALIDATOR);
         }
 
         /**
