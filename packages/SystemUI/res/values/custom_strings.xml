@@ -203,7 +203,12 @@
     <string name="data_disabled_icon_title">Show data disabled icon</string>
     <string name="data_disabled_icon_summary">Display the cross sign next to signal bar when data is disabled</string>
 
+    <!-- Expanded Desktop Tile -->
     <string name="quick_settings_expanded_navigation_off">Hide navbar</string>
     <string name="quick_settings_expanded_statusbar_off">Hide statusbar</string>
 
+    <!-- Notification Tile -->
+    <string name="quick_settings_notifications_none_label">Disabled</string>
+    <string name="quick_settings_notifications_ticker_label">Ticker</string>
+    <string name="quick_settings_notifications_headsup_label">Heads Up</string>
 </resources>
