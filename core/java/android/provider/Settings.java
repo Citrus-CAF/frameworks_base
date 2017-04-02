@@ -4255,6 +4255,15 @@ public final class Settings {
         private static final Validator ENABLE_SUGGESTIONS_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Controls whether the shutter sound is played when making a screenshot
+         * @hide
+         */
+        public static final String SCREENSHOT_SHUTTER_SOUND = "screenshot_shutter_sound";
+
+        /** @hide */
+        private static final Validator SCREENSHOT_SHUTTER_SOUND_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
@@ -4336,6 +4345,7 @@ public final class Settings {
             SCREEN_OFF_ANIMATION,
             ENABLE_CONDITIONS,
             ENABLE_SUGGESTIONS,
+            SCREENSHOT_SHUTTER_SOUND,
         };
 
         /**
@@ -4469,6 +4479,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREEN_OFF_ANIMATION);
             PRIVATE_SETTINGS.add(ENABLE_CONDITIONS);
             PRIVATE_SETTINGS.add(ENABLE_SUGGESTIONS);
+            PRIVATE_SETTINGS.add(SCREENSHOT_SHUTTER_SOUND);
         }
 
         /**
@@ -4576,6 +4587,7 @@ public final class Settings {
             VALIDATORS.put(SCREEN_OFF_ANIMATION, SCREEN_OFF_ANIMATION_VALIDATOR);
             VALIDATORS.put(ENABLE_CONDITIONS, ENABLE_CONDITIONS_VALIDATOR);
             VALIDATORS.put(ENABLE_SUGGESTIONS, ENABLE_SUGGESTIONS_VALIDATOR);
+            VALIDATORS.put(SCREENSHOT_SHUTTER_SOUND, SCREENSHOT_SHUTTER_SOUND_VALIDATOR);
         }
 
         /**
