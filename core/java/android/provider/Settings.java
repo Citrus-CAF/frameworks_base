@@ -4166,6 +4166,12 @@ public final class Settings {
         public static final String VOLUME_ADJUST_SOUNDS_ENABLED = "volume_adjust_sounds_enabled";
 
         /**
+         * Controls whether the shutter sound is played when making a screenshot
+         * @hide
+         */
+        public static final String SCREENSHOT_SHUTTER_SOUND = "screenshot_shutter_sound";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4222,7 +4228,8 @@ public final class Settings {
             NOTIFICATION_SOUND,
             ACCELEROMETER_ROTATION,
             SHOW_BATTERY_PERCENT,
-            NOTIFICATION_LIGHT_SCREEN_ON
+            NOTIFICATION_LIGHT_SCREEN_ON,
+            SCREENSHOT_SHUTTER_SOUND
         };
 
         /**
