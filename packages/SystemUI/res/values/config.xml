@@ -127,7 +127,7 @@
     <integer name="quick_settings_brightness_dialog_long_timeout">4000</integer>
 
     <!-- Whether or not we also show rsrp level for LTE. -->
-    <bool name="config_showRsrpSignalLevelforLTE">true</bool>
+    <bool name="config_showRsrpSignalLevelforLTE">false</bool>
 
     <!-- Whether or not we show carrier label in notification panel. -->
     <bool name="config_showCarrierLabel">false</bool>

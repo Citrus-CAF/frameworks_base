@@ -44,6 +44,7 @@ import android.widget.TextView;
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.systemui.BatteryLevelTextView;
 import com.android.systemui.BatteryMeterView;
+import com.android.systemui.BatteryLevelTextView;
 import com.android.systemui.FontSizeUtils;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
@@ -83,6 +84,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     private View mNotificationIconAreaInner;
 
     private BatteryMeterView mBatteryMeterView;
+    private BatteryLevelTextView mBatteryLevelTextView;
     private BatteryMeterView mBatteryMeterViewKeyguard;
     private Clock mClock;
     private Clock mCenterClock;
@@ -154,6 +156,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mStatusIconsKeyguard = (LinearLayout) keyguardStatusBar.findViewById(R.id.statusIcons);
 
         mBatteryMeterView = (BatteryMeterView) statusBar.findViewById(R.id.battery);
+        mBatteryLevelTextView =
+                (BatteryLevelTextView) statusBar.findViewById(R.id.battery_level_text);
         mBatteryMeterViewKeyguard = (BatteryMeterView) keyguardStatusBar.findViewById(R.id.battery);
         scaleBatteryMeterViews(context);
 
@@ -619,19 +623,18 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mCustomLogo = Settings.System.getIntForUser(mContext.getContentResolver(),
                Settings.System.CUSTOM_LOGO_STYLE, 0,
                UserHandle.USER_CURRENT);
-	    int mCustomlogoColor = 
+	    int mCustomlogoColor =
 Settings.System.getIntForUser(mContext.getContentResolver(),
-		       Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, 
+		       Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF,
                UserHandle.USER_CURRENT);
-        if (mCustomlogoColor == 0xFFFFFFFF) { 
+        if (mCustomlogoColor == 0xFFFFFFFF) {
 	    // we cant set imagetintlist on the last one. It is non colorable. Hence use a condition.
                 if (mCustomLogo == 37) {
 		        mCLogo.setColorFilter(mCustomlogoColor, Mode.MULTIPLY);
                 } else {
          	    mCLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
-                }	
+                }
         }
-        
         mSignalCluster.setIconTint(mIconTint, mDarkIntensity, mTintArea);
         mBatteryMeterView.setDarkIntensity(
                 isInArea(mTintArea, mBatteryMeterView) ? mDarkIntensity : 0);
@@ -648,6 +651,7 @@ Settings.System.getIntForUser(mContext.getContentResolver(),
             mCitrusLogoRight.setImageTintList(ColorStateList.valueOf(mIconTint));
             mCitrusLogoLeft.setImageTintList(ColorStateList.valueOf(mIconTint));
         }
+        mBatteryLevelTextView.setTextColor(getTint(mTintArea, mClock, mIconTint));
     }
 
     public void appTransitionPending() {
