@@ -47,11 +47,15 @@ public class TunerFragment extends PreferenceFragment {
 
     private static final String ROAMING_INDICATOR_ICON = "roaming_indicator_icon";
 
+    private static final String DATA_DISABLED_ICON = "data_disabled_icon";
+
     private SwitchPreference mBluetoothBattery;
 
     private SwitchPreference mShowLteFourGee;
 
     private SwitchPreference mShowRoamingIcon;
+
+    private SwitchPreference mShowNoDataIcon;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,13 @@ public class TunerFragment extends PreferenceFragment {
                  Settings.System.ROAMING_INDICATOR_ICON, 1) == 1));
         }
 
+       mShowNoDataIcon = (SwitchPreference) findPreference(DATA_DISABLED_ICON);
+        if (CustomUtils.isWifiOnly(getActivity())) {
+            prefSet.removePreference(mShowNoDataIcon);
+        } else {
+        mShowNoDataIcon.setChecked((Settings.System.getInt(resolver,
+                 Settings.System.DATA_DISABLED_ICON, 1) == 1));
+        }
         mBluetoothBattery = (SwitchPreference) findPreference(BLUETOOTH_SHOW_BATTERY);
         mBluetoothBattery.setChecked((Settings.System.getInt(resolver,
                 Settings.System.BLUETOOTH_SHOW_BATTERY, 0) == 1));
@@ -133,12 +144,17 @@ public class TunerFragment extends PreferenceFragment {
         } else if  (preference == mShowRoamingIcon) {
             boolean checked = ((SwitchPreference)preference).isChecked();
             Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.ROAMING_INDICATOR_ICON, checked ? 0:1);
+                    Settings.System.ROAMING_INDICATOR_ICON, checked ? 1:0);
             return true;            
         } else if  (preference == mBluetoothBattery) {
             boolean checked = ((SwitchPreference)preference).isChecked();
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.BLUETOOTH_SHOW_BATTERY, checked ? 1:0);
+            return true;
+        } else if  (preference == mShowNoDataIcon) {
+            boolean checked = ((SwitchPreference)preference).isChecked();
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.DATA_DISABLED_ICON, checked ? 1:0);
             return true;
         }
         return super.onPreferenceTreeClick(preference);
