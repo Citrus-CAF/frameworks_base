@@ -136,6 +136,7 @@
 
    <!-- Roaming indicator icon -->
    <string name="roaming_indicator_icon_title">Show roaming indicator</string>
+   <string name="roaming_indicator_icon_summary">Display roaming indicator in signal icon when in roaming mode</string>
 
     <!-- ANBI Tile -->
     <string name="quick_settings_anbi_label">Accidental Touch</string>
@@ -197,4 +198,9 @@
     <string name="quick_settings_expanded_desktop_label">Expanded desktop</string>
     <string name="quick_settings_expanded_desktop">Expanded</string>
     <string name="quick_settings_expanded_desktop_off">Normal</string>
+
+    <!-- Data disabled icon -->
+    <string name="data_disabled_icon_title">Show data disabled icon</string>
+    <string name="data_disabled_icon_summary">Display the cross sign next to signal bar when data is disabled</string>
+
 </resources>
