@@ -750,6 +750,8 @@ public class MobileSignalController extends SignalController<
             mCurrentState.imsRadioTechnology = getImsRadioTechnology();
         }
 
+        mCurrentState.dataNetType = mDataNetType;
+
         notifyListenersIfNecessary();
     }
 
@@ -1192,6 +1194,7 @@ public class MobileSignalController extends SignalController<
         int dataActivity;
         int voiceLevel;
         int imsRadioTechnology;
+        int dataNetType;
 
         @Override
         public void copyFrom(State s) {
@@ -1210,6 +1213,7 @@ public class MobileSignalController extends SignalController<
             dataActivity = state.dataActivity;
             voiceLevel = state.voiceLevel;
             imsRadioTechnology = state.imsRadioTechnology;
+            dataNetType = state.dataNetType;
         }
 
         @Override
@@ -1230,6 +1234,7 @@ public class MobileSignalController extends SignalController<
             builder.append("voiceLevel=").append(voiceLevel).append(',');
             builder.append("carrierNetworkChangeMode=").append(carrierNetworkChangeMode);
             builder.append("imsRadioTechnology=").append(imsRadioTechnology);
+            builder.append("dataNetType=").append(dataNetType);
         }
 
         @Override
@@ -1246,7 +1251,8 @@ public class MobileSignalController extends SignalController<
                     && ((MobileState) o).userSetup == userSetup
                     && ((MobileState) o).voiceLevel == voiceLevel
                     && ((MobileState) o).isDefault == isDefault
-                    && ((MobileState) o).imsRadioTechnology == imsRadioTechnology;
+                    && ((MobileState) o).imsRadioTechnology == imsRadioTechnology
+                    && ((MobileState) o).dataNetType == dataNetType;
         }
     }
 
