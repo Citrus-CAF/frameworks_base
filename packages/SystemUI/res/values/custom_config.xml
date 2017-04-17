@@ -23,7 +23,7 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_extra" translatable="false">
-        hotspot,inversion,saver,work,cast,night,screenshot,sync,music,ime,caffeine,navigation_bar,reboot,heads_up,nfc,usb_tether,weather
+        hotspot,inversion,saver,work,cast,night,screenshot,sync,music,ime,caffeine,navigation_bar,reboot,heads_up,nfc,usb_tether,weather,hwkeys
     </string>
 
 </resources>
