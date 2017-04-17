@@ -78,4 +78,9 @@
     <string name="accessibility_quick_settings_usb_tether_changed_on">USB tethering turned on</string>
     <string name="quick_settings_usb_tether_label">USB tethering</string>
 
+    <!-- HW Keys Tile -->
+    <string name="accessibility_quick_settings_hwkeys_on">Hardware keys on</string>
+    <string name="accessibility_quick_settings_hwkeys_off">Hardware keys off</string>
+    <string name="quick_settings_hwkeys_label">Hardware keys</string>
+
 </resources>
