@@ -996,6 +996,11 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                             if (state == BluetoothAdapter.STATE_BLE_ON) {
                                 Slog.w(TAG, "BT is in BLE_ON State");
                                 mBluetooth.onLeServiceUp();
+
+                                // waive WRITE_SECURE_SETTINGS permission check
+                                long callingIdentity = Binder.clearCallingIdentity();
+                                persistBluetoothSetting(BLUETOOTH_ON_BLUETOOTH);
+                                Binder.restoreCallingIdentity(callingIdentity);
                                 break;
                             }
                         }
