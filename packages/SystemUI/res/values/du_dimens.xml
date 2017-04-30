@@ -55,4 +55,7 @@
     <dimen name="phone_width">320dp</dimen>
     <dimen name="phone_height">420dp</dimen>
 
+    <!-- Recents task locking button -->
+    <dimen name="recents_task_view_header_lock_button_padding">44dp</dimen>
+
 </resources>
