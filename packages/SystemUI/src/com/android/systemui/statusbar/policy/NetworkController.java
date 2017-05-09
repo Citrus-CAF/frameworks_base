@@ -49,7 +49,7 @@ public interface NetworkController {
                 int qsType, boolean activityIn, boolean activityOut, int dataActivityId,
                 int mobileActivityId, int stackedDataIcon, int stackedVoiceIcon,
                 String typeContentDescription, String description,
-                boolean isWide, int subId) {}
+                boolean isWide, int subId, boolean roaming) {}
         default void setSubs(List<SubscriptionInfo> subs) {}
         default void setNoSims(boolean show) {}
 
@@ -66,7 +66,7 @@ public interface NetworkController {
                 int mobileActivityId, int stackedDataIcon, int stackedVoiceIcon,
                 String typeContentDescription, String description, boolean isWide,
                 int subId, int dataNetworkTypeId, int embmsIconId,
-                boolean isMobileIms, boolean isImsOverWifi);
+                boolean isMobileIms, boolean isImsOverWifi, boolean roaming);
     }
 
     public interface EmergencyListener {
