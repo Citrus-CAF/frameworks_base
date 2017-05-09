@@ -2251,9 +2251,9 @@ message MetricsEvent {
     // END OF AOSP CONSTANTS
 
     // Custom Squash
-    CUSTOM_SQUASH = 497;
+    CUSTOM_SQUASH = 744;
 
     // Quick setting tiles
-    QUICK_SETTINGS = 498;
+    QUICK_SETTINGS = 745;
   }
 }
