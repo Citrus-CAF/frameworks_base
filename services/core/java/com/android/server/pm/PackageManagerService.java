@@ -77,6 +77,8 @@ import static android.content.pm.PackageManager.MOVE_FAILED_SYSTEM_PACKAGE;
 import static android.content.pm.PackageManager.PERMISSION_DENIED;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.content.pm.PackageParser.PARSE_IS_PRIVILEGED;
+import static android.content.pm.PackageParser.PARSE_TRUSTED_OVERLAY;
+import static android.content.pm.PackageParser.SCAN_TRUSTED_OVERLAY;
 import static android.content.pm.PackageParser.isApkFile;
 import static android.os.Trace.TRACE_TAG_PACKAGE_MANAGER;
 import static android.system.OsConstants.O_CREAT;
