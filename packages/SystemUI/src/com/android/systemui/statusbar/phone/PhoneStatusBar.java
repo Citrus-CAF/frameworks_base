@@ -624,6 +624,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_TILE_TITLE_VISIBILITY),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.AMBIENT_DOZE_CUSTOM_BRIGHTNESS),
+                    false, this, UserHandle.USER_ALL);
            update();
 
         }
@@ -725,9 +728,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
 
             if (mHeader != null) {
-                mHeader.update();
+            }
+
+            int defaultDozeBrightness = mContext.getResources().getInteger(
+                    com.android.internal.R.integer.config_screenBrightnessDoze);
+            int customDozeBrightness = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.AMBIENT_DOZE_CUSTOM_BRIGHTNESS, defaultDozeBrightness, UserHandle.USER_CURRENT);
+            StatusBarWindowManager.updateSbCustomBrightnessDozeValue(customDozeBrightness);
         }
-      }
     }
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
