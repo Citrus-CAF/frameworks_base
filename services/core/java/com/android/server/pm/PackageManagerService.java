@@ -4593,7 +4593,8 @@ public class PackageManagerService extends IPackageManager.Stub {
                         || actionName.startsWith("com.android.server.sip.SipWakeupTimer")
                         || actionName.startsWith("com.android.internal.telephony.data-reconnect")
                         || actionName.startsWith("android.net.netmon.launchCaptivePortalApp")
-                        || actionName.startsWith("eu.chainfire.supersu.NativeAccess")) {
+                        || actionName.startsWith("eu.chainfire.supersu.NativeAccess")
+                        || actionName.startsWith("com.caf.fmradio.action.AUDIO_BECOMING_NOISY")) {
                     return true;
                 }
             }
