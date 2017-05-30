@@ -446,7 +446,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     // Custom Logos
     private boolean mCustomlogo;
     private ImageView mCLogo;
-    private int mCustomlogoColor;	
+    private int mCustomlogoColor;
     private int mCustomlogoStyle;
 
     private int mQsLayoutColumns;
@@ -598,23 +598,23 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.STATUS_BAR_CUSTOM_HEADER),
                   false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor( 
-                  Settings.System.STATUS_BAR_CITRUS_LOGO), false, this, 
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.STATUS_BAR_CITRUS_LOGO), false, this,
                   UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.STATUS_BAR_CITRUS_LOGO_COLOR), false, this,
                   UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor( 
+            resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.STATUS_BAR_CITRUS_LOGO_STYLE), false, this,
                   UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.SHOW_CUSTOM_LOGO), false, this,
                   UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.CUSTOM_LOGO_COLOR), false, this, 
+                  Settings.System.CUSTOM_LOGO_COLOR), false, this,
                   UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.CUSTOM_LOGO_STYLE), false, this, 
+                 Settings.System.CUSTOM_LOGO_STYLE), false, this,
                  UserHandle.USER_ALL);
             update();
         }
@@ -1023,7 +1023,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mSettingsObserver = new SettingsObserver(new Handler());
         }
         mSettingsObserver.observe();
- 
+
         // Lastly, call to the icon policy to install/update all the icons.
         mIconPolicy = new PhoneStatusBarPolicy(mContext, mIconController, mCastController,
                 mHotspotController, mUserInfoController, mBluetoothController,
@@ -1726,6 +1726,29 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             toggleRecentApps();
         }
     };
+
+
+   private View.OnLongClickListener mLongPressBackListener = new View.OnLongClickListener() {
+       @Override
+       public boolean onLongClick(View v) {
+           return handleLongPressBack();
+       }
+   };
+
+   private View.OnLongClickListener mRecentsLongClickListener = new View.OnLongClickListener() {
+
+      @Override
+       public boolean onLongClick(View v) {
+           if (mRecents == null || !ActivityManager.supportsMultiWindow()
+                   || !getComponent(Divider.class).getView().getSnapAlgorithm()
+                           .isSplitScreenFeasible()) {
+               return false;
+           }
+           toggleSplitScreenMode(MetricsEvent.ACTION_WINDOW_DOCK_LONGPRESS,
+                   MetricsEvent.ACTION_WINDOW_UNDOCK_LONGPRESS);
+           return true;
+       }
+   };
 
     @Override
     protected void toggleSplitScreenMode(int metricsDockAction, int metricsUndockAction) {
@@ -4322,7 +4345,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     };
 
 
- public void showmCustomlogo(boolean show,int color) { 
+ public void showmCustomlogo(boolean show,int color) {
         if (!show) {
             mCLogo.setVisibility(View.GONE);
             return;
@@ -5706,7 +5729,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
      * 1) Not currently in screen pinning (lock task).
      * 2) Back is long-pressed without recents.
      */
-    private boolean handleLongPressBackRecents(View v) {
+    private boolean handleLongPressBack() {
         try {
             boolean sendBackLongPress = false;
             IActivityManager activityManager = ActivityManagerNative.getDefault();
