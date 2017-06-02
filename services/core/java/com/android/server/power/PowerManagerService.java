@@ -248,6 +248,8 @@ public final class PowerManagerService extends SystemService
     private Light mAttentionLight;
     private Light mButtonsLight;
 
+    private int mEvent;
+
     private final Object mLock = LockGuard.installNewLock(LockGuard.INDEX_POWER);
 
     // A bitfield that indicates what parts of the power state have
@@ -294,6 +296,7 @@ public final class PowerManagerService extends SystemService
     private long mLastSleepTime;
 
     // Timestamp of the last call to user activity.
+    private long mLastButtonActivityTime;
     private long mLastUserActivityTime;
     private long mLastUserActivityTimeNoChangeLights;
 
@@ -1322,6 +1325,7 @@ public final class PowerManagerService extends SystemService
 
         Trace.traceBegin(Trace.TRACE_TAG_POWER, "userActivity");
         try {
+            mEvent = event;
             if (eventTime > mLastInteractivePowerHintTime) {
                 powerHintInternal(PowerHint.INTERACTION, 0);
                 mLastInteractivePowerHintTime = eventTime;
@@ -1341,6 +1345,10 @@ public final class PowerManagerService extends SystemService
             }
 
             maybeUpdateForegroundProfileLastActivityLocked(eventTime);
+
+            if ((event & PowerManager.USER_ACTIVITY_EVENT_BUTTON) != 0) {
+                mLastButtonActivityTime = eventTime;
+            }
 
             if ((flags & PowerManager.USER_ACTIVITY_FLAG_NO_CHANGE_LIGHTS) != 0) {
                 if (eventTime > mLastUserActivityTimeNoChangeLights
@@ -1629,16 +1637,18 @@ public final class PowerManagerService extends SystemService
             final int oldBrightness = mButtonsLight.getBrightness();
             final boolean wasOn = mButtonsLight.getBrightness() > 0;
             final boolean awake = mWakefulness == WAKEFULNESS_AWAKE;
-            final boolean turnOffByTimeout = now >= mLastUserActivityTime + BUTTON_ON_DURATION;
+            final boolean turnOffByTimeout = now >= mLastButtonActivityTime + BUTTON_ON_DURATION;
             final boolean screenBright = (mUserActivitySummary & USER_ACTIVITY_SCREEN_BRIGHT) != 0;
+            final boolean buttonPressed = mEvent == PowerManager.USER_ACTIVITY_EVENT_BUTTON;
             if (awake && wasOn) {
                 if (turnOffByTimeout || !screenBright || !mButtonBrightnessEnabled) {
                     mButtonsLight.setBrightness(0);
-                } else if (oldBrightness != mButtonBrightnessSetting) {
+                } else if (buttonPressed && oldBrightness != mButtonBrightnessSetting) {
                     mButtonsLight.setBrightness(mButtonBrightnessSetting);
                 }
             } else if (awake && !wasOn) {
-                if (mButtonBrightnessEnabled && (mWakefulnessChanging || screenBright) && !turnOffByTimeout) {
+                if (mButtonBrightnessEnabled && buttonPressed &&
+                            (mWakefulnessChanging || screenBright) && !turnOffByTimeout) {
                     mButtonsLight.setBrightness(mButtonBrightnessSetting);
                 }
             } else if (!awake && wasOn) {
