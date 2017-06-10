@@ -16,9 +16,6 @@
 -->
 <resources>
 
-    <!-- Custom Carrier Label -->
-    <color name="status_bar_carrier_color">#FFFFFFFF</color>
-
     <!-- Recents task locking -->
     <dimen name="recents_task_view_header_lock_button_padding">48dp</dimen>
 
