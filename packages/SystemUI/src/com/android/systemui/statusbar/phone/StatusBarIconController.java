@@ -40,7 +40,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.systemui.BatteryLevelTextView;
 import com.android.systemui.BatteryMeterView;
@@ -91,7 +90,6 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     private int mClockLocation;
     private LinearLayout mCenterClockLayout;
     private NetworkTraffic mNetworkTraffic;
-    private TextView mCarrierLabel;
     private ImageView mCitrusLogo;
     private ImageView mCitrusLogoRight;
     private ImageView mCitrusLogoLeft;
@@ -162,7 +160,6 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mCenterClock = (Clock) statusBar.findViewById(R.id.center_clock);
         mLeftClock = (Clock) statusBar.findViewById(R.id.left_clock);
         mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
-        mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
         mCitrusLogo = (ImageView) statusBar.findViewById(R.id.citrus_logo);
         mCitrusLogoRight = (ImageView) statusBar.findViewById(R.id.right_citrus_logo);
         mCitrusLogoLeft = (ImageView) statusBar.findViewById(R.id.left_citrus_logo);
@@ -619,19 +616,19 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mCustomLogo = Settings.System.getIntForUser(mContext.getContentResolver(),
                Settings.System.CUSTOM_LOGO_STYLE, 0,
                UserHandle.USER_CURRENT);
-	    int mCustomlogoColor = 
+	    int mCustomlogoColor =
 Settings.System.getIntForUser(mContext.getContentResolver(),
-		       Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, 
+		       Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF,
                UserHandle.USER_CURRENT);
-        if (mCustomlogoColor == 0xFFFFFFFF) { 
+        if (mCustomlogoColor == 0xFFFFFFFF) {
 	    // we cant set imagetintlist on the last one. It is non colorable. Hence use a condition.
                 if (mCustomLogo == 37) {
 		        mCLogo.setColorFilter(mCustomlogoColor, Mode.MULTIPLY);
                 } else {
          	    mCLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
-                }	
+                }
         }
-        
+
         mSignalCluster.setIconTint(mIconTint, mDarkIntensity, mTintArea);
         mBatteryMeterView.setDarkIntensity(
                 isInArea(mTintArea, mBatteryMeterView) ? mDarkIntensity : 0);
@@ -640,7 +637,6 @@ Settings.System.getIntForUser(mContext.getContentResolver(),
         mCenterClock.setTextColor(getTint(mTintArea, mCenterClock, mIconTint));
         mLeftClock.setTextColor(getTint(mTintArea, mLeftClock, mIconTint));
         mNetworkTraffic.setDarkIntensity(mDarkIntensity);
-        mCarrierLabel.setTextColor(getTint(mTintArea, mCarrierLabel, mIconTint));
         if (Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_CITRUS_LOGO_COLOR, 0xFFFFFFFF,
                 UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
@@ -700,7 +696,6 @@ Settings.System.getIntForUser(mContext.getContentResolver(),
         loadDimens();
         mNotificationIconAreaController.onDensityOrFontScaleChanged(mContext);
         updateClock();
-        updateCarrier();
         updateBatteryLevelText();
         for (int i = 0; i < mStatusIcons.getChildCount(); i++) {
             View child = mStatusIcons.getChildAt(i);
@@ -716,10 +711,6 @@ Settings.System.getIntForUser(mContext.getContentResolver(),
             child.setLayoutParams(lp);
         }
         scaleBatteryMeterViews(mContext);
-    }
-
-    private void updateCarrier() {
-        FontSizeUtils.updateFontSize(mCarrierLabel, R.dimen.status_bar_carrier_height);
     }
 
     private void updateClock() {
