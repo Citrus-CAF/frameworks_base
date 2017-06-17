@@ -705,7 +705,6 @@ public final class Call {
                     parcelableCall.getCapabilities(),
                     parcelableCall.getProperties(),
                     parcelableCall.getDisconnectCause(),
-                    parcelableCall.getCreateTimeMillis(),
                     parcelableCall.getConnectTimeMillis(),
                     parcelableCall.getGatewayInfo(),
                     parcelableCall.getVideoState(),
