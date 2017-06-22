@@ -172,6 +172,11 @@
     <!-- shortcut manager -->
     <uses-permission android:name="android.permission.RESET_SHORTCUT_MANAGER_THROTTLING" />
 
+    <!-- used for subsidy lock broadcasts. -->
+    <permission android:name="com.codeaurora.permission.SUBSIDYLOCK"
+        android:protectionLevel="signatureOrSystem"/>
+    <uses-permission android:name="com.codeaurora.permission.SUBSIDYLOCK" />
+
     <!-- Sync tile -->
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
