@@ -645,20 +645,10 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
             v.setImageTintList(ColorStateList.valueOf(getTint(mTintArea, v, mIconTint)));
         }
 
-        mCustomLogo = Settings.System.getIntForUser(mContext.getContentResolver(),
-               Settings.System.CUSTOM_LOGO_STYLE, 0,
-               UserHandle.USER_CURRENT);
-	    int mCustomlogoColor =
-Settings.System.getIntForUser(mContext.getContentResolver(),
-		       Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF,
-               UserHandle.USER_CURRENT);
-        if (mCustomlogoColor == 0xFFFFFFFF) {
-	    // we cant set imagetintlist on the last one. It is non colorable. Hence use a condition.
-                if (mCustomLogo == 37) {
-		        mCLogo.setColorFilter(mCustomlogoColor, Mode.MULTIPLY);
-                } else {
+        if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF,
+                UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
          	    mCLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
-                }
         }
 
         mSignalCluster.setIconTint(mIconTint, mDarkIntensity, mTintArea);

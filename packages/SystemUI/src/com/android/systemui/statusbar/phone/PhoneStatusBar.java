@@ -4373,7 +4373,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     };
 
-
  public void showmCustomlogo(boolean show,int color) {
         if (!show) {
             mCLogo.setVisibility(View.GONE);
@@ -4381,82 +4380,92 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
         Drawable d = null;
         int style = mCustomlogoStyle;
-		if ( style == 0) {
-        d = mContext.getResources().getDrawable(R.drawable.custom);
-		} else if ( style == 1) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_1);
+ 		if ( style == 0) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_cardinal);
+    } else if ( style == 1) {
+        d = mContext.getResources().getDrawable(R.drawable.bugdroid);
 		} else if ( style == 2) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_2);
+        d = mContext.getResources().getDrawable(R.drawable.drupal);
 		} else if ( style == 3) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_3);
+        d = mContext.getResources().getDrawable(R.drawable.cool_smile);
 		} else if ( style == 4) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_4);
+        d = mContext.getResources().getDrawable(R.drawable.ghost);
 		} else if ( style == 5) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_5);
-		} else if ( style == 6) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_6);
-		} else if ( style == 7) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_7);
+        d = mContext.getResources().getDrawable(R.drawable.windows);
+    } else if ( style == 6) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_pcmr);
+    } else if ( style == 7) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_playstation);
 		} else if ( style == 8) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_8);
-		}  else if ( style == 9) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_9);
+        d = mContext.getResources().getDrawable(R.drawable.xbox);
+		} else if ( style == 9) {
+        d = mContext.getResources().getDrawable(R.drawable.emoji);
 		} else if ( style == 10) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_10);
+        d = mContext.getResources().getDrawable(R.drawable.happy_smile);
 		} else if ( style == 11) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_11);
-		} else if ( style == 12) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_12);
-		} else if ( style  == 13) {
-        d = mContext.getResources().getDrawable(R.drawable.weather_off);
-		} else if ( style  == 14) {
         d = mContext.getResources().getDrawable(R.drawable.blender);
-		} else if ( style  == 15) {
-        d = mContext.getResources().getDrawable(R.drawable.cake_variant);
-		} else if ( style  == 16) {
+		} else if ( style == 12) {
         d = mContext.getResources().getDrawable(R.drawable.guitar_electric);
-		} else if ( style  == 17) {
-        d = mContext.getResources().getDrawable(R.drawable.tag_faces);
-		} else if ( style  == 18) {
-        d = mContext.getResources().getDrawable(R.drawable.run);
-		} else if ( style  == 19) {
+		} else if ( style == 13) {
         d = mContext.getResources().getDrawable(R.drawable.radioactive);
-		} else if ( style  == 20) {
+		} else if ( style == 14) {
         d = mContext.getResources().getDrawable(R.drawable.professional_hexagon);
-		} else if ( style  == 21) {
+		} else if ( style == 15) {
         d = mContext.getResources().getDrawable(R.drawable.pokeball);
-		} else if ( style  == 22) {
-        d = mContext.getResources().getDrawable(R.drawable.package_variant);
-		} else if ( style  == 23) {
-        d = mContext.getResources().getDrawable(R.drawable.package_variant_closed);
-		} else if ( style  == 24) {
-        d = mContext.getResources().getDrawable(R.drawable.weather_fog);
-		} else if ( style  == 25) {
+		} else if ( style == 16) {
         d = mContext.getResources().getDrawable(R.drawable.cat);
-		} else if ( style == 26) {
-        d = mContext.getResources().getDrawable(R.drawable.android1);
-		} else if ( style == 27) {
-        d = mContext.getResources().getDrawable(R.drawable.bike);
-		} else if ( style == 28) {
-        d = mContext.getResources().getDrawable(R.drawable.candycane);
-		} else if ( style == 29) {
-        d = mContext.getResources().getDrawable(R.drawable.shit);
-		} else if ( style == 30) {
-        d = mContext.getResources().getDrawable(R.drawable.chart_bubble);
-		} else if ( style == 31) {
-        d = mContext.getResources().getDrawable(R.drawable.google1);
-		} else if ( style == 32) {
-        d = mContext.getResources().getDrawable(R.drawable.fish);
-		} else if ( style == 33) {
-        d = mContext.getResources().getDrawable(R.drawable.gender_male);
-		} else if ( style == 34) {
-        d = mContext.getResources().getDrawable(R.drawable.gender_female);
-		} else if ( style == 35) {
+		} else if ( style == 17) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_batman);
+    } else if ( style == 18) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_batman_2k16);
+    } else if ( style == 19) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_captain_america);
+    } else if ( style == 20) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_daredevil);
+    } else if ( style == 21) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_deadpool);
+    } else if ( style == 22) {
+        d = mContext.getResources().getDrawable(R.drawable.flash);
+    } else if ( style == 23) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_ironman);
+    } else if ( style == 24) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_justice_league);
+		} else if ( style == 25) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_green_lantern);
+    } else if ( style == 26) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_punisher);
+    } else if ( style == 27) {
         d = mContext.getResources().getDrawable(R.drawable.spider1);
-		} else if ( style == 36) {
+    } else if ( style == 28) {
         d = mContext.getResources().getDrawable(R.drawable.spider2);
+		} else if ( style == 29) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_superman);
+		} else if ( style == 30) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_wonder_women);
+		} else if ( style == 31) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_ac_milan);
+		} else if ( style == 32) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_barcelona);
+		} else if ( style == 33) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_bayern);
+		} else if ( style == 34) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_chelsea);
+		} else if ( style == 35) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_juventus);
+		} else if ( style == 36) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_liverpool);
 		} else if ( style == 37) {
-        d = mContext.getResources().getDrawable(R.drawable.orioles_logo);
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_man_city);
+		} else if ( style == 38) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_man_utd);
+		} else if ( style == 39) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_real_madrid);
+		} else if ( style == 40) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_tottenham);
+    } else if ( style == 41) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_mi);
+    } else if ( style == 42) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_oneplus);
 		}
 	    mCLogo.setImageDrawable(null);
 	    mCLogo.setImageDrawable(d);
