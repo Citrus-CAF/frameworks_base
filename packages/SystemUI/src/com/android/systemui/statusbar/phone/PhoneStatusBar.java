@@ -4428,44 +4428,46 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     } else if ( style == 22) {
         d = mContext.getResources().getDrawable(R.drawable.flash);
     } else if ( style == 23) {
-        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_ironman);
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_fsociety);
     } else if ( style == 24) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_ironman);
+    } else if ( style == 25) {
         d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_justice_league);
-		} else if ( style == 25) {
+		} else if ( style == 26) {
         d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_green_lantern);
-    } else if ( style == 26) {
-        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_punisher);
     } else if ( style == 27) {
-        d = mContext.getResources().getDrawable(R.drawable.spider1);
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_punisher);
     } else if ( style == 28) {
+        d = mContext.getResources().getDrawable(R.drawable.spider1);
+    } else if ( style == 29) {
         d = mContext.getResources().getDrawable(R.drawable.spider2);
-		} else if ( style == 29) {
-        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_superman);
 		} else if ( style == 30) {
-        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_wonder_women);
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_superman);
 		} else if ( style == 31) {
-        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_ac_milan);
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_wonder_women);
 		} else if ( style == 32) {
-        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_barcelona);
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_ac_milan);
 		} else if ( style == 33) {
-        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_bayern);
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_barcelona);
 		} else if ( style == 34) {
-        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_chelsea);
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_bayern);
 		} else if ( style == 35) {
-        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_juventus);
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_chelsea);
 		} else if ( style == 36) {
-        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_liverpool);
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_juventus);
 		} else if ( style == 37) {
-        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_man_city);
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_liverpool);
 		} else if ( style == 38) {
-        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_man_utd);
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_man_city);
 		} else if ( style == 39) {
-        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_real_madrid);
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_man_utd);
 		} else if ( style == 40) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_real_madrid);
+		} else if ( style == 41) {
         d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_tottenham);
-    } else if ( style == 41) {
-        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_mi);
     } else if ( style == 42) {
+        d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_mi);
+    } else if ( style == 43) {
         d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_oneplus);
 		}
 	    mCLogo.setImageDrawable(null);
