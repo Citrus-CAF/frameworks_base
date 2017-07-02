@@ -99,6 +99,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 
     private int mCustomLogo;
     private ImageView mCLogo;
+    private ImageView mCLogoright;
+    private ImageView mCLogoleft;
     private TextView mCarrierLabel;
     private int mCarrierLabelMode;
     private TextView mWeatherTextView;
@@ -172,7 +174,9 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mCitrusLogoLeft = (ImageView) statusBar.findViewById(R.id.left_citrus_logo);
         mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
-        mCLogo = (ImageView) statusBar.findViewById(R.id.custom);
+        mCLogo = (ImageView) statusBar.findViewById(R.id.custom_center);
+        mCLogoright = (ImageView) statusBar.findViewById(R.id.custom_right);
+        mCLogoleft = (ImageView) statusBar.findViewById(R.id.custom_left);
         mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
         mHandler = new Handler();
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
@@ -375,10 +379,13 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
             animateHide(mCitrusLogoLeft, animate);
         }
 
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SHOW_CUSTOM_LOGO, 0) == 1) {
-       animateHide(mCLogo, animate);
-       }
+          if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SHOW_CUSTOM_LOGO, 0) == 1 &&
+           (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.CUSTOM_LOGO_POSITION,  0,
+                UserHandle.USER_CURRENT) == 0)) {
+           animateHide(mCLogoleft, animate);
+        }
 
         if ((Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_SHOW_CARRIER,  0,
@@ -396,14 +403,17 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_CITRUS_LOGO, 0) == 1 &&
            (Settings.System.getIntForUser(mContext.getContentResolver(),
-		Settings.System.STATUS_BAR_CITRUS_LOGO_STYLE,  0,
-	        UserHandle.USER_CURRENT) == 2)){
+                Settings.System.STATUS_BAR_CITRUS_LOGO_STYLE,  0,
+                UserHandle.USER_CURRENT) == 2)){
             animateShow(mCitrusLogoLeft, animate);
         }
 
         if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SHOW_CUSTOM_LOGO, 0) == 1 ) {
-        animateShow(mCLogo, animate);
+                Settings.System.SHOW_CUSTOM_LOGO, 0) == 1 &&
+           (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.CUSTOM_LOGO_POSITION,  0,
+                UserHandle.USER_CURRENT) == 0)) {
+        animateShow(mCLogoleft, animate);
         }
 
         if ((Settings.System.getIntForUser(mContext.getContentResolver(),
@@ -672,6 +682,13 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 UserHandle.USER_CURRENT) == mContext.getResources().
                 getColor(R.color.status_bar_clock_color)) {
         mCarrierLabel.setTextColor(mIconTint);
+        }
+        if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF,
+                UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
+            mCLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
+            mCLogoright.setImageTintList(ColorStateList.valueOf(mIconTint));
+            mCLogoleft.setImageTintList(ColorStateList.valueOf(mIconTint));
         }
         mPhoneStatusBar.setTickerTint(mIconTint);
         mWeatherTextView.setTextColor(mIconTint);

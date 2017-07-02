@@ -442,6 +442,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     // Custom Logos
     private boolean mCustomlogo;
     private ImageView mCLogo;
+    private ImageView mCLogoright;
+    private ImageView mCLogoleft;
+    private int mCustomLogoPos;
     private int mCustomlogoColor;
     private int mCustomlogoStyle;
 
@@ -601,6 +604,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                   Settings.System.STATUS_BAR_CITRUS_LOGO_STYLE), false, this,
                   UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                   Settings.System.CUSTOM_LOGO_POSITION), false, this,
+                  UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.SHOW_CUSTOM_LOGO), false, this,
                   UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -645,12 +651,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }  else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SHOW_CUSTOM_LOGO))
                     || uri.equals(Settings.System.getUriFor(
-                    Settings.System.CUSTOM_LOGO_STYLE))) {
+                    Settings.System.CUSTOM_LOGO_STYLE))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.CUSTOM_LOGO_POSITION))) {
             		mCustomlogo = Settings.System.getIntForUser(resolver,
             		Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
             		mCustomlogoColor = Settings.System.getIntForUser(resolver,
             		Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-				    showmCustomlogo(mCustomlogo,mCustomlogoColor);
+                    mCustomLogoPos = Settings.System.getIntForUser(
+                    resolver, Settings.System.CUSTOM_LOGO_POSITION, 0,
+                    UserHandle.USER_CURRENT);
+                    showmCustomlogo(mCustomlogo,mCustomlogoColor,mCustomLogoPos);
             } else if (uri.equals(Settings.System.getUriFor(
                       Settings.System.NAV_BAR_DYNAMIC))) {
             }
@@ -694,9 +705,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
             mCustomlogoColor = Settings.System.getIntForUser(resolver,
             Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-			mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
+            mCustomLogoPos = Settings.System.getIntForUser(
+                    resolver, Settings.System.CUSTOM_LOGO_POSITION, 0,
+                    UserHandle.USER_CURRENT);
+            mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_center);
+            mCLogoright = (ImageView) mStatusBarView.findViewById(R.id.custom_right);
+            mCLogoleft = (ImageView) mStatusBarView.findViewById(R.id.custom_left);
 
-	        showmCustomlogo(mCustomlogo,mCustomlogoColor);
+	        showmCustomlogo(mCustomlogo,mCustomlogoColor,mCustomLogoPos);
 
             boolean mShowLteFourGee = Settings.System.getIntForUser(resolver,
                     Settings.System.SHOW_LTE_FOURGEE, 0, UserHandle.USER_CURRENT) == 1;
@@ -4374,9 +4390,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     };
 
- public void showmCustomlogo(boolean show,int color) {
-        if (!show) {
+ public void showmCustomlogo(boolean show,int color,int pos) {
+    if (mStatusBarView == null) return;
+      if (!show) {
             mCLogo.setVisibility(View.GONE);
+            mCLogoleft.setVisibility(View.GONE);
+            mCLogoright.setVisibility(View.GONE);
             return;
         }
         Drawable d = null;
@@ -4470,15 +4489,24 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     } else if ( style == 43) {
         d = mContext.getResources().getDrawable(R.drawable.ic_statusbar_logo_oneplus);
 		}
-	    mCLogo.setImageDrawable(null);
-	    mCLogo.setImageDrawable(d);
-		if (color != 0xFFFFFFFF) {
-		mCLogo.setColorFilter(color, Mode.MULTIPLY);
-		} else {
-		mCLogo.clearColorFilter();
-		}
-		mCLogo.setVisibility(View.VISIBLE);
-   }
+
+    if (pos == 0) {
+    mCLogoleft.setImageDrawable(d);
+    mCLogoright.setVisibility(View.GONE);
+    mCLogoleft.setVisibility(View.VISIBLE);
+    mCLogo.setVisibility(View.GONE);
+    } else if (pos == 1) {
+    mCLogo.setImageDrawable(d);
+    mCLogo.setVisibility(View.VISIBLE);
+    mCLogoleft.setVisibility(View.GONE);
+    mCLogoright.setVisibility(View.GONE);
+    } else if (pos == 2) {
+    mCLogoright.setImageDrawable(d);
+    mCLogoright.setVisibility(View.VISIBLE);
+    mCLogo.setVisibility(View.GONE);
+    mCLogoleft.setVisibility(View.GONE);
+    }
+ }
 
     public void resetUserExpandedStates() {
         ArrayList<Entry> activeNotifications = mNotificationData.getActiveNotifications();

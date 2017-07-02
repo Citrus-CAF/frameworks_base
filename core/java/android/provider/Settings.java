@@ -4258,6 +4258,12 @@ public final class Settings {
          */
         public static final String CUSTOM_LOGO_STYLE = "custom_logo_style";
 
+         /**
+         * Position of Custom logo
+         * @hide
+         */
+        public static final String CUSTOM_LOGO_POSITION = "custom_logo_position";
+
         /**
          * Whether to allow one finger quick settings expansion on the left or right side of the statusbar.
          * @hide
