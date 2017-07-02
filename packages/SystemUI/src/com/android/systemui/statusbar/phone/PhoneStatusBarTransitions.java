@@ -32,7 +32,7 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
     private final PhoneStatusBarView mView;
     private final float mIconAlphaWhenOpaque;
 
-    private View mLeftSide, mStatusIcons, mSignalCluster, mBattery, mClock, mCenterClock, mNetworkTraffic, mCitrusLogo, mCitrusLogoRight, mCitrusLogoLeft,
+    private View mLeftSide, mStatusIcons, mSignalCluster, mBattery, mClock, mCenterClock, mNetworkTraffic, mCitrusLogo, mCitrusLogoRight, mCitrusLogoLeft, mCLogo, mCLogoleft, mCLogoright,
              mWeatherTextView, mWeatherImageView;
 
     private Animator mCurrentAnimation;
@@ -55,6 +55,9 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
         mCitrusLogo = mView.findViewById(R.id.citrus_logo);
         mCitrusLogoRight = mView.findViewById(R.id.right_citrus_logo);
         mCitrusLogoLeft = mView.findViewById(R.id.left_citrus_logo);
+        mCLogo = mView.findViewById(R.id.custom_center);
+        mCLogoright = mView.findViewById(R.id.custom_right);
+        mCLogoleft = mView.findViewById(R.id.custom_left);
         mWeatherTextView = mView.findViewById(R.id.weather_temp);
         mWeatherImageView = mView.findViewById(R.id.weather_image);
         applyModeBackground(-1, getMode(), false /*animate*/);
@@ -107,6 +110,9 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
                     animateTransitionTo(mCitrusLogo, newAlphaBC),
                     animateTransitionTo(mCitrusLogoRight, newAlphaBC),
                     animateTransitionTo(mCitrusLogoLeft, newAlphaBC),
+                    animateTransitionTo(mCLogo, newAlphaBC),
+                    animateTransitionTo(mCLogoright, newAlphaBC),
+                    animateTransitionTo(mCLogoleft, newAlphaBC),
                     animateTransitionTo(mWeatherTextView, newAlphaBC),
                     animateTransitionTo(mWeatherImageView, newAlphaBC)
                     );
@@ -123,9 +129,9 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
             mBattery.setAlpha(newAlphaBC);
             mClock.setAlpha(newAlphaBC);
             mCenterClock.setAlpha(newAlphaBC);
-            mCitrusLogo.setAlpha(newAlphaBC);
-            mCitrusLogoRight.setAlpha(newAlphaBC);
-            mCitrusLogoLeft.setAlpha(newAlphaBC);
+            mCLogo.setAlpha(newAlphaBC);
+            mCLogoright.setAlpha(newAlphaBC);
+            mCLogoleft.setAlpha(newAlphaBC);
             mWeatherTextView.setAlpha(newAlphaBC);
             mWeatherImageView.setAlpha(newAlphaBC);
         }
