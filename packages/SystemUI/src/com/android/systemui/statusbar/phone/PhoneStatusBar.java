@@ -4395,6 +4395,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mCLogoright.setVisibility(View.GONE);
             return;
         }
+        if (color != 0xFFFFFFFF) {
+            mCLogo.setColorFilter(color, Mode.MULTIPLY);
+            mCLogoleft.setColorFilter(color, Mode.MULTIPLY);
+            mCLogoright.setColorFilter(color, Mode.MULTIPLY);
+        } else {
+            mCLogo.clearColorFilter();
+            mCLogoleft.clearColorFilter();
+            mCLogoright.clearColorFilter();
+        }
         Drawable d = null;
         int style = mCustomlogoStyle;
  		if ( style == 0) {
