@@ -36,8 +36,6 @@ import com.android.internal.widget.LockPatternUtils;
 
 public abstract class KeyguardSubsidyStateView extends LinearLayout implements KeyguardSecurityView{
 
-    protected LockPatternUtils mLockPatternUtils;
-
     public KeyguardSubsidyStateView(Context context) {
         this(context, null);
     }
@@ -52,7 +50,6 @@ public abstract class KeyguardSubsidyStateView extends LinearLayout implements K
 
     @Override
     public void setLockPatternUtils(LockPatternUtils utils) {
-        mLockPatternUtils = utils;
     }
 
     @Override
