@@ -60,6 +60,7 @@ import com.android.keyguard.SubsidyController.*;
  */
 public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
     private static final String TAG = "KeyguardSubsidyPinView";
+    private static final boolean DEBUG = SubsidyUtility.DEBUG;
     private TextView mKeyguardMessageView;
     private TextView mNoDataText;
     private ImageButton mEnterKey;
@@ -153,7 +154,6 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
         if (entry.length() < 16) {
             // otherwise, display a message to the user, and don't
             // submit.
-            Log.v(TAG, "Insufficient pin to process");
             handleErrorCase();
             return;
         }
@@ -222,8 +222,9 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
     }
 
     public void handleErrorCase() {
-        Log.v(TAG, "Handle error case when user attemp with wrong pin");
-
+        if (DEBUG) {
+            Log.v(TAG, "Handle error case when user attemp with wrong pin");
+        }
         mRetryAttemptRemaining--;
 
         if (mRetryAttemptRemaining > 0) {
@@ -281,8 +282,9 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
 
                     @Override
                     public void onFinish() {
-                        Log.v(TAG, "CountDownTimer onFinish called");
-
+                        if (DEBUG) {
+                            Log.v(TAG, "CountDownTimer onFinish called");
+                        }
                         mRetryAttemptRemaining = getTotalRetryAttempts();
                         resetState();
                         mCountDownTimer = null;
@@ -322,9 +324,10 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
                 };
 
                 int slotId = extTelephony.getCurrentPrimaryCardSlotId();
-
-                Log.v(TAG, "call supplyIccDepersonalization SlotId ="
-                        + slotId);
+                if (DEBUG) {
+                    Log.v(TAG, "call supplyIccDepersonalization SlotId ="
+                            + slotId);
+                }
                  extTelephony
                     .supplyIccDepersonalization(mPin, PERSOSUBSTATE_SIM_NETWORK, depersoResCallback, slotId);
 
@@ -353,11 +356,6 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
                 .findViewById(R.id.enable_data);
         mNoDataText = (TextView) getRootView()
                 .findViewById(R.id.no_data_connection);
-        IntentFilter primaryCardIntentFilter = new IntentFilter();
-        primaryCardIntentFilter
-                .addAction(SubsidyUtility.ACTION_SET_PRIMARY_CARD_DONE);
-        mContext.registerReceiver(primaryCardChangeReceiver,
-                primaryCardIntentFilter);
         setNoDataTextVisibility();
         setEnableDataButtonVisibility();
         setSubsidySetupContainerVisibility(View.VISIBLE);
@@ -369,7 +367,6 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
         KeyguardUpdateMonitor.getInstance(mContext).removeCallback(
                 mInfoCallback);
         mContext.unregisterReceiver(connectivityReceiver);
-        mContext.unregisterReceiver(primaryCardChangeReceiver);
         mNoDataText = null;
         mSubsidySetupContainer = null;
         mEnableDataButton = null;
@@ -401,7 +398,6 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
                 }
                 public void onSimStateChanged(int subId, int slotId,
                         IccCardConstants.State simState) {
-                    Log.d(TAG, "onSimStateChanged event occured");
                     setEnableDataButtonVisibility();
                 }
             };
@@ -411,18 +407,6 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     setNoDataTextVisibility();
-                }
-            };
-
-    private final BroadcastReceiver primaryCardChangeReceiver =
-            new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    Log.d(TAG, "PrimaryConifg receiver Intent = " + intent);
-                    if (intent.getAction().equals(SubsidyUtility
-                            .ACTION_SET_PRIMARY_CARD_DONE)) {
-                        setEnableDataButtonVisibility();
-                    }
                 }
             };
 
