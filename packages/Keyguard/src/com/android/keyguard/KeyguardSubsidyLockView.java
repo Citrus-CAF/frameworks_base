@@ -34,7 +34,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import android.telephony.SubscriptionManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -122,11 +121,6 @@ public class KeyguardSubsidyLockView extends KeyguardSubsidyStateView {
                 .findViewById(R.id.no_data_connection);
         mContext.registerReceiver(connectivityReceiver, new IntentFilter(
                 ConnectivityManager.CONNECTIVITY_ACTION));
-        IntentFilter primaryCardIntentFilter = new IntentFilter();
-        primaryCardIntentFilter
-                .addAction(SubsidyUtility.ACTION_SET_PRIMARY_CARD_DONE);
-        mContext.registerReceiver(primaryCardChangeReceiver,
-                primaryCardIntentFilter);
         setNoDataTextVisibility();
         setEnableDataButtonVisibility();
         setSubsidySetupContainerVisibility(View.VISIBLE);
@@ -138,7 +132,6 @@ public class KeyguardSubsidyLockView extends KeyguardSubsidyStateView {
         KeyguardUpdateMonitor.getInstance(mContext).removeCallback(
                 mInfoCallback);
         mContext.unregisterReceiver(connectivityReceiver);
-        mContext.unregisterReceiver(primaryCardChangeReceiver);
         mNoDataText = null;
         mSubsidySetupContainer = null;
         mEnableDataButton = null;
@@ -161,7 +154,6 @@ public class KeyguardSubsidyLockView extends KeyguardSubsidyStateView {
             }
                 public void onSimStateChanged(int subId, int slotId,
                         IccCardConstants.State simState) {
-                    Log.d(TAG, "onSimStateChanged event occured ="+slotId);
                     setEnableDataButtonVisibility();
                 }
         };
@@ -173,19 +165,6 @@ public class KeyguardSubsidyLockView extends KeyguardSubsidyStateView {
                     setNoDataTextVisibility();
                 }
             };
-
-    private final BroadcastReceiver primaryCardChangeReceiver =
-            new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    Log.d(TAG, "PrimaryConifg receiver Intent = " + intent);
-                    if (intent.getAction().equals(SubsidyUtility
-                            .ACTION_SET_PRIMARY_CARD_DONE)) {
-                        setEnableDataButtonVisibility();
-                    }
-                }
-            };
-
 
     public void setNoDataTextVisibility() {
         if (mNoDataText != null) {
