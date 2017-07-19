@@ -190,11 +190,6 @@
     <!-- OmniJaws -->
     <uses-permission android:name="org.omnirom.omnijaws.READ_WEATHER" />
 
-    <!-- used for subsidy lock broadcasts. -->
-    <permission android:name="com.codeaurora.permission.SUBSIDYLOCK"
-        android:protectionLevel="signatureOrSystem"/>
-    <uses-permission android:name="com.codeaurora.permission.SUBSIDYLOCK" />
-
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
