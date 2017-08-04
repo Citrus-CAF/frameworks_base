@@ -4110,6 +4110,15 @@ public final class Settings {
         private static final Validator LOCKSCREEN_MEDIA_METADATA_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Sensor block per-package
+         * @hide
+         */
+        public static final String SENSOR_BLOCK = "sensor_block";
+
+        /** @hide */
+        private static final Validator SENSOR_BLOCK_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Citrus-CAF Addition ends
          */
 
@@ -4174,6 +4183,7 @@ public final class Settings {
             DISPLAY_COLOR_MODE,
             // Citrus-CAF Addition starts
             LOCKSCREEN_MEDIA_METADATA,
+            SENSOR_BLOCK,
         };
 
         /**
@@ -4290,6 +4300,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
             // Citrus-CAF Addition starts
             PRIVATE_SETTINGS.add(LOCKSCREEN_MEDIA_METADATA);
+            PRIVATE_SETTINGS.add(SENSOR_BLOCK);
         }
 
         /**
@@ -4380,6 +4391,7 @@ public final class Settings {
             VALIDATORS.put(SHOW_BATTERY_PERCENT, SHOW_BATTERY_PERCENT_VALIDATOR);
             // Citrus-CAF Addition starts
             VALIDATORS.put(LOCKSCREEN_MEDIA_METADATA, LOCKSCREEN_MEDIA_METADATA_VALIDATOR);
+            VALIDATORS.put(SENSOR_BLOCK, SENSOR_BLOCK_VALIDATOR);
         }
 
         /**
