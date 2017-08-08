@@ -136,5 +136,12 @@
 
    <!-- Roaming indicator icon -->
    <string name="roaming_indicator_icon_title">Show roaming indicator</string>
- 
+
+    <!-- ANBI Tile -->
+    <string name="quick_settings_anbi_label">Accidental Touch</string>
+    <string name="accessibility_quick_settings_anbi_on">Prevent Accidental touch</string>
+    <string name="accessibility_quick_settings_anbi_off">Don\'t Prevent Accidental touch</string>
+    <string name="accessibility_quick_settings_anbi_changed_off">Accidental touch turned off.</string>
+    <string name="accessibility_quick_settings_anbi_changed_on">Accidental touch turned on.</string>
+
 </resources>
