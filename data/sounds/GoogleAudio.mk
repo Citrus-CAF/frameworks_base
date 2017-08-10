@@ -55,6 +55,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)material/effects/Trusted.ogg:system/media/audio/ui/Trusted.ogg \
     $(LOCAL_PATH)material/effects/Undock.ogg:system/media/audio/ui/Undock.ogg \
     $(LOCAL_PATH)material/effects/Unlock.ogg:system/media/audio/ui/Unlock.ogg \
+    $(LOCAL_PATH)material/effects/VolumeIncremental.ogg:system/media/audio/ui/VolumeIncremental.ogg \
     $(LOCAL_PATH)material/effects/VideoRecord.ogg:system/media/audio/ui/VideoRecord.ogg \
     $(LOCAL_PATH)material/effects/VideoStop.ogg:system/media/audio/ui/VideoStop.ogg \
     $(LOCAL_PATH)material/effects/WirelessChargingStarted.ogg:system/media/audio/ui/WirelessChargingStarted.ogg \
