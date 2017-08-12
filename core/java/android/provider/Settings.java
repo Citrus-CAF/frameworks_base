@@ -4114,13 +4114,6 @@ public final class Settings {
         public static final String BLUETOOTH_SHOW_BATTERY = "bluetooth_show_battery";
 
         /**
-         * Whether to mute annoying notifications
-         * @hide
-         */
-        public static final String MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD =
-                "mute_annoying_notifications_threshold";
-
-        /**
          * Whether the phone ringtone should be played in an increasing manner
          * @
          */
