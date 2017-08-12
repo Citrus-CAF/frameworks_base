@@ -168,17 +168,6 @@ public class DozeParameters {
         return sPickupSubtypePerformsProxMatcher.isIn(subType);
     }
 
-    public int getDozeBrightness() {
-        final int dozeBrightnessDefault = mContext.getResources().getInteger(
-                    com.android.internal.R.integer.config_screenBrightnessDoze);
-        if (getOverwriteValue()) {
-            return Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.DOZE_SCREEN_BRIGHTNESS, dozeBrightnessDefault,
-                    UserHandle.USER_CURRENT);
-        }
-        return dozeBrightnessDefault;
-    }
-
     /**
      * Parses a spec of the form `1,2,3,!5,*`. The resulting object will match numbers that are
      * listed, will not match numbers that are listed with a ! prefix, and will match / not match
