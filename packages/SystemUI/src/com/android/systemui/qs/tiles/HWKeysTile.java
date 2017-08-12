@@ -15,7 +15,7 @@
  */
 
 package com.android.systemui.qs.tiles;
-
+import android.content.ComponentName;
 import android.content.Intent;
 import android.provider.Settings;
 
@@ -54,9 +54,10 @@ public class HWKeysTile extends QSTile<QSTile.BooleanState> {
         return mContext.getString(R.string.quick_settings_hwkeys_label);
     }
 
-   @Override
+    @Override
     public Intent getLongClickIntent() {
-        return null;
+        return new Intent().setComponent(new ComponentName(
+            "com.android.settings", "com.android.settings.Settings$HwKeysSettingsActivity"));
     }
 
     private void setEnabled(boolean enabled) {
