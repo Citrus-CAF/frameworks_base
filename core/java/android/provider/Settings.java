@@ -4433,12 +4433,6 @@ public final class Settings {
         public static final String DOZE_PULSE_DURATION_VISIBLE = "doze_pulse_duration_visible";
 
         /**
-         * custom screen brightness for doze mode
-         * @hide
-         */
-        public static final String DOZE_SCREEN_BRIGHTNESS = "doze_screen_brightness";
-
-        /**
          * @hide
          */
         public static final String STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR = "battery_bar_enable_charging_color";
