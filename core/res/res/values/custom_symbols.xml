@@ -102,4 +102,6 @@
   <!-- Automatic brightness enhancements -->
   <java-symbol type="integer" name="config_autoBrightnessBrighteningLightFastDebounce"/>
 
+  <!-- OmniJaws Weather drawable -->
+  <java-symbol type="drawable" name="ic_qs_weather_default_on" />
 </resources>
