@@ -43,6 +43,7 @@ import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
 
+import com.android.internal.util.custom.OmniJawsClient;
 import com.android.internal.widget.LockPatternUtils;
 
 import java.util.Date;
@@ -290,16 +291,15 @@ public class KeyguardStatusView extends GridLayout implements
         mDateView = (TextClock) findViewById(R.id.date_view);
         mDateView.setVisibility(mShowDate ? View.VISIBLE : View.GONE);
     }
-    
+
+    @Override
+    public void weatherError(int errorReason) {
+       // not used
+    }
+
     @Override
     public void weatherUpdated() {
         queryAndUpdateWeather();
-    }
-
-
-    @Override
-    public void weatherError() {
-        // Do nothing
     }
 
     public void queryAndUpdateWeather() {
