@@ -24,7 +24,7 @@
         android:orientation="horizontal">
     <TextView
             android:id="@+id/switch_label"
-            android:theme="@style/TextAppearance.NotificationGuts.Button"
+            style="@style/TextAppearance.NotificationGuts.Button"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
