@@ -67,12 +67,11 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
     private CheckUnlockPin mCheckUnlockPinThread;
     private ProgressDialog mUnlockProgressDialog = null;
     private int mRetryAttemptRemaining;
-    private CountDownTimer mSubsidyPinCountDownTimer;
+    private CountDownTimer mCountDownTimer;
     private LinearLayout mSubsidySetupContainer;
     private KeyguardSubsidySetupButton mEnableDataButton;
     private ViewGroup mContainer;
     private SubsidyController mController;
-    private boolean mIsCountDownTimerRunning = false;
 
     public KeyguardSubsidyPinView(Context context) {
         this(context, null);
@@ -150,6 +149,7 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
     @Override
     protected void verifyPasswordAndUnlock() {
         String entry = mPasswordEntry.getText();
+
         if (entry.length() < 16) {
             // otherwise, display a message to the user, and don't
             // submit.
@@ -222,9 +222,10 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
     }
 
     public void handleErrorCase() {
-        Log.d(TAG, "Handle error case when user attemp with wrong pin");
+        Log.v(TAG, "Handle error case when user attemp with wrong pin");
+
         mRetryAttemptRemaining--;
-        Log.d(TAG, "remaining retry attempts = "+mRetryAttemptRemaining);
+
         if (mRetryAttemptRemaining > 0) {
             mSecurityMessageDisplay.setMessage(
                     mContext.getResources().getQuantityString(
@@ -232,7 +233,6 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
                             mRetryAttemptRemaining, mRetryAttemptRemaining),
                     true);
         } else if (mRetryAttemptRemaining == 0) {
-            Log.d(TAG, "Retry attempt count is over so start timer");
             int attemptTimeOut =
                     mContext.getResources().getInteger(
                             R.integer.config_timeout_after_max_attempt_milli);
@@ -249,14 +249,9 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
         setPasswordEntryEnabled(false);
 
         final long elapsedRealtime = SystemClock.elapsedRealtime();
-        Log.d(TAG, "Count down timer is still running =" +mIsCountDownTimerRunning);
-        if (!mIsCountDownTimerRunning) {
-            Log.d(TAG, "CountDownTimer instance is reset to null");
-            mSubsidyPinCountDownTimer = null;
-        }
-        if (mSubsidyPinCountDownTimer == null) {
-            Log.d(TAG, "Create new instance of CountDownTimer");
-            mSubsidyPinCountDownTimer =
+
+        if (mCountDownTimer == null) {
+            mCountDownTimer =
                 new CountDownTimer(elapsedRealtimeDeadline - elapsedRealtime,
                         1000) {
                     @Override
@@ -282,16 +277,15 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
                                     R.string.kg_subsidy_too_many_failed_attempts_countdown_sec,
                                     true, secondsRemaining);
                         }
-                        mIsCountDownTimerRunning = true;
                     }
 
                     @Override
                     public void onFinish() {
-                        Log.d(TAG, "CountDownTimer finished");
+                        Log.v(TAG, "CountDownTimer onFinish called");
+
                         mRetryAttemptRemaining = getTotalRetryAttempts();
                         resetState();
-                        mSubsidyPinCountDownTimer = null;
-                        mIsCountDownTimerRunning = false;
+                        mCountDownTimer = null;
                     }
 
                 }.start();
@@ -385,14 +379,12 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
             new KeyguardUpdateMonitorCallback() {
                 @Override
                 public void onSubsidyLockStateChanged(boolean isLocked) {
-                    Log.d(TAG, "SubsidyLock state changed isLocked ="+isLocked);
                     if (!isLocked) {
-                        Log.d(TAG, "Reset the lockout deadline");
                         mLockPatternUtils.setLockoutAttemptDeadline(
                                 KeyguardUpdateMonitor.getCurrentUser(), 0);
-                        if (mSubsidyPinCountDownTimer != null) {
-                            mSubsidyPinCountDownTimer.cancel();
-                            mSubsidyPinCountDownTimer = null;
+                        if (mCountDownTimer != null) {
+                            mCountDownTimer.cancel();
+                            mCountDownTimer = null;
                         }
                         mRetryAttemptRemaining = getTotalRetryAttempts();
                         showDefaultMessage();
@@ -402,7 +394,6 @@ public class KeyguardSubsidyPinView extends KeyguardPinBasedInputView {
                     setNoDataTextVisibility();
                     setSubsidySetupContainerVisibility(View.VISIBLE);
                     // dismiss the dialog.
-
                     if (mUnlockProgressDialog != null) {
                         mUnlockProgressDialog.dismiss();
                         mUnlockProgressDialog = null;
