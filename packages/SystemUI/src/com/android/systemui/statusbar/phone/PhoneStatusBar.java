@@ -730,6 +730,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
 
             if (mHeader != null) {
+                mHeader.update();
             }
 
             int defaultDozeBrightness = mContext.getResources().getInteger(
