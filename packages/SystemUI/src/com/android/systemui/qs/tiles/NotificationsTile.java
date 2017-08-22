@@ -63,7 +63,7 @@ public class NotificationsTile extends QSTile<QSTile.State> {
 
     @Override
     public CharSequence getTileLabel() {
-        return mContext.getString(R.string.quick_settings_notifications_none_label);
+        return mContext.getString(R.string.quick_settings_notifications_label);
     }
 
     @Override
