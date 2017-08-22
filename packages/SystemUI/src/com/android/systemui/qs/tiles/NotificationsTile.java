@@ -76,7 +76,7 @@ public class NotificationsTile extends QSTile<QSTile.State> {
         switch (mNotif){
             case "":
                 state.label = mContext.getString(R.string.quick_settings_notifications_none_label);
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_heads_up_off);
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_notifications_off);
                 setValues(false, false);
                 break;
             case Settings.System.STATUS_BAR_SHOW_TICKER:
