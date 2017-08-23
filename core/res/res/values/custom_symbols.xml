@@ -87,18 +87,6 @@
   <!-- Whether notify fingerprint client of successful cancelled authentication -->
   <java-symbol type="bool" name="config_notifyClientOnFingerprintCancelSuccess" />
 
-  <!-- Config Power Menu -->
-  <java-symbol type="drawable" name="ic_lock_reboot" />
-  <java-symbol type="string" name="global_action_reboot" />
-  <java-symbol type="string" name="reboot_reboot" />
-  <java-symbol type="array" name="shutdown_reboot_actions" />
-  <java-symbol type="array" name="shutdown_reboot_options" />
-  <java-symbol type="string" name="reboot_system" />
-  <java-symbol type="string" name="reboot_progress" />
-  <java-symbol type="drawable" name="ic_lock_power_screenshot" />
-  <java-symbol type="string" name="powermenu_screenshot" />
-  <java-symbol type="drawable" name="ic_settings_powermenu" />
-
   <!-- Dyanamic Navbar -->
   <java-symbol type="color" name="input_method_navigation_guard_dynamic" />
 
