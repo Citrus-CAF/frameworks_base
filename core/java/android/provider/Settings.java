@@ -4520,55 +4520,6 @@ public final class Settings {
         public static final String DISABLE_SUGGESTIONS = "disable_suggestions";
 
         /**
-         * Whether to display sound panel in the power menu
-         *
-         * @hide
-         */
-        public static final String POWERMENU_SOUNDPANEL = "powermenu_soundpanel";
-
-        /**
-         * Whether to display screenshot in the power menu
-         *
-         * @hide
-         */
-        public static final String POWERMENU_SCREENSHOT = "powermenu_screenshot";
-
-        /**
-         * Whether to display settings in the power menu
-         *
-         * @hide
-         */
-        public static final String POWERMENU_SETTINGS = "powermenu_settings";
-
-        /**
-         * Whether to display lock in the power menu
-         *
-         * @hide
-         */
-        public static final String POWERMENU_LOCKDOWN = "powermenu_lockdown";
-
-        /**
-         * Whether to display airplane in the power menu
-         *
-         * @hide
-         */
-        public static final String POWERMENU_AIRPLANE = "powermenu_airplane";
-
-        /**
-         * Whether to display reboot in the power menu
-         *
-         * @hide
-         */
-        public static final String POWERMENU_REBOOT = "powermenu_reboot";
-
-        /**
-         * Whether to display power in the power menu
-         *
-         * @hide
-         */
-        public static final String POWERMENU_POWER = "powermenu_power";
-
-        /**
          * Show/Hide Emergency Button on Lockscreen
          * @hide
          */
@@ -7438,12 +7389,6 @@ public final class Settings {
         public static final String QS_WIFI_EASY_TOGGLE = "qs_wifi_easy_toggle";
 
         /**
-         * Whether to include options in power menu for rebooting into recovery and bootloader
-         * @hide
-         */
-        public static final String ADVANCED_REBOOT = "advanced_reboot";
-
-        /**
          * Whether the device should doze if configured.
          * @hide
          */
@@ -8081,8 +8026,7 @@ public final class Settings {
             STATUS_BAR_SHOW_BATTERY_PERCENT,
             STATUS_BAR_BATTERY_STYLE,
             LOCKSCREEN_QUICK_UNLOCK_CONTROL,
-            BATTERY_TILE_STYLE,
-            ADVANCED_REBOOT
+            BATTERY_TILE_STYLE
         };
 
         /**
