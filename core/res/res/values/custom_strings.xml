@@ -46,4 +46,8 @@
     <string name="global_action_voicesearch">Voice Search</string>
     <string name="global_action_screenrecord">Screenrecord</string>
 
+    <!-- One handed mode  -->
+    <string name="singlehandmode_click_hint_message">Touch outside the screen to exit mini screen view</string>
+    <string name="singlehandmode_slide_hint_message">Slide your finger across the navigation bar to switch between the standard and mini screen views</string>
+
 </resources>
