@@ -143,4 +143,7 @@
     <!-- Defines the length of FP unlock boost -->
     <integer name="fpunlockboost_duration">700</integer>
 
+    <!-- If this is true, key chords can be used to take a screen record on the device. -->
+    <bool name="config_enableScreenrecordChord">true</bool>
+
 </resources>

@@ -217,4 +217,111 @@
     <string name="quick_settings_screenrecord">Screenrecord</string>
     <string name="quick_settings_screenrecord_on">Recording ...</string>
 
+    <!-- Quick Settings tiles -->
+    <string name="quick_settings_screenshot_label">Screenshot</string>
+    <string name="quick_settings_sync_label">Sync</string>
+    <string name="accessibility_quick_settings_sync_off">Sync off</string>
+    <string name="accessibility_quick_settings_sync_on">Sync on</string>
+    <string name="accessibility_quick_settings_sync_changed_off">Sync turned off</string>
+    <string name="accessibility_quick_settings_sync_changed_on">Sync turned on</string>
+    <string name="quick_settings_music_label">Music</string>
+    <string name="quick_settings_music_play">Play</string>
+    <string name="quick_settings_music_pause">Pause</string>
+    <string name="quick_settings_ime_tile_label">Input method</string>
+    <string name="quick_settings_caffeine_label">Caffeine</string>
+    <string name="accessibility_quick_settings_caffeine_off">Caffeine off</string>
+    <string name="accessibility_quick_settings_caffeine_on">Caffeine on</string>
+
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Screen is being recorded</string>
+
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Recording screen</string>
+
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Stop</string>
+
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Show pointer</string>
+    <string name="screenrecord_notif_pointer_off">Hide pointer</string>
+
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Unable to record screen</string>
+
+    <!-- Navigation bar Tile -->
+    <string name="quick_settings_navigation_bar">Navigation bar</string>
+    <string name="quick_settings_smartbar">SmartBar</string>
+    <string name="quick_settings_smartbar_off">SmartBar off</string>
+    <string name="quick_settings_fling">Fling</string>
+    <string name="quick_settings_fling_off">Fling off</string>
+    
+    <!-- LocationTile Advanced -->
+    <string name="accessibility_quick_settings_location_battery_saving">Location reporting: battery saving mode.</string>
+    <string name="accessibility_quick_settings_location_gps_only">Location reporting: sensors only mode.</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Location reporting: high accuracy mode.</string>
+    <string name="accessibility_quick_settings_location_changed_battery_saving">Location reporting changed to battery saving mode.</string>
+    <string name="accessibility_quick_settings_location_changed_gps_only">Location reporting changed to sensors only mode.</string>
+    <string name="accessibility_quick_settings_location_changed_high_accuracy">Location reporting changed to high accuracy mode.</string>
+    <string name="quick_settings_location_detail_title">Location mode</string>
+    <string name="quick_settings_location_battery_saving_label">Battery saving</string>
+    <string name="quick_settings_location_gps_only_label">Device only</string>
+    <string name="quick_settings_location_high_accuracy_label">High accuracy</string>
+    <string name="quick_settings_location_off_label">Location off</string>
+
+    <!-- Path data for portrait battery -->
+    <string name="battery_portrait_path_full" translatable="false">M 5 2 H 19 V 21 H 5 V 2 Z</string>
+    <string name="battery_portrait_path_empty" translatable="false">M 5 21 H 19 V 21 H 5 V 21 Z</string>
+    <string name="battery_portrait_clip_path" translatable="false">M6,21V4h3V2h6v2h3v17H6z</string>
+
+    <!-- Path data for landscape battery -->
+    <string name="battery_landscape_path_full" translatable="false">M 1 4 H 25 V 20 H 1 V 4 Z</string>
+    <string name="battery_landscape_path_empty" translatable="false">M 1 4 H 1 V 20 H 1 V 4 Z</string>
+    <string name="battery_landscape_clip_path" translatable="false">M25,16h-2v4H1V4h22v4h2V16z</string>
+
+    <!-- Path data for circle battery -->
+    <string name="battery_circle_path" translatable="false">M 12 3.5 C 16.6944203736 3.5 20.5 7.30557962644 20.5 12 C 20.5 16.6944203736 16.6944203736 20.5 12 20.5 C 7.30557962644 20.5 3.5 16.6944203736 3.5 12 C 3.5 7.30557962644 7.30557962644 3.5 12 3.5 Z</string>
+
+    <!-- Path data for Solid battery -->
+    <string name="battery_solid_full" translatable="false">M 12 2 C 17.5228474983 2 22 6.47715250169 22 12 C 22 17.5228474983 17.5228474983 22 12 22 C 6.47715250169 22 2 17.5228474983 2 12 C 2 6.47715250169 6.47715250169 2 12 2 Z</string>
+    <string name="battery_solid_empty" translatable="false">M 12 12 C 12 12 12 12 12 12 C 12 12 12 12 12 12 C 12 12 12 12 12 12 C 12 12 12 12 12 12 Z</string>
+
+    <!-- Reboot/Recovery QS Tile -->
+    <string name="quick_settings_reboot_label">Reboot</string>
+    <string name="quick_settings_reboot_recovery_label">Recovery</string>
+
+    <!-- Show lte/4g switch -->
+    <string name="show_lte_fourgee_title">Show 4G instead of LTE</string>
+    <string name="show_lte_fourgee_summary">Replaces LTE statusbar indicator with 4G</string>
+    <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
+
+    <!-- Recents memory bar -->
+    <string name="recents_free_ram">FREE RAM</string>
+
+    <!-- Bluetooth status -->
+    <string name="bluetooth_battery_title">Show Bluetooth battery status</string>
+    <string name="bluetooth_battery_summary">Show battery status for the currently connected bluetooth device, if available.</string>
+
+   <!-- OmniJaws -->
+    <string name="omnijaws_service_error">Error</string>
+    <string name="omnijaws_service_unkown">No weather data</string>
+    <string name="omnijaws_service_error_long">Error loading weather data</string>
+    <string name="omnijaws_service_disabled">Service disabled</string>
+    <string name="omnijaws_service_error_marker" translatable="false">*</string>
+    <string name="omnijaws_detail_header">Weather</string>
+    <string name="omnijaws_label_default">Weather</string>
+    <string name="omnijaws_current_text">Now</string>
+    <string name="omnijaws_package_not_available">OmniJaws not available</string>
+
+    <!-- Lockscreen shortcuts -->
+    <string name="left_shortcut_hint">Swipe right for %1$s</string>
+    <string name="right_shortcut_hint">Swipe left for %1$s</string>
+    <string name="lockscreen_message">Tap an icon on the left or right to reassign a lock screen shortcut.</string>
+    <string name="lockscreen_default_target">Default</string>
+    <string name="select_application">Select application</string>
+    <string name="lockscreen_choose_action_title">Choose action</string>
+    <string name="lockscreen_none_target">None</string>
+
+    <!-- pnc -->
+    <string name="systemui_tuner_pnc_title">Power notification controls</string>
+
 </resources>
