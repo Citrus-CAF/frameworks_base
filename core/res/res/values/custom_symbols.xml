@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources>
- 
   <!-- Package Manager -->
   <java-symbol type="array" name="config_disabledComponents" />
 
@@ -47,5 +46,12 @@
   
   <!-- Gesture Sensor -->
   <java-symbol type="bool" name="config_enableGestureService" />
-  
+
+  <!-- Advanced power menu -->
+  <java-symbol type="string" name="reboot_to_recovery_title" />
+  <java-symbol type="string" name="reboot_to_recovery_message" />
+  <java-symbol type="string" name="reboot_to_bootloader_title" />
+  <java-symbol type="string" name="reboot_to_bootloader_message" />
+  <java-symbol type="string" name="reboot_title" />
+  <java-symbol type="string" name="reboot_message" />
 </resources>
