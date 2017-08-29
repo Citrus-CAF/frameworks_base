@@ -4667,6 +4667,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HEADS_UP_ENABLED),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4694,6 +4697,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setQsRowsColumns();
             setStatusBarWindowViewOptions();
             setUseLessBoringHeadsUp();
+            setStatusDoubleTapToSleep();
         }
     }
 
@@ -4718,6 +4722,12 @@ public class StatusBar extends SystemUI implements DemoMode,
         boolean lessBoringHeadsUp = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.HEADS_UP_ENABLED, 1, UserHandle.USER_CURRENT) == 1;
         mEntryManager.setUseLessBoringHeadsUp(lessBoringHeadsUp);
+        }
+
+    private void setStatusDoubleTapToSleep() {
+        if (mStatusBarWindow != null) {
+            mStatusBarWindow.setStatusDoubleTapToSleep();
+        }
     }
 
     public int getWakefulnessState() {
