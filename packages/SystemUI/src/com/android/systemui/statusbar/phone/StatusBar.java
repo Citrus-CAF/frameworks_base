@@ -6229,6 +6229,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HEADS_UP_WHITELIST_VALUES), 
                     false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -6256,6 +6259,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.HEADS_UP_WHITELIST_VALUES))) {
 		        setHeadsUpWhitelist();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN))) {
+                setLockscreenDoubleTapToSleep();
             }
         }
 
@@ -6266,6 +6272,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             setQuickStatusBarHeader();
             setHeadsUpBlacklist();
             setHeadsUpWhitelist();
+            setLockscreenDoubleTapToSleep();
+
         }
     }
 
@@ -6298,6 +6306,12 @@ public class StatusBar extends SystemUI implements DemoMode,
         splitAndAddToArrayList(mWhitelist, whitelistString, "\\|");
     }
 
+    private void setLockscreenDoubleTapToSleep() {
+        if (mStatusBarWindow != null) {
+            mStatusBarWindow.setLockscreenDoubleTapToSleep();
+        }
+    }
+
     protected final ContentObserver mNavbarObserver = new ContentObserver(mHandler) {
         @Override
         public void onChange(boolean selfChange) {
@@ -6322,7 +6336,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             mQSPanel.updateSettings();
         }
     }
-
 
     private RemoteViews.OnClickHandler mOnClickHandler = new RemoteViews.OnClickHandler() {
 

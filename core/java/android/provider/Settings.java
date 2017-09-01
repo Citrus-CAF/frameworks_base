@@ -4334,6 +4334,13 @@ public final class Settings {
         public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
  
         /**
+         * Double tap on lockscreen to sleep
+         * @hide
+         */
+        public static final String DOUBLE_TAP_SLEEP_LOCKSCREEN =
+                "double_tap_sleep_lockscreen";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4537,6 +4544,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SHOW_CLEAR_ALL_RECENTS);
             PRIVATE_SETTINGS.add(RECENTS_CLEAR_ALL_LOCATION);
             PRIVATE_SETTINGS.add(SYSTEMUI_RECENTS_MEM_DISPLAY);
+            PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_LOCKSCREEN);
         }
 
         /**
