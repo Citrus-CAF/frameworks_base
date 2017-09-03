@@ -23,8 +23,12 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.ConnectivityManager;
 import android.os.PowerManager;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.SystemClock; 
 import java.util.List;
+
+import com.android.internal.statusbar.IStatusBarService;
 
 public class CustomUtils {
 
@@ -79,5 +83,34 @@ public class CustomUtils {
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
         return (cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE) == false);
+    }
+
+    // Toggle flashlight
+    public static void toggleFlashLight() {
+        FireActions.toggleFlashLight();
+    }
+
+    private static final class FireActions {
+        private static IStatusBarService mStatusBarService = null;
+        private static IStatusBarService getStatusBarService() {
+            synchronized (FireActions.class) {
+                if (mStatusBarService == null) {
+                    mStatusBarService = IStatusBarService.Stub.asInterface(
+                            ServiceManager.getService("statusbar"));
+                }
+                return mStatusBarService;
+            }
+        }
+
+        public static void toggleFlashLight() {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.toggleFlashlight();
+                } catch (RemoteException e) {
+                    // do nothing.
+                }
+            }
+        }
     }
 }
