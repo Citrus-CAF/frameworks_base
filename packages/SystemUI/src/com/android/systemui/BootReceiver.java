@@ -41,6 +41,9 @@ public class BootReceiver extends BroadcastReceiver {
         }
 
         void observe() {
+            mContext.getContentResolver().registerContentObserver(Settings.Global.getUriFor(
+                    Settings.Global.SHOW_CPU_OVERLAY),
+                    false, this);
             update();
         }
 
@@ -50,6 +53,12 @@ public class BootReceiver extends BroadcastReceiver {
         }
 
         public void update() {
+            Intent cpuinfo = new Intent(mContext, com.android.systemui.CPUInfoService.class);
+            if (Settings.Global.getInt(mContext.getContentResolver(), Settings.Global.SHOW_CPU_OVERLAY, 0) != 0) {
+                mContext.startService(cpuinfo);
+            } else {
+                mContext.stopService(cpuinfo);
+            }
         }
     }
 
@@ -66,6 +75,12 @@ public class BootReceiver extends BroadcastReceiver {
             if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.START_SCREEN_STATE_SERVICE, 0) != 0) {
                 Intent screenstate = new Intent(context, com.android.systemui.screenstate.ScreenStateService.class);
                 context.startService(screenstate);
+            }
+
+            // Start the cpu info overlay, if activated
+            if (Settings.Global.getInt(mContext.getContentResolver(), Settings.Global.SHOW_CPU_OVERLAY, 0) != 0) {
+                Intent cpuinfo = new Intent(mContext, com.android.systemui.CPUInfoService.class);
+                mContext.startService(cpuinfo);
             }
 
         } catch (Exception e) {
