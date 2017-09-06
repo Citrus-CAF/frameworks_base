@@ -218,6 +218,9 @@
     <protected-broadcast android:name="com.android.settingslib.action.UNREGISTER_SLICE_RECEIVER" />
 
     <!-- Citrus-CAF Additions -->
+    <!-- Reboot -->
+    <uses-permission android:name="android.permission.REBOOT" />
+    <uses-permission android:name="android.permission.RECOVERY" />
     <!-- Screenshot -->
     <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
 
