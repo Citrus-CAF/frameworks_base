@@ -4515,6 +4515,18 @@ public final class Settings {
                 "mute_annoying_notifications_threshold";
 
         /**
+         * Whether to show the weather info on the lock screen
+         * @hide
+         */
+        public static final String HIDE_LOCKSCREEN_WEATHER = "hide_lockscreen_weather";
+
+        /**
+         * Whether to show the weather location lock screen
+         * @hide
+         */
+        public static final String HIDE_LOCKSCREEN_WEATHER_LOCATION = "hide_lockscreen_weather_location";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4743,7 +4755,9 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BUTTON_EXTRA_KEY_MAPPING);
             PRIVATE_SETTINGS.add(DEVICE_GESTURE_FEEDBACK_ENABLED);
             PRIVATE_SETTINGS.add(DEVICE_OFF_SCREEN_GESTURE_FEEDBACK_ENABLED);
-            PRIVATE_SETTINGS.add(MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD);            
+            PRIVATE_SETTINGS.add(MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD);   
+            PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_WEATHER);            
+            PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_WEATHER_LOCATION);
         }
         
         /**
