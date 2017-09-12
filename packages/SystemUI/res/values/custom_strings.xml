@@ -32,5 +32,8 @@
     <!-- Reboot/Recovery Tile -->
     <string name="quick_settings_reboot_label">Restart</string>
     <string name="quick_settings_reboot_recovery_label">Recovery</string>
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Screenshot</string>
+    <string name="quick_settings_region_screenshot_label">Partial screenshot</string>
 
 </resources>
