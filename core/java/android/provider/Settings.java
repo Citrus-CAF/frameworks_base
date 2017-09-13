@@ -4154,6 +4154,12 @@ public final class Settings {
         public static final String QS_TILE_TITLE_VISIBILITY = "qs_tile_title_visibility";
 
         /**
+         * If all file types can be accepted over Bluetooth OBEX.
+         * @hide
+         */
+        public static final String BLUETOOTH_ACCEPT_ALL_FILES = "bluetooth_accept_all_files";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
