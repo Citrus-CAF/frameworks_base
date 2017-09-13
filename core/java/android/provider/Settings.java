@@ -3894,6 +3894,20 @@ public final class Settings {
          */
 
         /**
+         * Citrus-CAF System settings modification starts
+         */
+
+        /**
+         * If all file types can be accepted over Bluetooth OBEX.
+         * @hide
+         */
+        public static final String BLUETOOTH_ACCEPT_ALL_FILES = "bluetooth_accept_all_files";
+
+        /**
+         * End of Citrus-CAF System settings modification
+         */
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4050,6 +4064,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(LOCK_TO_APP_ENABLED);
             PRIVATE_SETTINGS.add(EGG_MODE);
             PRIVATE_SETTINGS.add(SHOW_BATTERY_PERCENT);
+            PRIVATE_SETTINGS.add(BLUETOOTH_ACCEPT_ALL_FILES);
         }
 
         /**
