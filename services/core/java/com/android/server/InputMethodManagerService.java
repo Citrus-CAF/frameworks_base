@@ -863,6 +863,7 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
                     Settings.Secure.SHOW_IME_WITH_HARD_KEYBOARD), false, this, userId);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.ACCESSIBILITY_SOFT_KEYBOARD_MODE), false, this, userId);
+
             mRegistered = true;
         }
 
@@ -2359,13 +2360,17 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
                 try {
                     if ((mNotificationManager != null)
                             && !mIWindowManager.hasNavigationBar()) {
-                        if (DEBUG) {
-                            Slog.d(TAG, "--- show notification: label =  " + summary);
+                        final boolean showIMENotification = Settings.System.getIntForUser(mContext.getContentResolver(),
+                                Settings.System.STATUS_BAR_IME_SWITCHER, 1, UserHandle.USER_CURRENT) == 1;
+                        if (showIMENotification) {
+                            if (DEBUG) {
+                                Slog.d(TAG, "--- show notification: label =  " + summary);
+                            }
+                            mNotificationManager.notifyAsUser(null,
+                                    SystemMessage.NOTE_SELECT_INPUT_METHOD,
+                                    mImeSwitcherNotification.build(), UserHandle.ALL);
+                            mNotificationShown = true;
                         }
-                        mNotificationManager.notifyAsUser(null,
-                                SystemMessage.NOTE_SELECT_INPUT_METHOD,
-                                mImeSwitcherNotification.build(), UserHandle.ALL);
-                        mNotificationShown = true;
                     }
                 } catch (RemoteException e) {
                 }

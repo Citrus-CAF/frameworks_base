@@ -4119,6 +4119,15 @@ public final class Settings {
         private static final Validator SENSOR_BLOCK_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Whether to show the IME switcher in the status bar
+         * @hide
+         */
+        public static final String STATUS_BAR_IME_SWITCHER = "status_bar_ime_switcher";
+
+        /** @hide */
+        private static final Validator STATUS_BAR_IME_SWITCHER_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Citrus-CAF Addition ends
          */
 
@@ -4184,6 +4193,7 @@ public final class Settings {
             // Citrus-CAF Addition starts
             LOCKSCREEN_MEDIA_METADATA,
             SENSOR_BLOCK,
+            STATUS_BAR_IME_SWITCHER,
         };
 
         /**
@@ -4301,6 +4311,7 @@ public final class Settings {
             // Citrus-CAF Addition starts
             PRIVATE_SETTINGS.add(LOCKSCREEN_MEDIA_METADATA);
             PRIVATE_SETTINGS.add(SENSOR_BLOCK);
+            PRIVATE_SETTINGS.add(STATUS_BAR_IME_SWITCHER);
         }
 
         /**
@@ -4392,6 +4403,7 @@ public final class Settings {
             // Citrus-CAF Addition starts
             VALIDATORS.put(LOCKSCREEN_MEDIA_METADATA, LOCKSCREEN_MEDIA_METADATA_VALIDATOR);
             VALIDATORS.put(SENSOR_BLOCK, SENSOR_BLOCK_VALIDATOR);
+            VALIDATORS.put(STATUS_BAR_IME_SWITCHER, STATUS_BAR_IME_SWITCHER_VALIDATOR);
         }
 
         /**
