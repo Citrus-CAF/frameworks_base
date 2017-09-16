@@ -127,7 +127,7 @@ public class CallbackHandler extends Handler implements EmergencyListener, Signa
             final boolean activityOut, final int dataActivityId,
             final int stackedDataIcon, final int stackedVoiceIcon,
             final String typeContentDescription,
-            final String description, final boolean isWide, final int subId, boolean roaming) {
+            final String description, final boolean isWide, final int subId, boolean roaming, final boolean isMobileIms) {
         post(new Runnable() {
             @Override
             public void run() {
@@ -136,7 +136,7 @@ public class CallbackHandler extends Handler implements EmergencyListener, Signa
                             activityIn, activityOut, dataActivityId,
                             stackedDataIcon, stackedVoiceIcon,
                             typeContentDescription, description, isWide,
-                            subId, roaming);
+                            subId, roaming, isMobileIms);
                 }
             }
         });
