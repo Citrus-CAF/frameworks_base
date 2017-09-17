@@ -59,4 +59,20 @@
   <java-symbol type="string" name="adb_net_active_notification_title" />
   <java-symbol type="string" name="adb_both_active_notification_title" />
   <java-symbol type="string" name="adb_active_generic_notification_message" />
+
+  <!-- Is the battery LED intrusive? Used to decide if there should be a disable option -->
+  <java-symbol type="bool" name="config_intrusiveBatteryLed" />
+  <!-- Does the battery LED support multiple colors?
+      Used to decide if the user can change the colors -->
+  <java-symbol type="bool" name="config_multiColorBatteryLed" />
+  <!-- Do the battery/notification LEDs support pulsing?
+      Used to decide if we show pulse settings -->
+  <java-symbol type="bool" name="config_ledCanPulse" />
+
+  <!-- Notification light -->
+  <java-symbol type="bool" name="config_intrusiveNotificationLed" />
+  <java-symbol type="bool" name="config_multiColorNotificationLed" />
+  <java-symbol type="array" name="notification_light_package_mapping" />
+  <java-symbol type="array" name="config_notificationNoAlertsVibePattern" />
+
 </resources>
