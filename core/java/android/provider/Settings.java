@@ -4483,6 +4483,16 @@ public final class Settings {
         /** @hide */
         private static final Validator QS_ROWS_LANDSCAPE_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
+        /*
+         * Whether to display qs tile titles in the qs panel
+         * @hide
+         */
+        public static final String QS_TILE_TITLE_VISIBILITY = "qs_tile_title_visibility";
+
+        /** @hide */
+        private static final Validator QS_TILE_TITLE_VISIBILITY_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
         /**
          * Citrus-CAF SystemSettings additions ends
          */
@@ -4586,6 +4596,7 @@ public final class Settings {
             QS_COLUMNS_LANDSCAPE,
             QS_ROWS_PORTRAIT,
             QS_ROWS_LANDSCAPE,
+            QS_TILE_TITLE_VISIBILITY,
         };
 
         /**
@@ -4740,6 +4751,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_COLUMNS_LANDSCAPE);
             PRIVATE_SETTINGS.add(QS_ROWS_PORTRAIT);
             PRIVATE_SETTINGS.add(QS_ROWS_LANDSCAPE);
+            PRIVATE_SETTINGS.add(QS_TILE_TITLE_VISIBILITY);
         }
 
         /**
@@ -4868,6 +4880,7 @@ public final class Settings {
             VALIDATORS.put(QS_COLUMNS_LANDSCAPE, QS_COLUMNS_LANDSCAPE_VALIDATOR);
             VALIDATORS.put(QS_ROWS_PORTRAIT, QS_ROWS_PORTRAIT_VALIDATOR);
             VALIDATORS.put(QS_ROWS_LANDSCAPE, QS_ROWS_LANDSCAPE_VALIDATOR);
+            VALIDATORS.put(QS_TILE_TITLE_VISIBILITY, QS_TILE_TITLE_VISIBILITY_VALIDATOR);
         }
 
         /**
