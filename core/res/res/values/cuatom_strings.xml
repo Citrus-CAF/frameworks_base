@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2017 Cardinal-AOSP
+     Copyright 2018, Citrus-CAF Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,17 +15,10 @@
      limitations under the License.
 -->
 <resources>
- 
-  <!-- Package Manager -->
-  <java-symbol type="array" name="config_disabledComponents" />
 
-  <!-- System update service -->
-  <java-symbol type="array" name="config_forceEnabledComponents" />
-
-  <!-- Emergency button in power menu -->
-  <java-symbol type="bool" name="config_showEmergencyButtonInPowerMenu" />
-
-  <!-- DUI -->
-  <java-symbol type="anim" name="du_app_in" />
-  <java-symbol type="anim" name="du_app_out" />
+  <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_toggleNavigationEditor">control navigation editor</string>
+  <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_toggleNavigationEditor">Allows an application to control the navigation bar editor.</string>
+  
 </resources>
