@@ -101,7 +101,7 @@ public class NotificationsTile extends QSTile<QSTile.State> {
 
     private String getCurrentNotifier() {
         if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.HEADS_UP_USER_ENABLED, 0) != 0) {
+                Settings.System.HEADS_UP_USER_ENABLED, 1) != 0) {
             return Settings.System.HEADS_UP_USER_ENABLED;
         } else if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_SHOW_TICKER, 0) != 0) {
