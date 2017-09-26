@@ -4494,6 +4494,16 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * Indicates whether ANBI (Accidental navigation button interaction) is enabled.
+         *
+         * @hide
+         */
+        public static final String ANBI_ENABLED = "anbi_enabled";
+
+        /** @hide */
+        private static final Validator ANBI_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
@@ -4597,6 +4607,7 @@ public final class Settings {
             QS_ROWS_PORTRAIT,
             QS_ROWS_LANDSCAPE,
             QS_TILE_TITLE_VISIBILITY,
+            ANBI_ENABLED,
         };
 
         /**
@@ -4752,6 +4763,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_ROWS_PORTRAIT);
             PRIVATE_SETTINGS.add(QS_ROWS_LANDSCAPE);
             PRIVATE_SETTINGS.add(QS_TILE_TITLE_VISIBILITY);
+            PRIVATE_SETTINGS.add(ANBI_ENABLED);
         }
 
         /**
@@ -4881,6 +4893,7 @@ public final class Settings {
             VALIDATORS.put(QS_ROWS_PORTRAIT, QS_ROWS_PORTRAIT_VALIDATOR);
             VALIDATORS.put(QS_ROWS_LANDSCAPE, QS_ROWS_LANDSCAPE_VALIDATOR);
             VALIDATORS.put(QS_TILE_TITLE_VISIBILITY, QS_TILE_TITLE_VISIBILITY_VALIDATOR);
+            VALIDATORS.put(ANBI_ENABLED, ANBI_ENABLED_VALIDATOR);
         }
 
         /**
