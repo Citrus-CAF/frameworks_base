@@ -29,6 +29,10 @@
     <!-- ADB network tile -->
     <string name="quick_settings_adb_network_label">ADB over network</string>
     <string name="quick_settings_adb_network_toast">USB debugging is not enabled</string>
+    <!-- ANBI Tile -->
+    <string name="quick_settings_anbi_label">Accidental touch</string>
+    <string name="accessibility_quick_settings_anbi_changed_off">Accidental touch turned off</string>
+    <string name="accessibility_quick_settings_anbi_changed_on">Accidental touch turned on</string>
     <!-- Expanded desktop QS tile -->
     <string name="quick_settings_expanded_desktop_label">Expanded view</string>
     <string name="accessibility_quick_settings_expanded_desktop">Hide both</string>
