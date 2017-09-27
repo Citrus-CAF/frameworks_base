@@ -18,7 +18,7 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_extra" translatable="false">
-    anbi,adb_network,caffeine,heads_up,reboot,sound,volume
+    anbi,adb_network,caffeine,compass,heads_up,reboot,sound,volume
     </string>
 
 </resources>
