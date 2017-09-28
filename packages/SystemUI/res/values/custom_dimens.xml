@@ -34,4 +34,7 @@
     <dimen name="qs_page_indicator_margin_bottom">12dp</dimen>
     <dimen name="qs_paged_tile_layout_padding_bottom">4dp</dimen>
 
+    <!-- QuickSettingHeader scrollbar-->
+    <dimen name="qs_scroller_margin">8dp</dimen>
+
 </resources>
