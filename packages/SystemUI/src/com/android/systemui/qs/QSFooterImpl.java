@@ -113,6 +113,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mEdit.setOnClickListener(view ->
                 Dependency.get(ActivityStarter.class).postQSRunnableDismissingKeyguard(() ->
                         mQsPanel.showEdit(view)));
+        mEdit.setOnLongClickListener(this);
 
         mPageIndicator = findViewById(R.id.footer_page_indicator);
 
@@ -373,6 +374,8 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     public boolean onLongClick(View v) {
         if (v == mSettingsButton) {
             startSettingsLongClickActivity();
+        } else if (v == mEdit) {
+            startEditLongClickActivity();
         }
         return false;
     }
@@ -388,6 +391,13 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
             "com.android.settings.Settings$CustomSquashActivity");
         mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
+
+    private void startEditLongClickActivity() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+	intent.setClassName("com.android.settings",
+            "com.android.settings.Settings$QuickSettingsActivity");
+        mActivityStarter.startActivity(intent, true /* dismissShade */);
+   }
 
     @Override
     public void setEmergencyCallsOnly(boolean show) {
