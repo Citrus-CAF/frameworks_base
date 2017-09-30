@@ -28,6 +28,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Bundle;
 import android.os.UserManager;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
@@ -99,6 +100,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private final int mColorForeground;
     private final CellSignalState mInfo = new CellSignalState();
     private OnClickListener mExpandClickListener;
+    protected Vibrator mVibrator;
 
     public QSFooterImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -135,6 +137,8 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mDragHandle = findViewById(R.id.qs_drag_handle_view);
         mActionsContainer = findViewById(R.id.qs_footer_actions_container);
 
+        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+
         // RenderThread is doing more harm than good when touching the header (to expand quick
         // settings), so disable it for this view
         ((RippleDrawable) mSettingsButton.getBackground()).setForceSoftware(true);
@@ -163,6 +167,12 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
         setExpansion(mExpansionAmount);
     }
+
+    public void vibrateFooter(int duration) {
+        if (mVibrator != null) {
+            if (mVibrator.hasVibrator()) { mVibrator.vibrate(duration); }
+        }
+   }
 
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
@@ -377,6 +387,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         } else if (v == mEdit) {
             startEditLongClickActivity();
         }
+        vibrateFooter(20);
         return false;
     }
 
