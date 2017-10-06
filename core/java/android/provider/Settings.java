@@ -4444,6 +4444,12 @@ public final class Settings {
         public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
 
         /**
+         * Whether to use icon pack for Recents
+         * @hide
+         */
+        public static final String RECENTS_ICON_PACK = "recents_icon_pack";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4664,6 +4670,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_CLOCK);  
             PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_ALARM);  
             PRIVATE_SETTINGS.add(NOTIFICATION_SOUND_VIB_SCREEN_ON);
+            PRIVATE_SETTINGS.add(RECENTS_ICON_PACK);            
         }
 
         /**
