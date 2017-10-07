@@ -88,6 +88,4 @@
         <item>org.telegram.plus</item>
     </string-array>
 
-    <!-- Setting to false will disable IME switcher implementation for tablets -->
-    <bool name="config_show_IMESwitcher">true</bool>
 </resources>
