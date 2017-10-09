@@ -23,11 +23,14 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.app.ActivityManager;
+import android.app.ActivityManager.MemoryInfo;
 import android.app.ActivityOptions.OnAnimationStartedListener;
 import android.content.Context;
 import android.content.ContentResolver;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -54,6 +57,7 @@ import android.view.ViewPropertyAnimator;
 import android.view.Window;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.internal.colorextraction.ColorExtractor;
@@ -99,6 +103,11 @@ import com.android.systemui.statusbar.FlingAnimationUtils;
 import com.android.systemui.statusbar.phone.ScrimController;
 
 import java.io.PrintWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,6 +162,12 @@ public class RecentsView extends FrameLayout {
     private final FlingAnimationUtils mFlingAnimationUtils;
     private CustomSettingsObserver mCustomSettingsObserver;
 
+    TextView mMemText;
+    ProgressBar mMemBar;
+
+    private ActivityManager mAm;
+    private int mTotalMem;
+
     public RecentsView(Context context) {
         this(context, null);
     }
@@ -180,6 +195,7 @@ public class RecentsView extends FrameLayout {
         LayoutInflater inflater = LayoutInflater.from(context);
         mEmptyView = (TextView) inflater.inflate(R.layout.recents_empty, this, false);
         addView(mEmptyView);
+        mAm = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
 
         if (RecentsDebugFlags.Static.EnableStackActionButton) {
             if (mStackActionButton != null) {
@@ -495,6 +511,8 @@ public class RecentsView extends FrameLayout {
             }
         });
         super.onAttachedToWindow();
+		mMemText = (TextView) ((View)getParent()).findViewById(R.id.recents_memory_text);
+        mMemBar = (ProgressBar) ((View)getParent()).findViewById(R.id.recents_memory_bar);
     }
 
     @Override
@@ -510,11 +528,13 @@ public class RecentsView extends FrameLayout {
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        final ContentResolver resolver = mContext.getContentResolver();
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
 
         if (mTaskStackView.getVisibility() != GONE) {
             mTaskStackView.measure(widthMeasureSpec, heightMeasureSpec);
+        showMemDisplay();
         }
 
         // Measure the empty view to the full size of the screen
@@ -568,6 +588,43 @@ public class RecentsView extends FrameLayout {
             mFloatingButton.setVisibility(View.GONE);
         }
     }
+
+    private boolean showMemDisplay() {
+        boolean enableMemDisplay = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SYSTEMUI_RECENTS_MEM_DISPLAY, 0) == 1;
+
+        if (!enableMemDisplay) {
+            mMemText.setVisibility(View.GONE);
+            mMemBar.setVisibility(View.GONE);
+            return false;
+        }
+        mMemText.setVisibility(View.VISIBLE);
+        mMemBar.setVisibility(View.VISIBLE);
+
+        updateMemoryStatus();
+        return true;
+    }
+
+    private void updateMemoryStatus() {
+        if (mMemText.getVisibility() == View.GONE
+                || mMemBar.getVisibility() == View.GONE) return;
+
+        MemoryInfo memInfo = new MemoryInfo();
+        mAm.getMemoryInfo(memInfo);
+            int available = (int)(memInfo.availMem / 1048576L);
+            int max = (int)(getTotalMemory() / 1048576L);
+            mMemText.setText("Free RAM: " + String.valueOf(available) + "MB");
+            mMemBar.setMax(max);
+            mMemBar.setProgress(available);
+    }
+
+    public long getTotalMemory() {
+        MemoryInfo memInfo = new MemoryInfo();
+        mAm.getMemoryInfo(memInfo);
+        long totalMem = memInfo.totalMem;
+        return totalMem;
+    }
+
 
     /**
      * This is called with the full size of the window since we are handling our own insets.
@@ -856,6 +913,7 @@ public class RecentsView extends FrameLayout {
             // Animate the background away only if we are dismissing Recents to home
             animateBackgroundScrim(0f, DEFAULT_UPDATE_SCRIM_DURATION);
         }
+        updateMemoryStatus();
     }
 
     public final void onBusEvent(ShowStackActionButtonEvent event) {

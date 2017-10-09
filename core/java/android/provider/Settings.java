@@ -4309,6 +4309,12 @@ public final class Settings {
         public static final String SHOW_CLEAR_ALL_RECENTS = "show_clear_all_recents";
 
         /**
+          * show the membar in recents
+          *  @hide
+          */
+        public static final String SYSTEMUI_RECENTS_MEM_DISPLAY = "systemui_recents_mem_display";
+
+        /**
          * location of the clear all rectents button
          * @hide
          */
@@ -4517,6 +4523,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SENSOR_BLOCK);
             PRIVATE_SETTINGS.add(SHOW_CLEAR_ALL_RECENTS);
             PRIVATE_SETTINGS.add(RECENTS_CLEAR_ALL_LOCATION);
+            PRIVATE_SETTINGS.add(SYSTEMUI_RECENTS_MEM_DISPLAY);
         }
 
         /**
