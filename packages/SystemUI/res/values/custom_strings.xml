@@ -134,4 +134,8 @@
 
     <!-- Roaming icon toggle -->
     <string name="status_bar_roaming">Roaming</string>
+ 
+    <!-- Logo -->
+    <string name="status_bar_logo_title">Citrus logo</string>
+
 </resources>
