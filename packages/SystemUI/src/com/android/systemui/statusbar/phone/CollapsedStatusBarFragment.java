@@ -24,6 +24,7 @@ import android.app.Fragment;
 import android.app.StatusBarManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.UserHandle;
@@ -92,8 +93,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         }
 
         @Override
-        public void onChange(boolean selfChange) {
-            updateSettings(true);
+        public void onChange(boolean selfChange, Uri uri) {
+            if (uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_LOGO))) {
+                updateSettings(true);
+            }
         }
     }
 
@@ -335,6 +338,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
     
     public void updateSettings(boolean animate) {
+        if (getContext() == null) {
+            return;
+        }
+        
         mShowLogo = Settings.System.getIntForUser(mContentResolver,
                 Settings.System.STATUS_BAR_LOGO, 0,
                 UserHandle.USER_CURRENT) == 1;
