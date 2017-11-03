@@ -277,7 +277,7 @@
 
         <activity android:name=".tuner.TunerActivity"
                   android:icon="@drawable/tuner"
-                  android:theme="@style/TunerSettings"
+                  android:theme="@style/CustomTunerSettings"
                   android:label="@string/system_ui_tuner"
                   android:process=":tuner"
                   android:parentActivityName="com.citrus.settings.CustomSquash"
@@ -286,7 +286,7 @@
 
         <activity android:name=".tuner.StatusBarIconsTunerActivity"
                   android:icon="@drawable/tuner"
-                  android:theme="@style/TunerSettings"
+                  android:theme="@style/CustomTunerSettings"
                   android:label="@string/statusbar_icons_blacklist"
                   android:process=":tuner"
                   android:parentActivityName="com.citrus.settings.tabs.StatusBar"
@@ -294,7 +294,7 @@
         </activity>
 
         <activity android:name=".tuner.LockscreenTunerActivity"
-                  android:theme="@style/TunerSettings"
+                  android:theme="@style/CustomTunerSettings"
                   android:label="@string/lockscreen_tuner_activity"
                   android:process=":tuner"
                   android:parentActivityName="com.citrus.settings.tabs.LockScreen"
@@ -302,7 +302,7 @@
         </activity>
 
         <activity android:name=".tuner.PowerNotificationsTunerActivity"
-                  android:theme="@style/TunerSettings"
+                  android:theme="@style/CustomTunerSettings"
                   android:label="@string/powernotif_tuner_activity"
                   android:process=":tuner"
                   android:parentActivityName="com.citrus.settings.tabs.StatusBar"
@@ -312,7 +312,7 @@
         <activity-alias android:name=".DemoMode"
                   android:targetActivity=".tuner.TunerActivity"
                   android:icon="@drawable/tuner"
-                  android:theme="@style/TunerSettings"
+                  android:theme="@style/CustomTunerSettings"
                   android:label="@string/demo_mode"
                   android:process=":tuner"
                   android:exported="true">
@@ -325,7 +325,7 @@
         <activity android:name=".tuner.NavBarActivity"
                   android:enabled="true"
                   android:icon="@drawable/tuner"
-                  android:theme="@style/TunerSettings"
+                  android:theme="@style/CustomTunerSettings"
                   android:label="@string/systemui_tuner_navbar_title"
                   android:parentActivityName="com.citrus.settings.fragments.NavigationBar"
                   android:process=":tuner"
