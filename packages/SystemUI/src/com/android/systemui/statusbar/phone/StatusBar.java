@@ -605,6 +605,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected PorterDuffXfermode mSrcOverXferMode =
             new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER);
 
+    private String[] mNavMediaArrowsExcludeList;
     private MediaSessionManager mMediaSessionManager;
     private MediaController mMediaController;
     private String mMediaNotificationKey;
@@ -655,6 +656,12 @@ public class StatusBar extends SystemUI implements DemoMode,
                     getMediaControllerPlaybackState(mMediaController)
                     || PlaybackState.STATE_BUFFERING ==
                     getMediaControllerPlaybackState(mMediaController)) {
+                final String currentPkg = mMediaController.getPackageName().toLowerCase();
+                for (String packageName : mNavMediaArrowsExcludeList) {
+                    if (currentPkg.contains(packageName)) {
+                        return;
+                    }
+                }
                 mNavigationBar.setMediaPlaying(true);
             } else {
                 mNavigationBar.setMediaPlaying(false);
@@ -1077,6 +1084,9 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         Dependency.get(ConfigurationController.class).addCallback(this);
         mFlashlightController = Dependency.get(FlashlightController.class);
+
+        final String list = mContext.getResources().getString(R.string.navMediaArrowsExcludeList);
+        mNavMediaArrowsExcludeList = list.split(",");
     }
 
     protected void createIconController() {
