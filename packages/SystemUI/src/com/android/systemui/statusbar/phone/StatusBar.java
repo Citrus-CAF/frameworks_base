@@ -56,6 +56,7 @@ import android.content.ComponentCallbacks2;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
@@ -115,7 +116,6 @@ import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.Log;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
@@ -3632,10 +3632,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             if (mTicker == null || mTickerEnabled == 0) return;
             mTicking = true;
             mStatusBarContent.setVisibility(View.GONE);
-            mStatusBarContent.startAnimation(loadAnim(true, null));
+            mStatusBarContent.startAnimation(loadAnim(com.android.internal.R.anim.push_up_out, null));
             if (mTickerView != null) {
                 mTickerView.setVisibility(View.VISIBLE);
-                mTickerView.startAnimation(loadAnim(false, null));
+                mTickerView.startAnimation(loadAnim(com.android.internal.R.anim.push_up_in, null));
             }
         }
 
@@ -3643,10 +3643,10 @@ public class StatusBar extends SystemUI implements DemoMode,
         public void tickerDone() {
             if (mTicker == null || mTickerEnabled == 0) return;
             mStatusBarContent.setVisibility(View.VISIBLE);
-            mStatusBarContent.startAnimation(loadAnim(false, null));
+            mStatusBarContent.startAnimation(loadAnim(com.android.internal.R.anim.push_up_in, null));
             if (mTickerView != null) {
                 mTickerView.setVisibility(View.GONE);
-                mTickerView.startAnimation(loadAnim(true, mTickingDoneListener));
+                mTickerView.startAnimation(loadAnim(com.android.internal.R.anim.push_up_out, mTickingDoneListener));
             }
         }
 
@@ -3656,7 +3656,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             if (mStatusBarContent.getVisibility() != View.VISIBLE) {
                 mStatusBarContent.setVisibility(View.VISIBLE);
                 mStatusBarContent
-                        .startAnimation(loadAnim(false, null));
+                        .startAnimation(loadAnim(com.android.internal.R.anim.push_up_in, null));
             }
             if (mTickerView != null) {
                 mTickerView.setVisibility(View.GONE);
@@ -3680,18 +3680,15 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     };
 
-    private Animation loadAnim(boolean outAnim, Animation.AnimationListener listener) {
-        AlphaAnimation animation = new AlphaAnimation((outAnim ? 1.0f : 0.0f), (outAnim ? 0.0f : 1.0f));
-        Interpolator interpolator = AnimationUtils.loadInterpolator(mContext,
-                (outAnim ? android.R.interpolator.accelerate_quad : android.R.interpolator.decelerate_quad));
-        animation.setInterpolator(interpolator);
-        animation.setDuration(350);
+
+    private Animation loadAnim(int id, Animation.AnimationListener listener) {
+        Animation anim = AnimationUtils.loadAnimation(mContext, id);
 
         if (listener != null) {
-            animation.setAnimationListener(listener);
+            anim.setAnimationListener(listener);
         }
 
-        return animation;
+        return anim;
     }
 
     private void haltTicker() {
@@ -7796,7 +7793,8 @@ public class StatusBar extends SystemUI implements DemoMode,
         return mNotificationPanel;
     }
 
-    @Override
+    
+     @Override
     public void startAssist(Bundle args) {
         if (mAssistManager != null) {
             mAssistManager.startAssist(args);

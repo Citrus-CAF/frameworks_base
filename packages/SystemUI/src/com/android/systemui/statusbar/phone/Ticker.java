@@ -28,9 +28,8 @@ import android.service.notification.StatusBarNotification;
 import android.text.Layout.Alignment;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.Interpolator;
 import android.view.View;
 import android.widget.ImageSwitcher;
 import android.widget.TextSwitcher;
@@ -71,8 +70,8 @@ public abstract class Ticker implements DarkReceiver {
                 && gc != Character.SPACE_SEPARATOR;
     }
 
-    private AlphaAnimation mAnimationIn;
-    private AlphaAnimation mAnimationOut;
+    private Animation mAnimationIn;
+    private Animation mAnimationOut;
 
     private final class Segment {
         StatusBarNotification notification;
@@ -181,18 +180,9 @@ public abstract class Ticker implements DarkReceiver {
         final int outerBounds = res.getDimensionPixelSize(R.dimen.status_bar_icon_size);
         final int imageBounds = res.getDimensionPixelSize(R.dimen.status_bar_icon_drawing_size);
         mIconScale = (float)imageBounds / (float)outerBounds;
-
-        mAnimationIn = new AlphaAnimation(0.0f, 1.0f);
-        Interpolator interpolatorIn = AnimationUtils.loadInterpolator(context,
-                android.R.interpolator.decelerate_quad);
-        mAnimationIn.setInterpolator(interpolatorIn);
-        mAnimationIn.setDuration(350);
-
-        mAnimationOut = new AlphaAnimation(1.0f, 0.0f);
-        Interpolator interpolatorOut = AnimationUtils.loadInterpolator(context,
-                android.R.interpolator.accelerate_quad);
-        mAnimationOut.setInterpolator(interpolatorOut);
-        mAnimationOut.setDuration(350);
+        
+        mAnimationIn = AnimationUtils.loadAnimation(context, com.android.internal.R.anim.push_up_in);
+        mAnimationOut = AnimationUtils.loadAnimation(context, com.android.internal.R.anim.push_up_out);
 
         mNotificationColorUtil = NotificationColorUtil.getInstance(mContext);
 
