@@ -133,6 +133,9 @@
     <!-- volte icon switch -->
     <string name="status_bar_volte">VOLTE</string>
 
+    <!-- Vpn -->
+    <string name="status_bar_vpn">VPN</string>
+
     <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_data_connection_hspap">HSPA+</string>
 
@@ -164,4 +167,5 @@
     <string name="accessibility_quick_settings_hwkeys_on">HW keys on</string>
     <string name="accessibility_quick_settings_hwkeys_off">HW keys off</string>
     <string name="quick_settings_hwkeys_label">HW keys</string>
+
 </resources>
