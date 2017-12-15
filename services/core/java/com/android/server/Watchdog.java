@@ -19,6 +19,7 @@ package com.android.server;
 import android.app.IActivityController;
 import android.os.Binder;
 import android.os.RemoteException;
+import com.android.internal.os.BinderTracker;
 import com.android.server.am.ActivityManagerService;
 
 import android.content.BroadcastReceiver;
@@ -53,6 +54,7 @@ import java.util.concurrent.TimeoutException;
 /** This class calls its monitor every minute. Killing this process if they don't return **/
 public class Watchdog extends Thread {
     static final String TAG = "Watchdog";
+    static final String BINDERTRACKER = "binderTracker";
 
     // Set this to true to use debug default values.
     static final boolean DB = false;
@@ -457,6 +459,35 @@ public class Watchdog extends Thread {
 
             ArrayList<Integer> pids = new ArrayList<Integer>();
             pids.add(Process.myPid());
+
+            //Add processes to <firstPids> which are communicating with <app.pid>.
+            boolean enableTrackBinder = SystemProperties.getBoolean("persist.sys.enableTrackBinder",false);
+            if(enableTrackBinder){
+               int zygotePid = Process.myPpid();
+               Log.i(BINDERTRACKER, "zygotePid: "+ zygotePid);
+
+               BinderTracker binderTracker = new BinderTracker(Process.myPid());
+               ArrayList<Integer> binderPids = null;
+               binderPids = binderTracker.getBinderTransaction();
+               if (binderPids != null && binderPids.size() != 0) {
+                   int binderPidsSize = binderPids.size();
+                   for (int mPerBinderPids = 0; mPerBinderPids < binderPidsSize; mPerBinderPids++) {
+                        if (!pids.contains(binderPids.get(mPerBinderPids))) {
+                           try {
+                              int parentPid=Process.getParentPid(binderPids.get(mPerBinderPids));
+                              if (zygotePid == parentPid){
+                                 pids.add(binderPids.get(mPerBinderPids));
+                              } else {
+                                 Log.i(BINDERTRACKER, "binder communication with native process : "+ binderPids.get(mPerBinderPids));
+                              }
+                           } finally {
+
+                           }
+                        }
+                   }
+               }
+            }
+
             if (mPhonePid > 0) pids.add(mPhonePid);
             // Pass !waitedHalf so that just in case we somehow wind up here without having
             // dumped the halfway stacks, we properly re-initialize the trace file.

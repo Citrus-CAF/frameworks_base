@@ -218,6 +218,11 @@ public class SystemConfig {
             removeFeature(PackageManager.FEATURE_VULKAN_HARDWARE_LEVEL);
             removeFeature(PackageManager.FEATURE_VULKAN_HARDWARE_VERSION);
         }
+        // Remove android extension pack for opengles version 3.0
+        int value = SystemProperties.getInt("ro.opengles.version", 0);
+        if (value > 0 && (value == 196608)) {
+            removeFeature(PackageManager.FEATURE_OPENGLES_EXTENSION_PACK);
+        }
     }
 
     void readPermissions(File libraryDir, int permissionFlag) {

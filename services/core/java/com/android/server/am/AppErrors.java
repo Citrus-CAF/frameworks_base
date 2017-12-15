@@ -20,6 +20,7 @@ import com.android.internal.app.ProcessMap;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.MetricsProto;
 import com.android.internal.os.ProcessCpuTracker;
+import com.android.internal.os.BinderTracker;
 import com.android.server.Watchdog;
 
 import android.app.ActivityManager;
@@ -70,6 +71,7 @@ import static com.android.server.am.ActivityManagerService.SYSTEM_DEBUGGABLE;
 class AppErrors {
 
     private static final String TAG = TAG_WITH_CLASS_NAME ? "AppErrors" : TAG_AM;
+    private static final String BINDERTRACKER = "binderTracker";
 
     private final ActivityManagerService mService;
     private final Context mContext;
@@ -738,7 +740,7 @@ class AppErrors {
 
     final void appNotResponding(ProcessRecord app, ActivityRecord activity,
             ActivityRecord parent, boolean aboveSystem, final String annotation) {
-        ArrayList<Integer> firstPids = new ArrayList<Integer>(5);
+        ArrayList<Integer> firstPids = new ArrayList<Integer>(20);
         SparseArray<Boolean> lastPids = new SparseArray<Boolean>(20);
 
         if (mService.mController != null) {
@@ -816,6 +818,34 @@ class AppErrors {
                         }
                     }
                 }
+            }
+
+            //Add processes to <firstPids> which are communicating with <app.pid>.
+            boolean enableTrackBinder = SystemProperties.getBoolean("persist.sys.enableTrackBinder",false);
+            if(enableTrackBinder){
+               int zygotePid = Process.myPpid();
+               Log.i(BINDERTRACKER, "zygotePid: "+ zygotePid);
+
+               BinderTracker binderTracker = new BinderTracker(app.pid);
+               ArrayList<Integer> binderPids = null;
+               binderPids = binderTracker.getBinderTransaction();
+               if (binderPids != null && binderPids.size() != 0) {
+                   int binderPidsSize = binderPids.size();
+                   for (int mPerBinderPids = 0; mPerBinderPids < binderPidsSize; mPerBinderPids++) {
+                        if (!firstPids.contains(binderPids.get(mPerBinderPids))) {
+                           try {
+                              int parentPid=Process.getParentPid(binderPids.get(mPerBinderPids));
+                              if (zygotePid == parentPid){
+                                 firstPids.add(binderPids.get(mPerBinderPids));
+                              } else {
+                                 Log.i(BINDERTRACKER, "binder communication with native process : "+ binderPids.get(mPerBinderPids));
+                              }
+                           } finally {
+
+                           }
+                        }
+                   }
+               }
             }
         }
 
