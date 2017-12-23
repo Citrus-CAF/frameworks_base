@@ -18,7 +18,7 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_extra" translatable="false">
-    anbi,adb_network,caffeine,compass,expanded_desktop,heads_up,reboot,screenshot,sound,volume,weather
+    anbi,adb_network,caffeine,compass,expanded_desktop,heads_up,hwkeys,reboot,screenshot,sound,volume,weather
     </string>
 
     <!-- Whether to show Data disable prompt when user turn off data from QS -->
