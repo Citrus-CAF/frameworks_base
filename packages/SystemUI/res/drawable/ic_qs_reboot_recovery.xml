@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2017 ColtOS Project
+                        Cardinal-AOSP
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24.0dp"
+    android:height="24.0dp"
+    android:viewportWidth="24.0"
+    android:viewportHeight="24.0">
+
+    <path
+        android:strokeColor="#ffffff"
+        android:strokeWidth="2"
+        android:pathData="M10.516,3.05c0.483,-0.08 0.979,-0.121 1.484,-0.121c5.006,0 9.071,4.065
+9.071,9.071c0,5.006 -4.065,9.071 -9.071,9.071c-0.743,0 -1.464,-0.089
+-2.155,-0.258" />
+    <path
+        android:strokeColor="#ffffff"
+        android:strokeWidth="2"
+        android:pathData="M5.936,18.744c-1.845,-1.661 -3.007,-4.068 -3.007,-6.744c0,-2.204 0.787,-4.225
+2.096,-5.797" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M10.495,7.163l3.01,0l0,5.374l2.795,0l-4.3,4.3l-4.3,-4.3l2.795,0l0,-5.374Z" />
+</vector>
