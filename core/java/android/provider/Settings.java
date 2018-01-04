@@ -4582,6 +4582,15 @@ public final class Settings {
         public static final String RECENTS_ICON_PACK = "recents_icon_pack";
 
         /**
+         * Wheter to play notification sound and vibration if screen is on
+         * @hide
+         */
+        public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
+
+        /** @hide */
+        private static final Validator NOTIFICATION_SOUND_VIB_SCREEN_ON_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
@@ -4694,6 +4703,7 @@ public final class Settings {
             VIBRATE_ON_DISCONNECT,
             VIBRATE_ON_CALLWAITING,
             HEADS_UP_ENABLED,
+            NOTIFICATION_SOUND_VIB_SCREEN_ON,
         };
 
         /**
@@ -4857,6 +4867,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(VIBRATE_ON_DISCONNECT);
             PRIVATE_SETTINGS.add(VIBRATE_ON_CALLWAITING);
             PRIVATE_SETTINGS.add(HEADS_UP_ENABLED);
+            PRIVATE_SETTINGS.add(NOTIFICATION_SOUND_VIB_SCREEN_ON);
         }
 
         /**
@@ -4995,6 +5006,7 @@ public final class Settings {
             VALIDATORS.put(VIBRATE_ON_DISCONNECT, VIBRATE_ON_DISCONNECT_VALIDATOR);
             VALIDATORS.put(VIBRATE_ON_CALLWAITING, VIBRATE_ON_CALLWAITING_VALIDATOR);
             VALIDATORS.put(HEADS_UP_ENABLED, HEADS_UP_ENABLED_VALIDATOR);
+            VALIDATORS.put(NOTIFICATION_SOUND_VIB_SCREEN_ON, NOTIFICATION_SOUND_VIB_SCREEN_ON_VALIDATOR);
         }
 
         /**
