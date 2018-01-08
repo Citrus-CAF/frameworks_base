@@ -15,14 +15,18 @@
  */
 package com.android.systemui.statusbar.policy;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.net.NetworkCapabilities;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemProperties;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
@@ -80,6 +84,8 @@ public class MobileSignalController extends SignalController<
     private final int STATUS_BAR_STYLE_DATA_VOICE = 3;
     private int mStyle = STATUS_BAR_STYLE_ANDROID_DEFAULT;
     private boolean mDualBar = false;
+    // show lte/4g switch
+    private boolean mShowLteFourGee;
 
     // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
     // need listener lists anymore.
@@ -125,6 +131,45 @@ public class MobileSignalController extends SignalController<
                 updateTelephony();
             }
         };
+
+        Handler mHandler = new Handler();
+        SettingsObserver settingsObserver = new SettingsObserver(mHandler);
+        settingsObserver.observe();
+    }
+
+    protected class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+           ContentResolver resolver = mContext.getContentResolver();
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.SHOW_LTE_FOURGEE),
+                  false, this, UserHandle.USER_ALL);
+           updateSettings();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.SHOW_LTE_FOURGEE))) {
+                    mShowLteFourGee = Settings.System.getIntForUser(
+                            mContext.getContentResolver(),
+                            Settings.System.SHOW_LTE_FOURGEE,
+                            0, UserHandle.USER_CURRENT) == 1;
+                    mapIconSets();
+                    updateTelephony();
+            }
+            updateSettings();
+        }
+    }
+
+    private void updateSettings() {
+        ContentResolver resolver = mContext.getContentResolver();
+        boolean mShowLteFourGee = Settings.System.getIntForUser(resolver,
+                Settings.System.SHOW_LTE_FOURGEE, 0, UserHandle.USER_CURRENT) == 1;
     }
 
     public void setConfiguration(Config config) {
@@ -235,7 +280,8 @@ public class MobileSignalController extends SignalController<
         }
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, hGroup);
 
-        if (mConfig.show4gForLte) {
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SHOW_LTE_FOURGEE, 0) == 1) {
             mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.FOUR_G);
             if (mConfig.hideLtePlus) {
                 mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE_CA,
@@ -624,8 +670,13 @@ public class MobileSignalController extends SignalController<
         // Update data icon set
         int chosenNetworkType = ((dataType == TelephonyManager.NETWORK_TYPE_UNKNOWN)
                 ? voiceType : dataType);
+        
+        boolean show4gForLte = Settings.System.getInt(
+                mContext.getContentResolver(),
+                Settings.System.SHOW_LTE_FOURGEE, 0) == 1;
+
         TelephonyIcons.updateDataType(slotId, chosenNetworkType, mConfig.showAtLeast3G,
-                mConfig.show4gForLte, mConfig.hspaDataDistinguishable, inet);
+                show4gForLte, mConfig.hspaDataDistinguishable, inet);
 
         // Update signal strength icons
         singleSignalIcon = TelephonyIcons.getSignalStrengthIcon(slotId, inet, level, roaming);

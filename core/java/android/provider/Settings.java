@@ -4403,6 +4403,12 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_CUSTOM_LOGO_STYLE = "status_bar_custom_logo_style";
+  
+        /**
+         * Whether to display the 4g or lte network icon in the statusbar
+         * @hide
+         */
+        public static final String SHOW_LTE_FOURGEE = "show_lte_fourgee";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -4619,7 +4625,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREEN_STATE_ON_DELAY);
             PRIVATE_SETTINGS.add(FORCE_AMBIENT_FOR_MEDIA);
             PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_LOGO);
-            PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_LOGO_STYLE);            
+            PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_LOGO_STYLE); 
+            PRIVATE_SETTINGS.add(SHOW_LTE_FOURGEE);  
         }
 
         /**
