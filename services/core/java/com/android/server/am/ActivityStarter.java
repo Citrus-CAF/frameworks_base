@@ -261,8 +261,10 @@ class ActivityStarter {
         mSupervisor = supervisor;
         mInterceptor = new ActivityStartInterceptor(mService, mSupervisor);
         mUsingVr2dDisplay = false;
-        if (mPerf == null)
+        if (mPerf == null && mService.mContext.getResources().getBoolean
+                        (com.android.internal.R.bool.config_isBoostFrameworkPresent)) {
             mPerf = new BoostFramework();
+        }
     }
 
     int startActivityLocked(IApplicationThread caller, Intent intent, Intent ephemeralIntent,

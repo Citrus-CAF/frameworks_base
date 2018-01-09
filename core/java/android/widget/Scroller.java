@@ -189,7 +189,8 @@ public class Scroller  {
 
         mPhysicalCoeff = computeDeceleration(0.84f); // look and feel tuning
 
-        if (mPerf == null) {
+        if (mPerf == null && mContext.getResources().getBoolean
+                        (com.android.internal.R.bool.config_isBoostFrameworkPresent)) {
             mPerf = new BoostFramework();
         }
     }

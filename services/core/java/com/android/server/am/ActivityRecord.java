@@ -951,8 +951,10 @@ final class ActivityRecord extends ConfigurationContainer implements AppWindowCo
         mShowWhenLocked = (aInfo.flags & FLAG_SHOW_WHEN_LOCKED) != 0;
         mTurnScreenOn = (aInfo.flags & FLAG_TURN_SCREEN_ON) != 0;
 
-        if (mPerf == null)
+        if (mPerf == null && service.mContext.getResources().getBoolean
+                (com.android.internal.R.bool.config_isBoostFrameworkPresent)) {
             mPerf = new BoostFramework();
+        }
     }
 
     AppWindowContainerController getWindowContainerController() {
@@ -1947,7 +1949,8 @@ final class ActivityRecord extends ConfigurationContainer implements AppWindowCo
             Log.i(TAG, sb.toString());
         }
         mStackSupervisor.reportActivityLaunchedLocked(false, this, thisTime, totalTime);
-        if (mPerfFirstDraw == null) {
+        if (mPerfFirstDraw == null && service.mContext.getResources().getBoolean
+                        (com.android.internal.R.bool.config_isBoostFrameworkPresent)) {
             mPerfFirstDraw = new BoostFramework();
         }
         if (mPerfFirstDraw != null) {

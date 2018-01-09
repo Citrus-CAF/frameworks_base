@@ -2515,7 +2515,8 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
         // that the previous one will be hidden soon.  This way it can know
         // to ignore it when computing the desired screen orientation.
         boolean anim = true;
-        if (mPerf == null) {
+        if (mPerf == null && mService.mContext.getResources().getBoolean
+                        (com.android.internal.R.bool.config_isBoostFrameworkPresent)) {
             mPerf = new BoostFramework();
         }
         if (prev != null) {

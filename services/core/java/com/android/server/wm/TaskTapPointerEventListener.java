@@ -47,7 +47,8 @@ public class TaskTapPointerEventListener implements PointerEventListener {
             DisplayContent displayContent) {
         mService = service;
         mDisplayContent = displayContent;
-        if (mPerfObj == null) {
+        if (mPerfObj == null && mService.mContext.getResources().getBoolean(
+                        com.android.internal.R.bool.config_isBoostFrameworkPresent)) {
             mPerfObj = new BoostFramework();
         }
     }

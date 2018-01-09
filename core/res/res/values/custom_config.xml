@@ -92,4 +92,7 @@
     <bool name="config_canForceDozeNotifications">true</bool>
 
     <integer name="config_flashlightProximityTimeout">300</integer>
+
+    <!-- Whether boostframework.jar is present or not -->
+    <bool name="config_isBoostFrameworkPresent">false</bool>
 </resources>
