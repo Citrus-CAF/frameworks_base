@@ -4571,5 +4571,9 @@ message MetricsEvent {
 
     // Add new aosp constants above this line.
     // END OF AOSP CONSTANTS
+
+    // Citrus-CAF CONSTANTS
+    CUSTOM_SQUASH = 1500;
+    // END OF Citrus-CAF CONSTANTS
   }
 }
