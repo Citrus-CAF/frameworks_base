@@ -91,4 +91,5 @@
   <!-- Ambient music -->
   <java-symbol type="bool" name="config_canForceDozeNotifications" />
 
+  <java-symbol type="integer" name="config_flashlightProximityTimeout" />
 </resources>
