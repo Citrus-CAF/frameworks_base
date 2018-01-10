@@ -4411,6 +4411,24 @@ public final class Settings {
         public static final String SHOW_LTE_FOURGEE = "show_lte_fourgee";
 
         /**
+         * Hide lockscreen date
+         * @hide
+         */
+        public static final String HIDE_LOCKSCREEN_DATE = "hide_lockscreen_date";
+
+        /**
+         * Hide lockscreen clock
+         * @hide
+         */
+        public static final String HIDE_LOCKSCREEN_CLOCK = "hide_lockscreen_clock";
+
+        /**
+         * Hide lockscreen alarm
+         * @hide
+         */
+        public static final String HIDE_LOCKSCREEN_ALARM = "hide_lockscreen_alarm";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4626,7 +4644,10 @@ public final class Settings {
             PRIVATE_SETTINGS.add(FORCE_AMBIENT_FOR_MEDIA);
             PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_LOGO);
             PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_LOGO_STYLE); 
-            PRIVATE_SETTINGS.add(SHOW_LTE_FOURGEE);  
+            PRIVATE_SETTINGS.add(SHOW_LTE_FOURGEE);
+            PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_DATE); 
+            PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_CLOCK);  
+            PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_ALARM);  
         }
 
         /**
