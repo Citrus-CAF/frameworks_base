@@ -103,4 +103,7 @@
     <!-- The number of rows in the QuickSettings -->
     <java-symbol type="integer" name="quick_settings_num_rows" />
 
+    <!-- Flashlight proximity timeout -->
+    <java-symbol type="integer" name="config_flashlightProximityTimeout" />
+
 </resources>

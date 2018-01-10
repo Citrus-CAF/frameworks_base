@@ -119,4 +119,7 @@
     <integer name="config_longPressOnCameraKeyBehavior">0</integer>
     <integer name="config_doubleTapOnCameraKeyBehavior">0</integer>
 
+    <!-- Flashlight proximity timeout -->
+    <integer name="config_flashlightProximityTimeout">300</integer>
+
 </resources>
