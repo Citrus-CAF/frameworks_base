@@ -4164,7 +4164,6 @@ public final class Settings {
             NOTIFICATION_SOUND,
             ACCELEROMETER_ROTATION,
             SHOW_BATTERY_PERCENT,
-            SCREENSHOT_SHUTTER_SOUND,
             NOTIFICATION_LIGHT_SCREEN_ON
         };
 

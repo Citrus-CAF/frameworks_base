@@ -874,6 +874,7 @@ public final class PowerManagerService extends SystemService
                 false, mSettingsObserver, UserHandle.USER_ALL);
         resolver.registerContentObserver(Settings.Secure.getUriFor(
                 Settings.Secure.HARDWARE_KEYS_DISABLE),
+                false, mSettingsObserver, UserHandle.USER_ALL);
         resolver.registerContentObserver(Settings.Secure.getUriFor(
                 Settings.System.PROXIMITY_ON_WAKE),
                 false, mSettingsObserver, UserHandle.USER_ALL);
