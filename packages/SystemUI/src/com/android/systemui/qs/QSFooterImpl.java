@@ -402,7 +402,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private void startSettingsLongClickActivity() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
 	intent.setClassName("com.android.settings",
-            "com.android.settings.Settings$CustumSquashActivity");
+            "com.android.settings.Settings$CustomSquashActivity");
         mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
