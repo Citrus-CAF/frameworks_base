@@ -28,7 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:src="@drawable/ic_brightness_left"
-        android:contentDescription="@null" />
+        android:contentDescription="@null"
+        android:background="?android:attr/selectableItemBackgroundBorderless" />
 
     <com.android.systemui.settings.ToggleSliderView
         android:id="@+id/brightness_slider"
@@ -47,7 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:src="@drawable/ic_brightness_right"
-        android:contentDescription="@null" />
+        android:contentDescription="@null"
+        android:background="?android:attr/selectableItemBackgroundBorderless" />
 
     <ImageButton
         android:id="@+id/brightness_icon"
