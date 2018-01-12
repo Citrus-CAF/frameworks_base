@@ -4236,6 +4236,15 @@ public final class Settings {
         private static final Validator CUSTOM_SETTINGS_SUMMARY_VALIDATOR = ANY_STRING_VALIDATOR;
 
         /**
+         * Defines the screen-off animation to display
+         * @hide
+         */
+        public static final String SCREEN_OFF_ANIMATION = "screen_off_animation";
+
+        /** @hide */
+        private static final Validator SCREEN_OFF_ANIMATION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
@@ -4315,6 +4324,7 @@ public final class Settings {
             LOCKSCREEN_WEATHER_ENABLED,
             CUSTOM_SETTINGS_RANDOM_SUMMARY,
             CUSTOM_SETTINGS_SUMMARY,
+            SCREEN_OFF_ANIMATION,
         };
 
         /**
@@ -4446,6 +4456,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(LOCKSCREEN_WEATHER_ENABLED);
             PRIVATE_SETTINGS.add(CUSTOM_SETTINGS_RANDOM_SUMMARY);
             PRIVATE_SETTINGS.add(CUSTOM_SETTINGS_SUMMARY);
+            PRIVATE_SETTINGS.add(SCREEN_OFF_ANIMATION);
         }
 
         /**
@@ -4551,6 +4562,7 @@ public final class Settings {
             VALIDATORS.put(LOCKSCREEN_WEATHER_ENABLED, LOCKSCREEN_WEATHER_ENABLED_VALIDATOR);
             VALIDATORS.put(CUSTOM_SETTINGS_RANDOM_SUMMARY, CUSTOM_SETTINGS_RANDOM_SUMMARY_VALIDATOR);
             VALIDATORS.put(CUSTOM_SETTINGS_SUMMARY, CUSTOM_SETTINGS_SUMMARY_VALIDATOR);
+            VALIDATORS.put(SCREEN_OFF_ANIMATION, SCREEN_OFF_ANIMATION_VALIDATOR);
         }
 
         /**
