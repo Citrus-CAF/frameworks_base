@@ -479,7 +479,7 @@ public class UpstreamNetworkMonitor {
 
             for (NetworkState value : netStates) {
                 if ( (cm()!= null && cm().getActiveNetworkInfo() != null &&
-                        type != (cm().getActiveNetworkInfo().getType())) ||
+                        type != cm().getActiveNetworkInfo().getType()) ||
                         !nc.satisfiedByNetworkCapabilities(value.networkCapabilities)) {
                     continue;
                 }

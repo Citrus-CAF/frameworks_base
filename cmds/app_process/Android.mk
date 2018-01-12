@@ -2,6 +2,7 @@ LOCAL_PATH:= $(call my-dir)
 
 app_process_common_shared_libs := \
     libandroid_runtime \
+    libbase \
     libbinder \
     libcutils \
     libdl \
