@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2018 Citrus-CAF
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1440dp"
+    android:height="340dp"
+    android:viewportWidth="1440"
+    android:viewportHeight="340"
+    android:tint="@*android:color/accent_device_default_light">
+
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M601.947,254.038c-0.239,-2.98 -0.361,-5.994 -0.361,-9.035c0,-62.255
+51.116,-112.722 114.164,-112.722c63.048,0 114.164,50.467 114.164,112.722c0,3.041
+-0.122,6.055 -0.361,9.035" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M863.606,252.423l79.876,0" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M819.417,145.357l52.681,-52.681" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M717.451,104.569l0,-78.172" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M613.784,148.758l-55.229,-55.239" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M569.595,249.025l-76.474,0" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M505.019,313.603l141.614,0l74.992,-74.992l74.987,74.992l150.267,0" />
+</vector>

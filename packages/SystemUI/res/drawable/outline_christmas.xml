@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2018 Citrus-CAF
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1440dp"
+    android:height="340dp"
+    android:viewportWidth="1440"
+    android:viewportHeight="340"
+    android:tint="@*android:color/accent_device_default_light">
+
+    <path
+        android:fillColor="#000000"
+        android:pathData="M719.463,26.397l5.956,17.342l19.393,-0.036l-15.711,10.683l6.021,17.319l-15.659,-10.736l-15.658,10.736l6.016,-17.319l-15.706,-10.683l19.387,0.036l5.961,-17.342Z" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M720,70.625l63.643,63.637l-105.707,-21.567l42.064,-42.07Z" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M729.192,131.556l39.346,9.182l28.049,28.042l-151.009,25.892l0.822,-0.248l20.745,-19.168l-36.675,2.157l1.099,-0.792l43.127,-41.278l-0.254,-0.118l-26.713,1.199l23.729,-18.34l19.074,4.455m5.979,1.389l25.922,6.05" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M640.181,203.3l135.906,-23.736l43.151,43.152l-36.676,1.075l4.314,8.633l-170.425,-9.708l1.637,-0.798l22.093,-18.618Z" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M705.979,233.842l-31.47,-2.127m-1.43,-0.101l-19.954,-1.347l-43.145,42.064l94.917,-1.075l-8.626,42.064l4.603,0.283l43.937,-0.283l-9.708,-42.064l94.917,0l-33.431,-31.281l-89.706,-6.074" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M674.508,231.712c4.378,0.756 7.74,4.94 7.74,10.004c0,5.595 -4.106,10.121
+-9.17,10.121c-5.064,0 -9.165,-4.526 -9.165,-10.121c0,-5.596 4.101,-10.128
+9.165,-10.128" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M706.884,233.902c2.547,0.461 4.491,2.83 4.491,5.69c0,3.191 -2.417,5.773
+-5.395,5.773c-2.983,0 -5.394,-2.582 -5.394,-5.773c0,-3.191 2.411,-5.773
+5.394,-5.773" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M764.223,250.44c2.972,0 5.395,-2.594 5.395,-5.773c0,-3.179 -2.423,-5.773
+-5.395,-5.773c-2.972,0 -5.389,2.594 -5.389,5.773c0,3.179 2.417,5.773
+5.389,5.773Z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M701.87,203.314c2.972,0 5.389,-2.422 5.389,-5.394c0,-2.972 -2.417,-5.395
+-5.389,-5.395c-2.972,0 -5.394,2.423 -5.394,5.395c0,2.972 2.422,5.394
+5.394,5.394Z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M734.022,206.534c4.756,0 8.633,-3.876 8.633,-8.627c0,-4.756 -3.877,-8.632
+-8.633,-8.632c-4.757,0 -8.633,3.876 -8.633,8.632c0,4.751 3.876,8.627
+8.633,8.627Z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M759.907,197.902c4.159,0 7.551,-3.392 7.551,-7.545c0,-4.16 -3.392,-7.552
+-7.551,-7.552c-4.16,0 -7.546,3.392 -7.546,7.552c0,4.153 3.386,7.545 7.546,7.545Z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M696.509,123.928c1.82,1.376 2.996,3.562 2.996,6.026c0,4.166 -3.38,7.546
+-7.551,7.546c-4.172,0 -7.552,-3.38 -7.552,-7.546c0,-3.687 2.642,-6.753
+6.128,-7.415" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M729.192,131.556c3.534,2.056 5.909,5.879 5.909,10.257c0,6.553 -5.312,11.871
+-11.865,11.871c-6.547,0 -11.864,-5.318 -11.864,-11.871c0,-6.281 4.892,-11.421
+11.061,-11.835" />
+</vector>

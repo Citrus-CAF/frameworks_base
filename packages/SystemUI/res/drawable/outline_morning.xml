@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2018 Citrus-CAF
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1440dp"
+    android:height="340dp"
+    android:viewportWidth="1440"
+    android:viewportHeight="340"
+    android:tint="@*android:color/accent_device_default_light">
+
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M573.198,313.603c-0.302,-3.753 -0.456,-7.562 -0.456,-11.4c0,-78.544
+64.491,-142.216 144.044,-142.216c79.546,0 144.03,63.672 144.03,142.216c0,3.838
+-0.154,7.647 -0.455,11.4" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M903.324,311.565l100.776,0" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M847.579,176.484l66.459,-66.465" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M718.926,125.024l0,-98.627" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M588.133,180.772l-69.68,-69.687" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M532.384,307.281l-96.484,0" />
+</vector>

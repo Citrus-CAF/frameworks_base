@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2018 Citrus-CAF
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1440dp"
+    android:height="340dp"
+    android:viewportWidth="1440"
+    android:viewportHeight="340"
+    android:tint="@*android:color/accent_device_default_light">
+
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M719.957,243.42c40.464,0 73.466,-32.985 73.466,-73.421c0,-40.442 -33.002,-73.426
+-73.466,-73.426c-40.464,0 -73.466,32.984 -73.466,73.426c0,40.436 33.002,73.421
+73.466,73.421Z" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M720.001,263.935l0,49.668m0,-287.206l0,49.668" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M813.933,170l49.669,0" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M626.067,170l-49.669,0" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M653.58,103.576l-36.152,-36.152m202.992,202.991l-33.999,-33.999" />
+    <path
+        android:strokeColor="#000"
+        android:strokeWidth="10"
+        android:pathData="M786.422,103.576l36.153,-36.152m-204.069,204.068l35.076,-35.07" />
+</vector>
