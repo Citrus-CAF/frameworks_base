@@ -88,4 +88,7 @@
   <!-- Sensor block-per package -->
   <java-symbol type="array" name="config_blockPackagesSensorDrain" />
 
+  <!-- Ambient music -->
+  <java-symbol type="bool" name="config_canForceDozeNotifications" />
+
 </resources>
