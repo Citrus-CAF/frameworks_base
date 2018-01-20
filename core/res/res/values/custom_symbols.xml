@@ -44,9 +44,6 @@
   <!-- Proximity check on screen on default -->
   <java-symbol type="bool" name="config_proximityCheckOnWakeEnabledByDefault" />
   
-  <!-- Gesture Sensor -->
-  <java-symbol type="bool" name="config_enableGestureService" />
-
   <!-- Advanced power menu -->
   <java-symbol type="string" name="reboot_to_recovery_title" />
   <java-symbol type="string" name="reboot_to_recovery_message" />
