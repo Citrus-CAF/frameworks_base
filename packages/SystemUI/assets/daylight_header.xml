@@ -23,7 +23,7 @@ day_header entries have a higher priority then hour entries -->
     <meta_data creator="rock_kellan" />
     <hour_header hour="6" image="outline_sunrise" />
     <hour_header hour="9" image="outline_morning" />
-    <hour_header hour="11" image="oitline_noon" />
+    <hour_header hour="11" image="outline_noon" />
     <hour_header hour="13" image="outline_afternoon" />
     <hour_header hour="19" image="outline_evening" />
     <hour_header hour="21" image="outline_night" />
