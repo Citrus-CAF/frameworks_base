@@ -4448,6 +4448,11 @@ public final class Settings {
          * @hide
          */
         public static final String RECENTS_ICON_PACK = "recents_icon_pack";
+ 
+        /**
+         * @hide
+         */
+        public static final String STATUS_BAR_FILE_HEADER_IMAGE = "status_bar_file_header_image";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -4670,9 +4675,10 @@ public final class Settings {
             PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_CLOCK);  
             PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_ALARM);  
             PRIVATE_SETTINGS.add(NOTIFICATION_SOUND_VIB_SCREEN_ON);
-            PRIVATE_SETTINGS.add(RECENTS_ICON_PACK);            
+            PRIVATE_SETTINGS.add(RECENTS_ICON_PACK);
+            PRIVATE_SETTINGS.add(STATUS_BAR_FILE_HEADER_IMAGE);          
         }
-
+        
         /**
          * These are all public system settings
          *
