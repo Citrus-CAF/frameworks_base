@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.internal.utils.du.UserContentObserver;
@@ -71,7 +72,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private SignalClusterView mSignalClusterView;
 
     // Citrus additions start
-    private View mCitrusLogo;
+    private ImageView mCitrusLogo;
     private View mTickerViewFromStub;    
     private boolean mShowLogo;
     private final Handler mHandler = new Handler();
@@ -138,6 +139,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mSignalClusterView = mStatusBar.findViewById(R.id.signal_cluster);
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mSignalClusterView);
         mCitrusLogo = mStatusBar.findViewById(R.id.status_bar_logo);
+        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mCitrusLogo);        
         mCustomSettingsObserver.observe();
         updateSettings(false);
         // initTickerView() already called above from updateSettings(false) 
@@ -169,6 +171,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         super.onDestroyView();
         Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(mSignalClusterView);
         Dependency.get(StatusBarIconController.class).removeIconGroup(mDarkIconManager);
+        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(mCitrusLogo);
         if (mNetworkController.hasEmergencyCryptKeeperText()) {
             mNetworkController.removeCallback(mSignalCallback);
         }
