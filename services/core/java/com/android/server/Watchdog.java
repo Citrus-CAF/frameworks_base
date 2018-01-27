@@ -33,6 +33,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.hidl.manager.V1_0.IServiceManager;
 import android.os.Debug;
+import android.os.FileUtils;
 import android.os.Handler;
 import android.os.IPowerManager;
 import android.os.Looper;
@@ -48,6 +49,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -421,6 +423,7 @@ public class Watchdog extends Thread {
     @Override
     public void run() {
         boolean waitedHalf = false;
+        File initialStack = null;
         while (true) {
             final List<HandlerChecker> blockedCheckers;
             final String subject;
@@ -479,8 +482,8 @@ public class Watchdog extends Thread {
                             // trace and wait another half.
                             ArrayList<Integer> pids = new ArrayList<Integer>();
                             pids.add(Process.myPid());
-                            ActivityManagerService.dumpStackTraces(true, pids, null, null,
-                                getInterestingNativePids());
+                            initialStack = ActivityManagerService.dumpStackTraces(true, pids,
+                                    null, null, getInterestingNativePids());
                             waitedHalf = true;
                         }
                         continue;
@@ -506,7 +509,7 @@ public class Watchdog extends Thread {
             if (mPhonePid > 0) pids.add(mPhonePid);
             // Pass !waitedHalf so that just in case we somehow wind up here without having
             // dumped the halfway stacks, we properly re-initialize the trace file.
-            final File stack = ActivityManagerService.dumpStackTraces(
+            final File finalStack = ActivityManagerService.dumpStackTraces(
                     !waitedHalf, pids, null, null, getInterestingNativePids());
             //Collect Binder State logs to get status of all the transactions
             if ("1".equals(SystemProperties.get("ro.debuggable"))) {
@@ -523,7 +526,7 @@ public class Watchdog extends Thread {
             }
 
             final String tracesDirProp = SystemProperties.get("dalvik.vm.stack-trace-dir", "");
-            File stackFd = stack;
+            File stackFd = finalStack;
             if (tracesDirProp.isEmpty()) {
                 String tracesPath = SystemProperties.get("dalvik.vm.stack-trace-file", null);
                 String traceFileNameAmendment = "_SystemServer_WDT" +
@@ -543,6 +546,51 @@ public class Watchdog extends Thread {
                     stackFd = new File(newTracesPath);
                 } else {
                     Slog.w(TAG, "dump WDT Traces: no trace path configured");
+                }
+            } else {
+                // the new trace dumpsing mechanism
+                String newTracesPath = "traces_SystemServer_WDT"
+                        + mTraceDateFormat.format(new Date()) + "_pid"
+                        + String.valueOf(Process.myPid());
+                File tracesDir = new File(tracesDirProp);
+                File watchdogTraces = new File(tracesDir, newTracesPath);
+
+                try {
+                    if (watchdogTraces.createNewFile()) {
+                        FileUtils.setPermissions(watchdogTraces.getAbsolutePath(),
+                                0600, -1, -1); // -rw------- permissions
+
+                        // Append both traces from the first and second half
+                        // to a new file, making it easier to debug Watchdog timeouts
+                        //dumpStackTraces() can return a null instance, so check the same
+                        if (initialStack != null) {
+                            // check the last-modified time of this file.
+                            // we are interested in this only it was written to in the
+                            // last minute or so
+                            final long age = System.currentTimeMillis()
+                                    - initialStack.lastModified();
+                            final long MINUTE_IN_MILLIS = 1000 * 60;
+                            if (age < MINUTE_IN_MILLIS) {
+                                Slog.e(TAG, "First set of traces taken from "
+                                        + initialStack.getAbsolutePath());
+                                appendFile(watchdogTraces, initialStack);
+                            }
+                        } else {
+                            Slog.e(TAG, "First set of traces are empty!");
+                        }
+
+                        if (finalStack != null) {
+                            Slog.e(TAG, "Second set of traces taken from "
+                                    + finalStack.getAbsolutePath());
+                            appendFile(watchdogTraces, finalStack);
+                        } else {
+                             Slog.e(TAG, "Second set of traces are empty!");
+                        }
+                    } else {
+                        Slog.w(TAG, "Unable to create Watchdog dump file: createNewFile failed");
+                    }
+                } catch (IOException ioe) {
+                    Slog.e(TAG, "Exception creating Watchdog dump file:", ioe);
                 }
             }
             final File newFd = stackFd;
@@ -637,6 +685,25 @@ public class Watchdog extends Thread {
             sysrq_trigger.close();
         } catch (IOException e) {
             Slog.w(TAG, "Failed to write to /proc/sysrq-trigger", e);
+        }
+    }
+
+    private void appendFile (File writeTo, File copyFrom) {
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(copyFrom));
+            FileWriter out = new FileWriter(writeTo, true);
+            String line = null;
+
+            // Write line-by-line from "copyFrom" to "writeTo"
+            while ((line = in.readLine()) != null) {
+                out.write(line);
+                out.write('\n');
+            }
+            in.close();
+            out.close();
+        } catch (IOException e) {
+            Slog.e(TAG, "Exception while writing watchdog traces to new file!");
+            e.printStackTrace();
         }
     }
 

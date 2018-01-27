@@ -87,6 +87,7 @@ import android.util.SparseArray;
 import android.util.TypedValue;
 import android.util.apk.ApkSignatureSchemeV2Verifier;
 import android.util.jar.StrictJarFile;
+import android.util.BoostFramework;
 import android.view.Gravity;
 
 import com.android.internal.R;
@@ -214,13 +215,15 @@ public class PackageParser {
 
     private static final String METADATA_MAX_ASPECT_RATIO = "android.max_aspect";
     // multithread verification
-    private static final int NUMBER_OF_CORES = Runtime.getRuntime().availableProcessors();
+    private static final int NUMBER_OF_CORES =
+            Runtime.getRuntime().availableProcessors() >= 4 ? 4 : Runtime.getRuntime().availableProcessors() ;
     private static int sTaskCount = 0;
     private static Object sObjWaitAll = new Object();
     private static boolean sWaitingForVerificationDone = false;
     private static int sPackageParseExceptionFlag = 0;
     private static Exception sException = null;
-
+    private static BoostFramework sPerfBoost = null;
+    private static boolean sIsPerfLockAcquired = false;
 
     /**
      * Bit mask of all the valid bits that can be set in recreateOnConfigChanges.
@@ -1654,7 +1657,16 @@ public class PackageParser {
                     toVerify.add(entry);
                 }
             }
-
+            if (sPerfBoost == null) {
+                sPerfBoost = new BoostFramework();
+            }
+            if (sPerfBoost != null && !sIsPerfLockAcquired) {
+                //Use big enough number here to hold the perflock for entire PackageInstall session
+                sPerfBoost.perfHint(BoostFramework.VENDOR_HINT_PACKAGE_INSTALL_BOOST,
+                        null, Integer.MAX_VALUE, -1);
+                Log.d(TAG, "perflock acquired for PackageInstall ");
+                sIsPerfLockAcquired = true;
+            }
             // Verify that entries are signed consistently with the first entry
             // we encountered. Note that for splits, certificates may have
             // already been populated during an earlier parse of a base APK.
@@ -1692,19 +1704,21 @@ public class PackageParser {
                             }
                             final Signature[] entrySignatures = convertToSignatures(entryCerts);
 
-                            if (pkg.mCertificates == null) {
-                                pkg.mCertificates = entryCerts;
-                                pkg.mSignatures = entrySignatures;
-                                pkg.mSigningKeys = new ArraySet<PublicKey>();
-                                for (int i=0; i < entryCerts.length; i++) {
-                                    pkg.mSigningKeys.add(entryCerts[i][0].getPublicKey());
-                                }
-                            } else {
-                                if (!Signature.areExactMatch(pkg.mSignatures, entrySignatures)) {
-                                    throw new PackageParserException(
-                                            INSTALL_PARSE_FAILED_INCONSISTENT_CERTIFICATES, "Package " + apkPath
-                                            + " has mismatched certificates at entry "
-                                            + entry.getName());
+                            synchronized (sObjWaitAll) {
+                                if (pkg.mCertificates == null) {
+                                    pkg.mCertificates = entryCerts;
+                                    pkg.mSignatures = entrySignatures;
+                                    pkg.mSigningKeys = new ArraySet<PublicKey>();
+                                    for (int i=0; i < entryCerts.length; i++) {
+                                        pkg.mSigningKeys.add(entryCerts[i][0].getPublicKey());
+                                    }
+                                } else {
+                                    if (!Signature.areExactMatch(pkg.mSignatures, entrySignatures)) {
+                                        throw new PackageParserException(
+                                                INSTALL_PARSE_FAILED_INCONSISTENT_CERTIFICATES, "Package " + apkPath
+                                                + " has mismatched certificates at entry "
+                                                + entry.getName());
+                                    }
                                 }
                             }
                         } catch (GeneralSecurityException e) {
@@ -1758,6 +1772,11 @@ public class PackageParser {
                     "Failed to collect certificates from " + apkPath, e);
         } finally {
             sException = null;
+            if (sIsPerfLockAcquired && sPerfBoost != null) {
+                sPerfBoost.perfLockRelease();
+                sIsPerfLockAcquired = false;
+                Log.d(TAG, "Perflock released for PackageInstall ");
+            }
             closeQuietly(jarFile);
         }
     }

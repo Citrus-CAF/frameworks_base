@@ -343,10 +343,13 @@ public class MobileSignalController extends SignalController<
         if (SystemProperties.getBoolean("persist.vendor.radio.L_L_4G", false)
                 && (mDataNetType == TelephonyManager.NETWORK_TYPE_LTE_CA
                        || mDataNetType == TelephonyManager.NETWORK_TYPE_LTE)) showDataIcon = true;
-        showDataIcon &= mStyle == STATUS_BAR_STYLE_ANDROID_DEFAULT;
         int typeIcon = showDataIcon ? icons.mDataType : 0;
-
-        int dataActivityId = showMobileActivity() ? 0 : icons.mActivityId;
+        if ( mStyle == STATUS_BAR_STYLE_DATA_VOICE ) {
+            typeIcon = 0;
+        }
+        showDataIcon &= (mStyle == STATUS_BAR_STYLE_DATA_VOICE
+                        || mStyle == STATUS_BAR_STYLE_ANDROID_DEFAULT) ;
+        int dataActivityId = showDataIcon ? icons.mActivityId : 0;
         callback.setMobileDataIndicators(statusIcon, qsIcon, typeIcon, qsTypeIcon,
                 activityIn, activityOut, dataActivityId,
                 icons.mStackedDataIcon, icons.mStackedVoiceIcon,

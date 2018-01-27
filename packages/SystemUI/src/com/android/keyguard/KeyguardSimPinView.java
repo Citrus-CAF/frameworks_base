@@ -56,6 +56,7 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
     private int mRemainingAttempts = -1;
     private AlertDialog mRemainingAttemptsDialog;
     private int mSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+    private int mSlotId;
     private ImageView mSimImageView;
 
     KeyguardUpdateMonitorCallback mUpdateMonitorCallback = new KeyguardUpdateMonitorCallback() {
@@ -129,7 +130,7 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
             msgId = isDefault ? R.plurals.kg_password_default_pin_message :
                      R.plurals.kg_password_wrong_pin_code;
             displayMessage = getContext().getResources()
-                    .getQuantityString(msgId, attemptsRemaining, attemptsRemaining);
+                    .getQuantityString(msgId, attemptsRemaining, mSlotId, attemptsRemaining);
         } else {
             msgId = isDefault ? R.string.kg_sim_pin_instructions : R.string.kg_password_pin_failed;
             displayMessage = getContext().getString(msgId);
@@ -345,6 +346,7 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
             return;
         }
 
+        mSlotId = SubscriptionManager.getSlotIndex(mSubId) + 1;
         boolean isEsimLocked = KeyguardEsimArea.isEsimLocked(mContext, mSubId);
         int count = TelephonyManager.getDefault().getSimCount();
         Resources rez = getResources();
