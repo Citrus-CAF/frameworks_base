@@ -4393,11 +4393,6 @@ public final class Settings {
         public static final String FORCE_AMBIENT_FOR_MEDIA = "force_ambient_for_media";
 
         /**
-         * @hide
-         */
-        public static final String STATUS_BAR_LOGO = "status_bar_logo";
-
-        /**
          * Statusbar Custom logos
          * @hide
          */
@@ -4623,7 +4618,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREEN_STATE_OFF_DELAY);
             PRIVATE_SETTINGS.add(SCREEN_STATE_ON_DELAY);
             PRIVATE_SETTINGS.add(FORCE_AMBIENT_FOR_MEDIA);
-            PRIVATE_SETTINGS.add(STATUS_BAR_LOGO);
             PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_LOGO);
             PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_LOGO_STYLE);            
         }
