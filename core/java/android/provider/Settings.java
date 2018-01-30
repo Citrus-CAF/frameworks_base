@@ -8029,7 +8029,7 @@ public final class Settings {
          *
          * @hide
          */
-        public static final String LOCK_QS_DISABLED = "lockscreen_qs_disabled";
+        public static final String LOCK_QS_DISABLED = "lock_qs_disabled";
 
         /**
          * Hide lockscreen shortcuts on secure lock screens
