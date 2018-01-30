@@ -103,7 +103,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             if (uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_CUSTOM_LOGO))
                     || uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_CUSTOM_LOGO_STYLE))) {
                 updateSettings(true);
-                updateCustomLogo();
             }
         }
     }
@@ -373,6 +372,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mCustomlogoStyle = Settings.System.getIntForUser(mContentResolver,
                 Settings.System.STATUS_BAR_CUSTOM_LOGO_STYLE, 0,
                 UserHandle.USER_CURRENT);
+        updateCustomLogo();
     }
 
 
