@@ -6324,7 +6324,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN)) || 
                     uri.equals(Settings.System.getUriFor(Settings.System.DOUBLE_TAP_SLEEP_GESTURE))) {
                 setStatusBarWindowViewOptions();
-            } else if (uri.equals(Settings.System.getUriFor(
+            } else if (uri.equals(Settings.Secure.getUriFor(
                     Settings.Secure.LOCK_QS_DISABLED))) {
 		        setLockQs();
             } else if (uri.equals(Settings.System.getUriFor(
