@@ -734,7 +734,7 @@ public final class SubstratumService extends SystemService {
         File srcConfig = new File("/system/etc/fonts.xml");
         File dstConfig = new File(cacheDir, "fonts.xml");
         if (!dstConfig.exists()) {
-            FileUtils.copyFile(srcConfig, dstConfig)
+            FileUtils.copyFile(srcConfig, dstConfig);
         }
 
         // Prepare system theme fonts folder and copy new fonts folder from our cache
