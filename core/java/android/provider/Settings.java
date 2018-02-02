@@ -4534,6 +4534,12 @@ public final class Settings {
         public static final String HIDE_LOCKSCREEN_WEATHER_LOCATION = "hide_lockscreen_weather_location";
 
         /**
+         * Whether to show QS footer warnings
+         * @hide
+         */
+        public static final String QS_FOOTER_WARNINGS = "qs_footer_warnings";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4765,6 +4771,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD);   
             PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_WEATHER);            
             PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_WEATHER_LOCATION);
+            PRIVATE_SETTINGS.add(QS_FOOTER_WARNINGS);          
         }
         
         /**
