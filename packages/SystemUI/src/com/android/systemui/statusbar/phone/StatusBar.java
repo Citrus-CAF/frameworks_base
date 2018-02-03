@@ -3782,7 +3782,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         @Override
         public void tickerDone() {
-            if (mTicker == null || mTickerEnabled == 0) return;
             mStatusBarContent.setVisibility(View.VISIBLE);
             mStatusBarContent.startAnimation(loadAnim(com.android.internal.R.anim.push_up_in, null));
             if (mTickerView != null) {
@@ -3793,7 +3792,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         @Override
         public void tickerHalting() {
-            if (mTicker == null || mTickerEnabled == 0) return;
             if (mStatusBarContent.getVisibility() != View.VISIBLE) {
                 mStatusBarContent.setVisibility(View.VISIBLE);
                 mStatusBarContent
