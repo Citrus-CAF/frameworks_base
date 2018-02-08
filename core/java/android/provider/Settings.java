@@ -4540,6 +4540,18 @@ public final class Settings {
         public static final String QS_FOOTER_WARNINGS = "qs_footer_warnings";
 
         /**
+         * Custom Settings activity custom summary text
+         * @hide
+         */
+        public static final String CUSTOM_SETTINGS_SUMMARY= "custom_settings_summary";
+
+        /**
+         * Random summary text
+         * @hide
+         */
+        public static final String CUSTOM_SETTINGS_RANDOM_SUMMARY= "custom_settings_random_summary";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4772,6 +4784,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_WEATHER);            
             PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_WEATHER_LOCATION);
             PRIVATE_SETTINGS.add(QS_FOOTER_WARNINGS);          
+            PRIVATE_SETTINGS.add(CUSTOM_SETTINGS_SUMMARY);
+            PRIVATE_SETTINGS.add(CUSTOM_SETTINGS_RANDOM_SUMMARY);
         }
         
         /**
