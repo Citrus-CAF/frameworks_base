@@ -4218,6 +4218,24 @@ public final class Settings {
         private static final Validator LOCKSCREEN_WEATHER_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Random summary text
+         * @hide
+         */
+        public static final String CUSTOM_SETTINGS_RANDOM_SUMMARY= "custom_settings_random_summary";
+
+        /** @hide */
+        private static final Validator CUSTOM_SETTINGS_RANDOM_SUMMARY_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * Custom Settings activity custom summary text
+         * @hide
+         */
+        public static final String CUSTOM_SETTINGS_SUMMARY= "custom_settings_summary";
+
+        /** @hide */
+        private static final Validator CUSTOM_SETTINGS_SUMMARY_VALIDATOR = ANY_STRING_VALIDATOR;
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
@@ -4295,6 +4313,8 @@ public final class Settings {
             SCREENSHOT_SHUTTER_SOUND,
             OMNIJAWS_WEATHER_ICON_PACK,
             LOCKSCREEN_WEATHER_ENABLED,
+            CUSTOM_SETTINGS_RANDOM_SUMMARY,
+            CUSTOM_SETTINGS_SUMMARY,
         };
 
         /**
@@ -4424,6 +4444,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREENSHOT_SHUTTER_SOUND);
             PRIVATE_SETTINGS.add(OMNIJAWS_WEATHER_ICON_PACK);
             PRIVATE_SETTINGS.add(LOCKSCREEN_WEATHER_ENABLED);
+            PRIVATE_SETTINGS.add(CUSTOM_SETTINGS_RANDOM_SUMMARY);
+            PRIVATE_SETTINGS.add(CUSTOM_SETTINGS_SUMMARY);
         }
 
         /**
@@ -4527,6 +4549,8 @@ public final class Settings {
             VALIDATORS.put(SCREENSHOT_SHUTTER_SOUND, SCREENSHOT_SHUTTER_SOUND_VALIDATOR);
             VALIDATORS.put(OMNIJAWS_WEATHER_ICON_PACK, OMNIJAWS_WEATHER_ICON_PACK_VALIDATOR);
             VALIDATORS.put(LOCKSCREEN_WEATHER_ENABLED, LOCKSCREEN_WEATHER_ENABLED_VALIDATOR);
+            VALIDATORS.put(CUSTOM_SETTINGS_RANDOM_SUMMARY, CUSTOM_SETTINGS_RANDOM_SUMMARY_VALIDATOR);
+            VALIDATORS.put(CUSTOM_SETTINGS_SUMMARY, CUSTOM_SETTINGS_SUMMARY_VALIDATOR);
         }
 
         /**
