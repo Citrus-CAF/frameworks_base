@@ -402,6 +402,9 @@ public class KeyguardStatusView extends GridLayout implements
         if (mWeatherCurrentTemp != null) {
             mWeatherCurrentTemp.setTextColor(primaryTextColor);
         }
+        if (mWeatherConditionImage != null) {
+            mWeatherConditionImage.setColorFilter(primaryTextColor);
+        }
     }
 
     @Override
