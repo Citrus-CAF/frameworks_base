@@ -4432,6 +4432,14 @@ public final class Settings {
         public static final String STATUS_BAR_CUSTOM_LOGO_STYLE = "status_bar_custom_logo_style";
   
         /**
+         * 0 = Center (Default) 
+         * 1 = Left       
+         * 2 = Right
+         * @hide
+         */
+        public static final String STATUS_BAR_CUSTOM_LOGO_POSITION = "status_bar_custom_logo_position";
+  
+        /**
          * Whether to display the 4g or lte network icon in the statusbar
          * @hide
          */
@@ -4782,7 +4790,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREEN_STATE_ON_DELAY);
             PRIVATE_SETTINGS.add(FORCE_AMBIENT_FOR_MEDIA);
             PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_LOGO);
-            PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_LOGO_STYLE); 
+            PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_LOGO_STYLE);
+            PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_LOGO_POSITION);            
             PRIVATE_SETTINGS.add(SHOW_LTE_FOURGEE);
             PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_DATE); 
             PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_CLOCK);  

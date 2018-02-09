@@ -73,12 +73,15 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private SignalClusterView mSignalClusterView;
 
     // Citrus additions start
-    private ImageView mCustomLogo; 
+    private ImageView mCustomLogo;
+    private ImageView mCustomLogoLeft;
+    private ImageView mCustomLogoRight;
     private int mCustomlogoStyle; 
     private View mTickerViewFromStub;    
     private boolean mShowCustomLogo;    
     private final Handler mHandler = new Handler();
     private int mTickerEnabled;
+    private int mCustomLogoPos;
     private ContentResolver mContentResolver;
     // Custom Carrier
     private View mCustomCarrierLabel;
@@ -95,6 +98,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                     false, this, UserHandle.USER_ALL);
             getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CUSTOM_LOGO_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CUSTOM_LOGO_POSITION),
                     false, this, UserHandle.USER_ALL);
             getContext().getContentResolver().registerContentObserver(
                     Settings.System.getUriFor(Settings.System.STATUS_BAR_SHOW_TICKER),
@@ -149,7 +155,11 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mSignalClusterView = mStatusBar.findViewById(R.id.signal_cluster);
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mSignalClusterView);
         mCustomLogo = mStatusBar.findViewById(R.id.status_bar_custom_logo);
-        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mCustomLogo);      
+        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mCustomLogo);
+        mCustomLogoLeft = mStatusBar.findViewById(R.id.status_bar_custom_logo_left);
+        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mCustomLogoLeft);  
+        mCustomLogoRight = mStatusBar.findViewById(R.id.status_bar_custom_logo_right);
+        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mCustomLogoRight);
         mCustomSettingsObserver.observe();
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);        
         updateSettings(false);
@@ -182,7 +192,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         super.onDestroyView();
         Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(mSignalClusterView);
         Dependency.get(StatusBarIconController.class).removeIconGroup(mDarkIconManager);
-        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(mCustomLogo);        
+        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(mCustomLogo);
+        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(mCustomLogoLeft);
+        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(mCustomLogoRight);        
         if (mNetworkController.hasEmergencyCryptKeeperText()) {
             mNetworkController.removeCallback(mSignalCallback);
         }
@@ -256,23 +268,35 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     public void hideSystemIconArea(boolean animate) {
         animateHide(mSystemIconArea, animate, true);
+        if (mShowCustomLogo && mCustomLogoPos == 0) {
+            animateHide(mCustomLogo, animate, true);
+        }
+        if (mShowCustomLogo && mCustomLogoPos == 2) {
+            animateHide(mCustomLogoRight, animate, true);
+        }
     }
 
     public void showSystemIconArea(boolean animate) {
         animateShow(mSystemIconArea, animate);
+        if (mShowCustomLogo && mCustomLogoPos == 0) {
+            animateShow(mCustomLogo, animate);            
+        }
+        if (mShowCustomLogo && mCustomLogoPos == 2) {
+            animateShow(mCustomLogoRight, animate);            
+        }
     }
 
     public void hideNotificationIconArea(boolean animate) {
         animateHide(mNotificationIconAreaInner, animate, true);
-        if (mShowCustomLogo) {
-            animateHide(mCustomLogo, animate, true);
+        if (mShowCustomLogo && mCustomLogoPos == 1) {
+            animateHide(mCustomLogoLeft, animate, true);
         }
     }
 
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
-        if (mShowCustomLogo) {
-            animateShow(mCustomLogo, animate);            
+        if (mShowCustomLogo && mCustomLogoPos == 1) {
+            animateShow(mCustomLogoLeft, animate);            
         }
     }
 
@@ -373,16 +397,38 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mShowCustomLogo = Settings.System.getIntForUser(mContentResolver,
                 Settings.System.STATUS_BAR_CUSTOM_LOGO, 0,
                 UserHandle.USER_CURRENT) == 1;
-        if (mNotificationIconAreaInner != null) {
-            if (mShowCustomLogo) {
-                if (mNotificationIconAreaInner.getVisibility() == View.VISIBLE) {
+
+        mCustomLogoPos =Settings.System.getIntForUser(mContentResolver,
+                Settings.System.STATUS_BAR_CUSTOM_LOGO_POSITION, 0,
+                UserHandle.USER_CURRENT);
+
+        if (mSystemIconArea != null) {
+            if (mShowCustomLogo && mCustomLogoPos == 0) {
+                if (mSystemIconArea.getVisibility() == View.VISIBLE) {
                     animateShow(mCustomLogo, animate);
                 }
-            } else {
+            } else if (mShowCustomLogo && mCustomLogoPos != 0) {
                 animateHide(mCustomLogo, animate, false);
+            }
+            if (mShowCustomLogo && mCustomLogoPos == 2) {
+                if (mSystemIconArea.getVisibility() == View.VISIBLE) {
+                    animateShow(mCustomLogoRight, animate);
+                }
+            } else if (mShowCustomLogo && mCustomLogoPos != 2) {
+                animateHide(mCustomLogoRight, animate, false);
+            } 
         }
-    }
-    
+
+        if (mNotificationIconAreaInner != null) {
+            if (mShowCustomLogo && mCustomLogoPos == 1) {
+                if (mNotificationIconAreaInner.getVisibility() == View.VISIBLE) {
+                    animateShow(mCustomLogoLeft, animate);
+                }
+            } else if (mShowCustomLogo && mCustomLogoPos != 1) {
+                animateHide(mCustomLogoLeft, animate, false);
+            }
+        }
+
         mTickerEnabled = Settings.System.getIntForUser(mContentResolver,
                 Settings.System.STATUS_BAR_SHOW_TICKER, 0,
                 UserHandle.USER_CURRENT);
@@ -407,7 +453,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         }
     }
 
-
     public void updateCustomLogo() {
         if (getContext() == null) {
             return;
@@ -415,14 +460,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
         Drawable d = null;
         
-        if (!mShowCustomLogo) {
-            mCustomLogo.setImageDrawable(null);
-            mCustomLogo.setVisibility(View.GONE);
-            return;
-        } else {
-            mCustomLogo.setVisibility(View.VISIBLE);            
-        }
-
         int style = mCustomlogoStyle;
         if ( style == 0) {
             d = getContext().getResources().getDrawable(R.drawable.status_bar_logo);
@@ -515,8 +552,34 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         } else if ( style == 44) {
             d = getContext().getResources().getDrawable(R.drawable.ic_statusbar_logo_oneplus);
 
+        }
+        if (mShowCustomLogo) {
+            if (mCustomLogoPos == 0) {
+                mCustomLogoLeft.setVisibility(View.GONE);
+                mCustomLogoRight.setVisibility(View.GONE);
+	            mCustomLogo.setImageDrawable(null);
+	            mCustomLogo.setImageDrawable(d);
+                mCustomLogo.setVisibility(View.VISIBLE);
+            } else if (mCustomLogoPos == 1) {
+                mCustomLogo.setVisibility(View.GONE);
+                mCustomLogoRight.setVisibility(View.GONE);                                              
+	            mCustomLogoLeft.setImageDrawable(null);
+	            mCustomLogoLeft.setImageDrawable(d);
+                mCustomLogoLeft.setVisibility(View.VISIBLE);
+            } else if (mCustomLogoPos == 2) {
+                mCustomLogo.setVisibility(View.GONE);
+                mCustomLogoLeft.setVisibility(View.GONE);                                              
+	            mCustomLogoRight.setImageDrawable(null);
+	            mCustomLogoRight.setImageDrawable(d);
+                mCustomLogoRight.setVisibility(View.VISIBLE);
+            }
+        } else {
+            mCustomLogo.setImageDrawable(null);
+            mCustomLogo.setVisibility(View.GONE);
+            mCustomLogoLeft.setImageDrawable(null);
+            mCustomLogoLeft.setVisibility(View.GONE);
+            mCustomLogoRight.setImageDrawable(null);
+            mCustomLogoRight.setVisibility(View.GONE);
+        }
     }
-	    mCustomLogo.setImageDrawable(null);
-	    mCustomLogo.setImageDrawable(d);
-   }
 }
