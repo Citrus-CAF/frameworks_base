@@ -54,6 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:paddingStart="4dp"            
             android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
             android:visibility="gone"
             android:singleLine="true"/>
@@ -64,7 +65,8 @@
             android:layout_height="@dimen/status_bar_icon_size"
             android:src="@drawable/status_bar_logo"
             android:scaleType="centerInside"
-            android:padding="2dp"
+            android:paddingStart="4dp"
+            android:gravity="start|center_vertical"         
             android:visibility="gone" />
 
         <!-- The alpha of this area is controlled from both PhoneStatusBarTransitions and
@@ -82,6 +84,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             >
+
             <com.android.systemui.statusbar.policy.NetworkTraffic
                 android:id="@+id/networkTraffic"
                 android:layout_width="wrap_content"
@@ -98,7 +101,8 @@
                 android:layout_height="@dimen/status_bar_icon_size"
                 android:src="@drawable/status_bar_logo"
                 android:scaleType="centerInside"
-                android:padding="2dp"
+                android:paddingStart="2dp"
+                android:gravity="end|center_vertical"                
                 android:visibility="gone" />
 
             <include layout="@layout/system_icons" />
@@ -120,7 +124,9 @@
                 android:layout_height="@dimen/status_bar_icon_size"
                 android:src="@drawable/status_bar_logo"
                 android:scaleType="centerInside"
-                android:padding="2dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="0dp"
+                android:gravity="center_vertical|start"                                
                 android:visibility="gone" />
 
         </com.android.keyguard.AlphaOptimizedLinearLayout>
