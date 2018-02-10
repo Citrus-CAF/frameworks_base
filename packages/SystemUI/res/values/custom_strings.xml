@@ -104,6 +104,10 @@
     <string name="keyguard_plugged_in_dash_charging">Dash Charging</string>
 
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_battery_saving">Battery saving</string>
+    <string name="quick_settings_location_gps_only">Device only</string>
+    <string name="quick_settings_location_high_accuracy">High accuracy</string>
+    <string name="quick_settings_location_off">Location off</string>
     <string name="accessibility_quick_settings_location_battery_saving">Location reporting: battery saving mode.</string>
     <string name="accessibility_quick_settings_location_gps_only">Location reporting: sensors only mode.</string>
     <string name="accessibility_quick_settings_location_high_accuracy">Location reporting: high accuracy mode.</string>
