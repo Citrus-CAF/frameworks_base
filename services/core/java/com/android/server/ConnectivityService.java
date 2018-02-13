@@ -2074,8 +2074,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case NetworkAgent.EVENT_NETWORK_SCORE_CHANGED: {
-                    Integer score = (Integer) msg.obj;
-                    if (score != null) updateNetworkScore(nai, score.intValue());
+                    updateNetworkScore(nai, msg.arg1);
                     break;
                 }
                 case NetworkAgent.EVENT_UID_RANGES_ADDED: {
@@ -2458,12 +2457,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     // 2. Unvalidated WiFi will not be reaped when validated cellular
                     //    is currently satisfying the request.  This is desirable when
                     //    WiFi ends up validating and out scoring cellular.
-                    (mNetworkForRequestId.get(nri.request.requestId) != null &&
-                     (mNetworkForRequestId.get(nri.request.requestId).getCurrentScore() <
-                            nai.getCurrentScoreAsValidated() ||
-                      mobileMultiNetworkScoreMatch(nai.networkCapabilities,
-                            mNetworkForRequestId.get(nri.request.requestId).getCurrentScore(),
-                            nai.getCurrentScoreAsValidated()))))) {
+                    mNetworkForRequestId.get(nri.request.requestId).getCurrentScore() <
+                            nai.getCurrentScoreAsValidated())) {
                 return false;
             }
         }
@@ -4983,7 +4978,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             (currentNetwork != null ? currentNetwork.getCurrentScore() : 0) +
                             ", newScore = " + score);
                 }
-                if (currentNetwork == null || currentNetwork.getCurrentScore() < score) {
+                if (currentNetwork == null ||
+                    isBestMobileMultiNetwork(currentNetwork,
+                          currentNetwork.networkCapabilities,
+                          newNetwork,
+                          newNetwork.networkCapabilities,
+                          nri.request.networkCapabilities) ||
+                    currentNetwork.getCurrentScore() < score) {
                     if (VDBG) log("rematch for " + newNetwork.name());
                     if (currentNetwork != null) {
                         if (VDBG) log("   accepting network in place of " + currentNetwork.name());
@@ -5641,6 +5642,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return b ? 1 : 0;
     }
 
+    private boolean isMobileNetwork(NetworkAgentInfo nai) {
+        if (nai != null && nai.networkCapabilities != null &&
+            nai.networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+            return true;
+        }
+        return false;
+    }
+
     private boolean satisfiesMobileMultiNetworkDataCheck(NetworkCapabilities agentNc,
             NetworkCapabilities requestNc) {
         if (agentNc != null && requestNc != null
@@ -5654,17 +5663,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
         return true;
-    }
-
-    private boolean mobileMultiNetworkScoreMatch(NetworkCapabilities nc, int currentScore,
-                                                     int newScore) {
-        if (nc != null && nc.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-               && getIntSpecifier(nc.getNetworkSpecifier()) == SubscriptionManager
-                                     .getDefaultDataSubscriptionId()
-               && currentScore == newScore) {
-            return true;
-        }
-        return false;
     }
 
     private int getIntSpecifier(NetworkSpecifier networkSpecifierObj) {
@@ -5682,5 +5680,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
         return specifier;
+    }
+
+    private boolean isBestMobileMultiNetwork(NetworkAgentInfo currentNetwork,
+            NetworkCapabilities currentRequestNc,
+            NetworkAgentInfo newNetwork,
+            NetworkCapabilities newRequestNc,
+            NetworkCapabilities requestNc) {
+        if (isMobileNetwork(currentNetwork) &&
+            isMobileNetwork(newNetwork) &&
+            satisfiesMobileMultiNetworkDataCheck(newRequestNc, requestNc) &&
+            !satisfiesMobileMultiNetworkDataCheck(currentRequestNc, requestNc)) {
+            return true;
+        }
+        return false;
     }
 }
