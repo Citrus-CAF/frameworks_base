@@ -77,7 +77,7 @@ public class BatteryMeterView extends LinearLayout implements
     private final int mFrameColor;
 
     private int mStyle = BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT;
-    private boolean mShowPercentText ;
+    private int mShowPercentText;
     private boolean mCharging;
 
     private final int mEndPadding;
@@ -154,9 +154,11 @@ public class BatteryMeterView extends LinearLayout implements
     }
 
     private boolean forcePercentageQsHeader() {
-        return mQsHeaderOrKeyguard && (mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT
+        return mQsHeaderOrKeyguard
+                && ((mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT && mShowPercentText == 0)
                 || mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_HIDDEN
-                || mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT);
+                || mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT
+                || (isCircleBattery() && mShowPercentText == 0));
     }
 
     private boolean isHiddenButQsOrKeyguard() {
@@ -243,7 +245,7 @@ public class BatteryMeterView extends LinearLayout implements
         final boolean showing = mBatteryPercentView != null;
         if (forcePercentageQsHeader()
                 || (mStyle != BatteryMeterDrawableBase.BATTERY_STYLE_HIDDEN
-                && (mShowPercentText || mForceShowPercent))) {
+                && ((mShowPercentText == 1) || mForceShowPercent))) {
             if (!showing) {
                 mBatteryPercentView = loadPercentView();
                 if (mTextColor != 0) mBatteryPercentView.setTextColor(mTextColor);
@@ -265,7 +267,8 @@ public class BatteryMeterView extends LinearLayout implements
                     (mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT || isHiddenButQsOrKeyguard())
 	            ? 0 : mEndPadding, 0);
         }
-        mDrawable.showPercentInsideCircle(!mShowPercentText);
+        mDrawable.showPercentInsideCircle(mShowPercentText == 2);
+        mDrawable.setShowPercent(mShowPercentText == 2);
     }
 
     @Override
@@ -365,7 +368,7 @@ public class BatteryMeterView extends LinearLayout implements
     }
 
     public void updateSettings(boolean fromObserver) {
-        mShowPercentText = 0 != Settings.System.getIntForUser(mContext.getContentResolver(),
+        mShowPercentText = Settings.System.getIntForUser(mContext.getContentResolver(),
                 SHOW_BATTERY_PERCENT, 0, mUser);
         mStyle = Settings.Secure.getIntForUser(mContext.getContentResolver(),
                 STATUS_BAR_BATTERY_STYLE, BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT, mUser);
