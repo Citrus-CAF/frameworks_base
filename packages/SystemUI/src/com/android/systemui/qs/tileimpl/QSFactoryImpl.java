@@ -39,6 +39,7 @@ import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LocationTile;
+import com.android.systemui.qs.tiles.NavigationBarTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.RebootTile;
@@ -123,6 +124,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new ExpandedDesktopTile(mHost);
             case "anbi":
                 return new ANBITile(mHost);
+            case "navigation_bar":
+                return new NavigationBarTile(mHost);
         }
 
         // Intent tiles.
