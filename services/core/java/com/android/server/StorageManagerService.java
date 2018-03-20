@@ -1319,9 +1319,9 @@ class StorageManagerService extends IStorageManager.Stub
                 vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE;
             }
 
-            // Adoptable public disks are visible to apps, since they meet
-            // public API requirement of being in a stable location.
-            if (vol.disk.isAdoptable()) {
+            // Set sdcards to visible to apps. If they are visible media is scanned
+            // and they can be used for other stuff.
+            if (vol.disk.isSd()) {
                 vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE;
             }
 
@@ -2645,6 +2645,12 @@ class StorageManagerService extends IStorageManager.Stub
                 // to let the UI to clear itself
                 mHandler.postDelayed(new Runnable() {
                     public void run() {
+                        // unmount the internal emulated volume first
+                        try {
+                            mConnector.execute("volume", "unmount", "emulated");
+                        } catch (NativeDaemonConnectorException e) {
+                            Slog.e(TAG, "unable to shut down internal volume", e);
+                        }
                         try {
                             mCryptConnector.execute("cryptfs", "restart");
                         } catch (NativeDaemonConnectorException e) {

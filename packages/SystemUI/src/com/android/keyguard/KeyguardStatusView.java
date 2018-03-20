@@ -60,8 +60,9 @@ import android.widget.TextView;
 
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.widget.LockPatternUtils;
-import com.android.systemui.ChargingView;
+//import com.android.systemui.ChargingView;
 import com.android.systemui.doze.DozeLog;
+
 import com.android.systemui.statusbar.policy.DateView;
 import com.android.systemui.omni.OmniJawsClient;
 
@@ -81,7 +82,7 @@ public class KeyguardStatusView extends GridLayout implements
     private TextClock mClockView;
     private TextView mOwnerInfo;
     private ViewGroup mClockContainer;
-    private ChargingView mBatteryDoze;
+    //private ChargingView mBatteryDoze;
     private View mKeyguardStatusArea;
     private Runnable mPendingMarqueeStart;
     private Handler mHandler;
@@ -189,13 +190,10 @@ public class KeyguardStatusView extends GridLayout implements
         mDateView = findViewById(R.id.date_view);
         mClockView = findViewById(R.id.clock_view);
         mClockView.setShowCurrentUserTime(true);
-        if (KeyguardClockAccessibilityDelegate.isNeeded(mContext)) {
-            mClockView.setAccessibilityDelegate(new KeyguardClockAccessibilityDelegate(mContext));
-        }
         mOwnerInfo = findViewById(R.id.owner_info);
-        mBatteryDoze = findViewById(R.id.battery_doze);
+        //mBatteryDoze = findViewById(R.id.battery_doze);
         mKeyguardStatusArea = findViewById(R.id.keyguard_status_area);
-        mVisibleInDoze = new View[]{mBatteryDoze, mClockView, mKeyguardStatusArea};
+        mVisibleInDoze = new View[]{/*mBatteryDoze, */mClockView, mKeyguardStatusArea};
         mTextColor = mClockView.getCurrentTextColor();
         mDateTextColor = mDateView.getCurrentTextColor();
         mAlarmTextColor = mAlarmStatusView.getCurrentTextColor();
@@ -207,7 +205,6 @@ public class KeyguardStatusView extends GridLayout implements
 
         // Disable elegant text height because our fancy colon makes the ymin value huge for no
         // reason.
-        mClockView.setElegantTextHeight(false);
 
         mWeatherView = findViewById(R.id.keyguard_weather_view);
         mWeatherCity = (TextView) findViewById(R.id.city);
@@ -476,10 +473,6 @@ public class KeyguardStatusView extends GridLayout implements
 
             clockView24 = DateFormat.getBestDateTimePattern(locale, clockView24Skel);
 
-            // Use fancy colon.
-            clockView24 = clockView24.replace(':', '\uee01');
-            clockView12 = clockView12.replace(':', '\uee01');
-
             cacheKey = key;
         }
     }
@@ -504,7 +497,7 @@ public class KeyguardStatusView extends GridLayout implements
         }
 
         updateDozeVisibleViews();
-        mBatteryDoze.setDark(dark);
+        //mBatteryDoze.setDark(dark);
         mClockView.setTextColor(ColorUtils.blendARGB(mTextColor, Color.WHITE, darkAmount));
         mDateView.setTextColor(ColorUtils.blendARGB(mDateTextColor, Color.WHITE, darkAmount));
         int blendedAlarmColor = ColorUtils.blendARGB(mAlarmTextColor, Color.WHITE, darkAmount);

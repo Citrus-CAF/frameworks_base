@@ -102,4 +102,7 @@
   <!-- Name of that key handler class -->  
   <java-symbol type="string" name="config_deviceKeyHandlerClass" />
 
+  <!-- Whether to persist the notification for when a usb drive device is plugged in -->
+  <java-symbol type="bool" name="config_persistUsbDriveNotification" />
+
 </resources>

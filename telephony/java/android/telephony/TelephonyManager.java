@@ -1689,6 +1689,10 @@ public class TelephonyManager {
         }
     }
 
+    /*
+     * When adding a network type to the list below, make sure to add the correct icon to
+     * MobileSignalController.mapIconSets().
+     */
     /** Network type is unknown */
     public static final int NETWORK_TYPE_UNKNOWN = 0;
     /** Current network is GPRS */
@@ -3556,7 +3560,7 @@ public class TelephonyManager {
      *               LISTEN_ flags.
      */
     public void listen(PhoneStateListener listener, int events) {
-        if (mContext == null) return;
+        if (mContext == null || listener == null) return;
         try {
             boolean notifyNow = (getITelephony() != null);
             // If the listener has not explicitly set the subId (for example, created with the

@@ -3460,7 +3460,8 @@ public class PackageManagerService extends IPackageManager.Stub
         // NOTE: When no BUILD_NUMBER is set by the build system, it defaults to a build
         // that starts with "eng." to signify that this is an engineering build and not
         // destined for release.
-        if (Build.IS_USERDEBUG && Build.VERSION.INCREMENTAL.startsWith("eng.")) {
+        if (Build.IS_USERDEBUG && Build.VERSION.INCREMENTAL.startsWith("eng.") &&
+                cacheDir != null) {
             Slog.w(TAG, "Wiping cache directory because the system partition changed.");
 
             // Heuristic: If the /system directory has been modified recently due to an "adb sync"
@@ -9336,6 +9337,8 @@ public class PackageManagerService extends IPackageManager.Stub
             PackageParser.collectCertificates(pkg, policyFlags);
         } catch (PackageParserException e) {
             throw PackageManagerException.from(e);
+        } catch (NullPointerException e) {
+            throw new PackageManagerException(e.getMessage());
         } finally {
             Trace.traceEnd(TRACE_TAG_PACKAGE_MANAGER);
         }
@@ -9896,26 +9899,12 @@ public class PackageManagerService extends IPackageManager.Stub
             if ((isFirstBoot() || isUpgrade()) && isSystemApp(pkg)) {
                 // Copy over initial preopt profiles since we won't get any JIT samples for methods
                 // that are already compiled.
+
+                // Standard prebuilt path.
                 File profileFile = new File(getPrebuildProfilePath(pkg));
-                // Copy profile if it exists.
-                if (profileFile.exists()) {
-                    try {
-                        // We could also do this lazily before calling dexopt in
-                        // PackageDexOptimizer to prevent this happening on first boot. The issue
-                        // is that we don't have a good way to say "do this only once".
-                        if (!mInstaller.copySystemProfile(profileFile.getAbsolutePath(),
-                                pkg.applicationInfo.uid, pkg.packageName)) {
-                            Log.e(TAG, "Installer failed to copy system profile!");
-                        } else {
-                            // Disabled as this causes speed-profile compilation during first boot
-                            // even if things are already compiled.
-                            // useProfileForDexopt = true;
-                        }
-                    } catch (Exception e) {
-                        Log.e(TAG, "Failed to copy profile " + profileFile.getAbsolutePath() + " ",
-                                e);
-                    }
-                } else {
+
+                if (!profileFile.exists()) {
+                    // Second chance: is this a stub app?
                     PackageSetting disabledPs = mSettings.getDisabledSystemPkgLPr(pkg.packageName);
                     // Handle compressed APKs in this path. Only do this for stubs with profiles to
                     // minimize the number off apps being speed-profile compiled during first boot.
@@ -9932,23 +9921,24 @@ public class PackageManagerService extends IPackageManager.Stub
                         // reference profile every OTA even though the existing reference profile
                         // may have more data. We can't copy during decompression since the
                         // directories are not set up at that point.
-                        if (profileFile.exists()) {
-                            try {
-                                // We could also do this lazily before calling dexopt in
-                                // PackageDexOptimizer to prevent this happening on first boot. The
-                                // issue is that we don't have a good way to say "do this only
-                                // once".
-                                if (!mInstaller.copySystemProfile(profileFile.getAbsolutePath(),
-                                        pkg.applicationInfo.uid, pkg.packageName)) {
-                                    Log.e(TAG, "Failed to copy system profile for stub package!");
-                                } else {
-                                    useProfileForDexopt = true;
-                                }
-                            } catch (Exception e) {
-                                Log.e(TAG, "Failed to copy profile " +
-                                        profileFile.getAbsolutePath() + " ", e);
-                            }
+                    }
+                }
+
+                // Copy profile if it exists.
+                if (profileFile.exists()) {
+                    try {
+                        // We could also do this lazily before calling dexopt in
+                        // PackageDexOptimizer to prevent this happening on first boot. The issue
+                        // is that we don't have a good way to say "do this only once".
+                        if (!mInstaller.copySystemProfile(profileFile.getAbsolutePath(),
+                                pkg.applicationInfo.uid, pkg.packageName)) {
+                            Log.e(TAG, "Installer failed to copy system profile!");
+                        } else {
+                            useProfileForDexopt = true;
                         }
+                    } catch (Exception e) {
+                        Log.e(TAG, "Failed to copy profile " + profileFile.getAbsolutePath() + " ",
+                                e);
                     }
                 }
             }
