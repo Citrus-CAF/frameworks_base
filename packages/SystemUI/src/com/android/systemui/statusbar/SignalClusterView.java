@@ -132,6 +132,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
     private boolean mBlockRoaming;
     private boolean mBlockVpn;
     private boolean mNoBattery;
+    private boolean mIsKeyguard;
 
     private final IconLogger mIconLogger = Dependency.get(IconLogger.class);
 
@@ -164,6 +165,10 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         mSecurityController = Dependency.get(SecurityController.class);
         updateActivityEnabled();
         mReadIconsFromXML = res.getBoolean(R.bool.config_read_icons_from_xml);
+    }
+
+    public void setIsKeyguard(boolean keyguard) {
+        mIsKeyguard = keyguard;
     }
 
     public void setForceBlockWifi() {
@@ -209,7 +214,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         } else if (STATUS_BAR_BATTERY_STYLE.equals(key)) {
             final int style = newValue == null ?
                 BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT : Integer.parseInt(newValue);
-            mNoBattery = style == BatteryMeterDrawableBase.BATTERY_STYLE_HIDDEN;
+            mNoBattery = style == BatteryMeterDrawableBase.BATTERY_STYLE_HIDDEN && !mIsKeyguard;
 
             apply();
         }
