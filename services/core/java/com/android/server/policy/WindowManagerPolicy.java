@@ -1584,6 +1584,11 @@ public interface WindowManagerPolicy extends WindowManagerPolicyConstants {
     public boolean hasNavigationBar();
 
     /**
+     * Specifies whether the device needs a navigation bar (no hardware navigation keys).
+     */
+    public boolean needsNavigationBar();
+
+    /**
      * Send some ActionHandler commands to WindowManager.
      */
     public void sendCustomAction(Intent intent);

@@ -4264,6 +4264,17 @@ public final class Settings {
         private static final Validator SCREENSHOT_SHUTTER_SOUND_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Whether user can enable/disable navigation bar.
+         * <p>
+         * Type: int (0 for false, 1 for true)
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_ENABLED = "navigation_bar_enabled";
+
+        /** @hide */
+        private static final Validator NAVIGATION_BAR_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
@@ -4346,6 +4357,7 @@ public final class Settings {
             ENABLE_CONDITIONS,
             ENABLE_SUGGESTIONS,
             SCREENSHOT_SHUTTER_SOUND,
+            NAVIGATION_BAR_ENABLED,
         };
 
         /**
@@ -4480,6 +4492,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(ENABLE_CONDITIONS);
             PRIVATE_SETTINGS.add(ENABLE_SUGGESTIONS);
             PRIVATE_SETTINGS.add(SCREENSHOT_SHUTTER_SOUND);
+            PRIVATE_SETTINGS.add(NAVIGATION_BAR_ENABLED);
         }
 
         /**
@@ -4588,6 +4601,7 @@ public final class Settings {
             VALIDATORS.put(ENABLE_CONDITIONS, ENABLE_CONDITIONS_VALIDATOR);
             VALIDATORS.put(ENABLE_SUGGESTIONS, ENABLE_SUGGESTIONS_VALIDATOR);
             VALIDATORS.put(SCREENSHOT_SHUTTER_SOUND, SCREENSHOT_SHUTTER_SOUND_VALIDATOR);
+            VALIDATORS.put(NAVIGATION_BAR_ENABLED, NAVIGATION_BAR_ENABLED_VALIDATOR);
         }
 
         /**
