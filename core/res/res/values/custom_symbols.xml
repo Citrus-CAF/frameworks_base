@@ -53,4 +53,16 @@
     <!-- Aspect ratio of screen --> 
     <java-symbol type="dimen" name="config_screenAspectRatio" />
 
+    <!-- Minimum screen brightness setting allowed by the power manager.
+       The user is forbidden from setting the brightness below this level. -->
+    <java-symbol type="integer" name="config_buttonBrightnessSettingMinimum" />
+
+    <!-- Maximum button brightness allowed by the power manager.
+       The user is forbidden from setting the brightness above this level. -->
+    <java-symbol type="integer" name="config_buttonBrightnessSettingMaximum" />
+
+    <!-- Default button brightness setting.
+       Must be in the range specified by minimum and maximum. -->
+    <java-symbol type="integer" name="config_buttonBrightnessSettingDefault" />
+
 </resources>
