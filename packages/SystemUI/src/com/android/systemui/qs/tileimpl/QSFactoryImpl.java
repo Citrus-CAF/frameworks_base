@@ -26,6 +26,7 @@ import com.android.systemui.qs.external.CustomTile;
 import com.android.systemui.qs.tiles.AdbOverNetworkTile;
 import com.android.systemui.qs.tiles.AirplaneModeTile;
 import com.android.systemui.qs.tiles.ANBITile;
+import com.android.systemui.qs.tiles.AODTile;
 import com.android.systemui.qs.tiles.BatterySaverTile;
 import com.android.systemui.qs.tiles.BluetoothTile;
 import com.android.systemui.qs.tiles.CastTile;
@@ -126,6 +127,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new ANBITile(mHost);
             case "navigation_bar":
                 return new NavigationBarTile(mHost);
+            case "aod":
+                return new AODTile(mHost);
         }
 
         // Intent tiles.
