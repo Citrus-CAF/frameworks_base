@@ -687,7 +687,15 @@ public class PackageParser {
         pi.requiredAccountType = p.mRequiredAccountType;
         pi.overlayTarget = p.mOverlayTarget;
         pi.overlayPriority = p.mOverlayPriority;
-        pi.isStaticOverlay = p.mIsStaticOverlay;
+
+        if (p.mIsStaticOverlay) {
+            pi.overlayFlags |= PackageInfo.FLAG_OVERLAY_STATIC;
+        }
+
+        if (p.mTrustedOverlay) {
+            pi.overlayFlags |= PackageInfo.FLAG_OVERLAY_TRUSTED;
+        }
+
         pi.firstInstallTime = firstInstallTime;
         pi.lastUpdateTime = lastUpdateTime;
         if ((flags&PackageManager.GET_GIDS) != 0) {
@@ -1689,12 +1697,14 @@ public class PackageParser {
                     public void run() {
                         try {
                             long tid = Thread.currentThread().getId();
+                            final StrictJarFile tempJarFile;
                             synchronized (strictJarFiles) {
                                 if (strictJarFiles.get(Long.toString(tid)) == null) {
                                     strictJarFiles.put(Long.toString(tid), sJarFiles[vData.index++]);
                                 }
+                                tempJarFile = strictJarFiles.get(Long.toString(tid));
                             }
-                            final Certificate[][] entryCerts = loadCertificates(strictJarFiles.get(Long.toString(tid)), entry);
+                            final Certificate[][] entryCerts = loadCertificates(tempJarFile, entry);
                             if (ArrayUtils.isEmpty(entryCerts)) {
                                 throw new PackageParserException(INSTALL_PARSE_FAILED_NO_CERTIFICATES,
                                         "Package " + apkPath + " has no certificates at entry "
