@@ -27055,6 +27055,13 @@ public class ActivityManagerService extends IActivityManager.Stub
         public void enforceCallerIsRecentsOrHasPermission(String permission, String func) {
             ActivityManagerService.this.enforceCallerIsRecentsOrHasPermission(permission, func);
         }
+
+        @Override
+        public Intent getHomeIntent() {
+            synchronized (ActivityManagerService.this) {
+                return ActivityManagerService.this.getHomeIntent();
+            }
+        }
     }
 
     /**
