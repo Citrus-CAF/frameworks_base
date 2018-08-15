@@ -65,6 +65,12 @@
        Must be in the range specified by minimum and maximum. -->
     <java-symbol type="integer" name="config_buttonBrightnessSettingDefault" />
 
+    <!-- Path to the library that contains a device specific key handler -->
+    <java-symbol type="string" name="config_deviceKeyHandlerLib" />
+
+    <!-- Name of that key handler class -->
+    <java-symbol type="string" name="config_deviceKeyHandlerClass" />
+
     <!-- Hardware 'face' keys present on the device, stored as a bit field.
          This integer should equal the sum of the corresponding value for each
          of the following keys present:
@@ -111,5 +117,9 @@
 
     <!-- Icon packs -->
     <java-symbol type="drawable" name="adaptive_icon_drawable_wrapper" />
+
+    <!-- make sure you enable this only if your device supports deep slepp
+         with active proximity sensor event listener -->
+    <java-symbol type="bool" name="config_proxiSensorWakupCheck" />
 
 </resources>
