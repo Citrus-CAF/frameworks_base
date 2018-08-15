@@ -4503,6 +4503,13 @@ public final class Settings {
         /** @hide */
         private static final Validator ANBI_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
 
+        /** @hide */
+        public static final String SYSTEM_PROXI_CHECK_ENABLED = "system_proxi_check_enabled";
+
+        /** @hide */
+        private static final Validator SYSTEM_PROXI_CHECK_ENABLED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
         /**
          * Citrus-CAF SystemSettings additions ends
          */
@@ -4608,6 +4615,7 @@ public final class Settings {
             QS_ROWS_LANDSCAPE,
             QS_TILE_TITLE_VISIBILITY,
             ANBI_ENABLED,
+            SYSTEM_PROXI_CHECK_ENABLED,
         };
 
         /**
@@ -4764,6 +4772,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_ROWS_LANDSCAPE);
             PRIVATE_SETTINGS.add(QS_TILE_TITLE_VISIBILITY);
             PRIVATE_SETTINGS.add(ANBI_ENABLED);
+            PRIVATE_SETTINGS.add(SYSTEM_PROXI_CHECK_ENABLED);
         }
 
         /**
@@ -4894,6 +4903,9 @@ public final class Settings {
             VALIDATORS.put(QS_ROWS_LANDSCAPE, QS_ROWS_LANDSCAPE_VALIDATOR);
             VALIDATORS.put(QS_TILE_TITLE_VISIBILITY, QS_TILE_TITLE_VISIBILITY_VALIDATOR);
             VALIDATORS.put(ANBI_ENABLED, ANBI_ENABLED_VALIDATOR);
+            VALIDATORS.put(SYSTEM_PROXI_CHECK_ENABLED,
+                    SYSTEM_PROXI_CHECK_ENABLED_VALIDATOR);
+
         }
 
         /**
