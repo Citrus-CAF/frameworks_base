@@ -15,12 +15,6 @@
      limitations under the License.
 -->
 
-<resources>
-
-    <!-- The default tiles to display in QuickSettings -->
-    <string name="quick_settings_tiles_extra" translatable="false">
-    adb_network,heads_up,reboot,screenshot,sync,weather
-    </string>
-
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <dimen name="current_weather_image_size">42dp</dimen>
 </resources>
-

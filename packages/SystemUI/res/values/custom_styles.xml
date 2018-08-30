@@ -14,13 +14,16 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="TextAppearance.StatusBar.Expanded.Weather">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
 
-<resources>
-
-    <!-- The default tiles to display in QuickSettings -->
-    <string name="quick_settings_tiles_extra" translatable="false">
-    adb_network,heads_up,reboot,screenshot,sync,weather
-    </string>
-
+    <style name="TextAppearance.StatusBar.Expanded.Weather.Detailed">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
 </resources>
-
