@@ -61,6 +61,7 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentCallbacks2;
 import android.content.ContentResolver;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -732,6 +733,8 @@ public class StatusBar extends SystemUI implements DemoMode,
         mWallpaperChangedReceiver.onReceive(mContext, null);
 
         mLockscreenUserManager.setUpWithPresenter(this, mEntryManager);
+        mCustomSettingsObserver.observe();
+        mCustomSettingsObserver.update();
         mCommandQueue.disable(switches[0], switches[6], false /* animate */);
         setSystemUiVisibility(switches[1], switches[7], switches[8], 0xffffffff,
                 fullscreenStackBounds, dockedStackBounds);
@@ -5199,6 +5202,24 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public boolean isDeviceInVrMode() {
         return mVrMode;
+    }
+
+    private CustomSettingsObserver mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
+    private class CustomSettingsObserver extends ContentObserver {
+
+        CustomSettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+        }
+
+        public void update() {
+        }
     }
 
     private final BroadcastReceiver mBannerActionBroadcastReceiver = new BroadcastReceiver() {
