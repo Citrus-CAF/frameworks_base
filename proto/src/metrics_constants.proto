@@ -6119,5 +6119,11 @@ message MetricsEvent {
     // ---- End P Constants, all P constants go above this line ----
     // Add new aosp constants above this line.
     // END OF AOSP CONSTANTS
+
+
+    // Citrus-CAF CONSTANTS
+    CUSTOM_SQUASH = 1500;
+    // Add new Citrus-CAF constants above this line.
+    // END OF Citrus-CAF CONSTANTS
   }
 }
