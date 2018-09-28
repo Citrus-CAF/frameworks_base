@@ -6123,6 +6123,7 @@ message MetricsEvent {
 
     // Citrus-CAF CONSTANTS
     CUSTOM_SQUASH = 1500;
+    CUSTOM_QUICK_SETTINGS = 1501;
     // Add new Citrus-CAF constants above this line.
     // END OF Citrus-CAF CONSTANTS
   }
