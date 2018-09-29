@@ -4128,6 +4128,15 @@ public final class Settings {
         private static final Validator STATUS_BAR_IME_SWITCHER_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * If all file types can be accepted over Bluetooth OBEX.
+         * @hide
+         */
+        public static final String BLUETOOTH_ACCEPT_ALL_FILES = "bluetooth_accept_all_files";
+
+        /** @hide */
+        private static final Validator BLUETOOTH_ACCEPT_ALL_FILES_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
@@ -4194,6 +4203,7 @@ public final class Settings {
             LOCKSCREEN_MEDIA_METADATA,
             SENSOR_BLOCK,
             STATUS_BAR_IME_SWITCHER,
+            BLUETOOTH_ACCEPT_ALL_FILES,
         };
 
         /**
@@ -4312,6 +4322,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(LOCKSCREEN_MEDIA_METADATA);
             PRIVATE_SETTINGS.add(SENSOR_BLOCK);
             PRIVATE_SETTINGS.add(STATUS_BAR_IME_SWITCHER);
+            PRIVATE_SETTINGS.add(BLUETOOTH_ACCEPT_ALL_FILES);
         }
 
         /**
@@ -4404,6 +4415,7 @@ public final class Settings {
             VALIDATORS.put(LOCKSCREEN_MEDIA_METADATA, LOCKSCREEN_MEDIA_METADATA_VALIDATOR);
             VALIDATORS.put(SENSOR_BLOCK, SENSOR_BLOCK_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_IME_SWITCHER, STATUS_BAR_IME_SWITCHER_VALIDATOR);
+            VALIDATORS.put(BLUETOOTH_ACCEPT_ALL_FILES, BLUETOOTH_ACCEPT_ALL_FILES_VALIDATOR);
         }
 
         /**
