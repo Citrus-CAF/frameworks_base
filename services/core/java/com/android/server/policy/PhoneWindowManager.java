@@ -1056,8 +1056,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.SYSTEM_NAVIGATION_KEYS_ENABLED), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.LOCK_POWER_MENU_DISABLED), false, this,
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.LOCK_POWER_MENU_DISABLED), false, this,
                     UserHandle.USER_ALL);
 
             updateSettings();
@@ -2647,8 +2647,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mImmersiveModeConfirmation.loadSetting(mCurrentUserId);
             }
 
-            mGlobalActionsOnLockDisable = Settings.System.getIntForUser(resolver,
-                    Settings.System.LOCK_POWER_MENU_DISABLED, 0,
+            mGlobalActionsOnLockDisable = Settings.Secure.getIntForUser(resolver,
+                    Settings.Secure.LOCK_POWER_MENU_DISABLED, 0,
                     UserHandle.USER_CURRENT) != 0;
         }
         synchronized (mWindowManagerFuncs.getWindowManagerLock()) {

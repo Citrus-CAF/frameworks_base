@@ -4194,15 +4194,6 @@ public final class Settings {
         private static final Validator SCREEN_STATE_ON_DELAY_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
-         * Disable power menu on secure lock screens
-         * @hide
-         */
-        public static final String LOCK_POWER_MENU_DISABLED = "lockscreen_power_menu_disabled";
-
-        /** @hide */
-        private static final Validator LOCK_POWER_MENU_DISABLED_VALIDATOR = BOOLEAN_VALIDATOR;
-
-        /**
          * @hide
          */
         public static final String SCREENSHOT_SHUTTER_SOUND = "screenshot_shutter_sound";
@@ -4301,7 +4292,6 @@ public final class Settings {
             SCREEN_STATE_MOBILE_DATA,
             SCREEN_STATE_OFF_DELAY,
             SCREEN_STATE_ON_DELAY,
-            LOCK_POWER_MENU_DISABLED,
             SCREENSHOT_SHUTTER_SOUND,
             OMNIJAWS_WEATHER_ICON_PACK,
             LOCKSCREEN_WEATHER_ENABLED,
@@ -4431,7 +4421,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREEN_STATE_MOBILE_DATA);
             PRIVATE_SETTINGS.add(SCREEN_STATE_OFF_DELAY);
             PRIVATE_SETTINGS.add(SCREEN_STATE_ON_DELAY);
-            PRIVATE_SETTINGS.add(LOCK_POWER_MENU_DISABLED);
             PRIVATE_SETTINGS.add(SCREENSHOT_SHUTTER_SOUND);
             PRIVATE_SETTINGS.add(OMNIJAWS_WEATHER_ICON_PACK);
             PRIVATE_SETTINGS.add(LOCKSCREEN_WEATHER_ENABLED);
@@ -4535,7 +4524,6 @@ public final class Settings {
             VALIDATORS.put(SCREEN_STATE_MOBILE_DATA, SCREEN_STATE_MOBILE_DATA_VALIDATOR);
             VALIDATORS.put(SCREEN_STATE_OFF_DELAY, SCREEN_STATE_OFF_DELAY_VALIDATOR);
             VALIDATORS.put(SCREEN_STATE_ON_DELAY, SCREEN_STATE_ON_DELAY_VALIDATOR);
-            VALIDATORS.put(LOCK_POWER_MENU_DISABLED, LOCK_POWER_MENU_DISABLED_VALIDATOR);
             VALIDATORS.put(SCREENSHOT_SHUTTER_SOUND, SCREENSHOT_SHUTTER_SOUND_VALIDATOR);
             VALIDATORS.put(OMNIJAWS_WEATHER_ICON_PACK, OMNIJAWS_WEATHER_ICON_PACK_VALIDATOR);
             VALIDATORS.put(LOCKSCREEN_WEATHER_ENABLED, LOCKSCREEN_WEATHER_ENABLED_VALIDATOR);
@@ -8136,6 +8124,12 @@ public final class Settings {
          * @hide
          */
         public static final String ADB_PORT = "adb_port";
+
+        /**
+         * Disable power menu on secure lock screens
+         * @hide
+         */
+        public static final String LOCK_POWER_MENU_DISABLED = "lockscreen_power_menu_disabled";
 
         /**
          * Citrus-CAF SecureSettings additions ends
