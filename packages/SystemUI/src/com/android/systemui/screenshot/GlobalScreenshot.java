@@ -178,7 +178,7 @@ class SaveImageInBackgroundTask extends AsyncTask<Void, Void, Void> {
             // Now remove all special chars from the app name
             appNameString = appNameString.replaceAll("[\\\\/:*?\"<>|\\s]+", "_");
             mImageFileName = String.format(SCREENSHOT_FILE_NAME_TEMPLATE_APPNAME,
-                    appNameString, imageDate);
+                    imageDate, appNameString);
         } else {
             mImageFileName = String.format(SCREENSHOT_FILE_NAME_TEMPLATE, imageDate);
         }
