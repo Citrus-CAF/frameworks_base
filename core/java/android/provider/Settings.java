@@ -4245,6 +4245,24 @@ public final class Settings {
         private static final Validator SCREEN_OFF_ANIMATION_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
+         * Disable dashboard conditions in settings
+         * @hide
+         */
+        public static final String ENABLE_CONDITIONS = "enable_conditions";
+
+        /** @hide */
+        private static final Validator ENABLE_CONDITIONS_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * Disable dashboard suggestions in settings
+         * @hide
+         */
+        public static final String ENABLE_SUGGESTIONS = "enable_suggestions";
+
+        /** @hide */
+        private static final Validator ENABLE_SUGGESTIONS_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
@@ -4325,6 +4343,8 @@ public final class Settings {
             CUSTOM_SETTINGS_RANDOM_SUMMARY,
             CUSTOM_SETTINGS_SUMMARY,
             SCREEN_OFF_ANIMATION,
+            ENABLE_CONDITIONS,
+            ENABLE_SUGGESTIONS,
         };
 
         /**
@@ -4457,6 +4477,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(CUSTOM_SETTINGS_RANDOM_SUMMARY);
             PRIVATE_SETTINGS.add(CUSTOM_SETTINGS_SUMMARY);
             PRIVATE_SETTINGS.add(SCREEN_OFF_ANIMATION);
+            PRIVATE_SETTINGS.add(ENABLE_CONDITIONS);
+            PRIVATE_SETTINGS.add(ENABLE_SUGGESTIONS);
         }
 
         /**
@@ -4563,6 +4585,8 @@ public final class Settings {
             VALIDATORS.put(CUSTOM_SETTINGS_RANDOM_SUMMARY, CUSTOM_SETTINGS_RANDOM_SUMMARY_VALIDATOR);
             VALIDATORS.put(CUSTOM_SETTINGS_SUMMARY, CUSTOM_SETTINGS_SUMMARY_VALIDATOR);
             VALIDATORS.put(SCREEN_OFF_ANIMATION, SCREEN_OFF_ANIMATION_VALIDATOR);
+            VALIDATORS.put(ENABLE_CONDITIONS, ENABLE_CONDITIONS_VALIDATOR);
+            VALIDATORS.put(ENABLE_SUGGESTIONS, ENABLE_SUGGESTIONS_VALIDATOR);
         }
 
         /**
