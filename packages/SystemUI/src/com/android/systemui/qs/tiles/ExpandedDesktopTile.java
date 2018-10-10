@@ -88,20 +88,46 @@ public class ExpandedDesktopTile extends QSTileImpl<BooleanState> {
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
+        state.label = mContext.getString(
+                R.string.quick_settings_expanded_desktop_label);
         state.state = Tile.STATE_ACTIVE;
         if (mExpandedDesktopState == 1) {
+            state.contentDescription =  mContext.getString(
+                    R.string.accessibility_quick_settings_expanded_desktop_changed);
             state.icon = ResourceIcon.get(R.drawable.ic_qs_expanded_desktop);
-            state.label = mContext.getString(R.string.quick_settings_expanded_desktop);
+            state.secondaryLabel = mContext.getString(
+                    R.string.accessibility_quick_settings_expanded_desktop);
         } else if (mExpandedDesktopState == 2) {
+            state.contentDescription =  mContext.getString(
+                    R.string.accessibility_quick_settings_expanded_desktop_changed_statusbar_off);
             state.icon = ResourceIcon.get(R.drawable.ic_qs_expanded_statusbar_off);
-            state.label = mContext.getString(R.string.quick_settings_expanded_statusbar_off);
+            state.secondaryLabel = mContext.getString(
+                    R.string.accessibility_quick_settings_expanded_statusbar_off);
         } else if (mExpandedDesktopState == 3) {
+            state.contentDescription =  mContext.getString(
+                    R.string.accessibility_quick_settings_expanded_desktop_changed_navigation_off);
             state.icon = ResourceIcon.get(R.drawable.ic_qs_expanded_navigation_off);
-            state.label = mContext.getString(R.string.quick_settings_expanded_navigation_off);
+            state.secondaryLabel = mContext.getString(
+                    R.string.accessibility_quick_settings_expanded_navigation_off);
         } else {
+            state.contentDescription =  mContext.getString(
+                    R.string.accessibility_quick_settings_expanded_desktop_changed_off);
             state.icon = ResourceIcon.get(R.drawable.ic_qs_expanded_desktop_off);
-            state.label = mContext.getString(R.string.quick_settings_expanded_desktop_off);
+            state.secondaryLabel = null;
             state.state = Tile.STATE_INACTIVE;
+        }
+    }
+
+    @Override
+    protected String composeChangeAnnouncement() {
+        if (mExpandedDesktopState == 1) {
+            return mContext.getString(R.string.accessibility_quick_settings_expanded_desktop);
+        } else if (mExpandedDesktopState == 2) {
+            return mContext.getString(R.string.accessibility_quick_settings_expanded_statusbar_off);
+        } else if (mExpandedDesktopState == 3) {
+            return mContext.getString(R.string.accessibility_quick_settings_expanded_navigation_off);
+        } else {
+            return mContext.getString(R.string.accessibility_quick_settings_expanded_desktop_changed_off);
         }
     }
 

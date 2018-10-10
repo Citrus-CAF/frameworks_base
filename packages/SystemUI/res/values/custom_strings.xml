@@ -30,11 +30,14 @@
     <string name="quick_settings_adb_network_label">ADB over network</string>
     <string name="quick_settings_adb_network_toast">USB debugging is not enabled</string>
     <!-- Expanded desktop QS tile -->
-    <string name="quick_settings_expanded_desktop_label">Expanded desktop</string>
-    <string name="quick_settings_expanded_desktop">Expanded</string>
-    <string name="quick_settings_expanded_navigation_off">Hide navbar</string>
-    <string name="quick_settings_expanded_statusbar_off">Hide statusbar</string>
-    <string name="quick_settings_expanded_desktop_off">Normal</string>
+    <string name="quick_settings_expanded_desktop_label">Expanded view</string>
+    <string name="accessibility_quick_settings_expanded_desktop">Hide both</string>
+    <string name="accessibility_quick_settings_expanded_navigation_off">Hide navbar</string>
+    <string name="accessibility_quick_settings_expanded_statusbar_off">Hide statusbar</string>
+    <string name="accessibility_quick_settings_expanded_desktop_changed">Hide both navigation bar and statusbar.</string>
+    <string name="accessibility_quick_settings_expanded_desktop_changed_navigation_off">Hide navigation bar.</string>
+    <string name="accessibility_quick_settings_expanded_desktop_changed_statusbar_off">Hide statusbar.</string>
+    <string name="accessibility_quick_settings_expanded_desktop_changed_off">Expanded view turned off.</string>
     <!-- Heads up QS tile -->
     <string name="quick_settings_heads_up_label">Heads up</string>
     <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
