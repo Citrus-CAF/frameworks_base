@@ -105,6 +105,7 @@ public class BoostFramework {
         public static final int BOOST_V1 = 1;
         public static final int BOOST_V2 = 2;
         public static final int BOOST_V3 = 3;
+        public static final int BOOST_GAME = 4;
         public static final int TYPE_SERVICE_START = 100;
     };
 
@@ -145,6 +146,25 @@ public class BoostFramework {
         }
         catch(Exception e) {
             Log.e(TAG,"BoostFramework() : Exception_3 = " + e);
+        }
+    }
+
+/** @hide */
+    public BoostFramework(boolean isUntrustedDomain) {
+        initFunctions();
+
+        try {
+            if (sPerfClass != null) {
+                Constructor cons = sPerfClass.getConstructor(boolean.class);
+                if (cons != null)
+                    mPerf = cons.newInstance(isUntrustedDomain);
+            }
+            if (sUxPerfClass != null) {
+                mUxPerf = sUxPerfClass.newInstance();
+            }
+        }
+        catch(Exception e) {
+            Log.e(TAG,"BoostFramework() : Exception_5 = " + e);
         }
     }
 

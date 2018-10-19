@@ -1568,11 +1568,19 @@ public class AudioService extends IAudioService.Stub
 
     protected void adjustStreamVolume(int streamType, int direction, int flags,
             String callingPackage, String caller, int uid) {
+        if (DEBUG_VOL) Log.d(TAG, "adjustStreamVolume() stream=" + streamType + ", dir=" + direction
+                + ", flags=" + flags + ", caller=" + caller);
+
+        /* If MirrorLink audio is playing, then disable volume changes */
+        String value = SystemProperties.get("vendor.mls.audio.session.status", "default");
+        if (true == value.equals("started")){
+            Log.e(TAG, "adjustStreamVolume() Ignore volume change during MirrorLink session");
+            return;
+        }
+
         if (mUseFixedVolume) {
             return;
         }
-        if (DEBUG_VOL) Log.d(TAG, "adjustStreamVolume() stream=" + streamType + ", dir=" + direction
-                + ", flags=" + flags + ", caller=" + caller);
 
         ensureValidDirection(direction);
         ensureValidStreamType(streamType);
@@ -1942,6 +1950,14 @@ public class AudioService extends IAudioService.Stub
             Log.d(TAG, "setStreamVolume(stream=" + streamType+", index=" + index
                     + ", calling=" + callingPackage + ")");
         }
+
+        /* If MirrorLink audio is playing, then disable volume changes */
+        String value = SystemProperties.get("vendor.mls.audio.session.status", "default");
+        if (true == value.equals("started")){
+            Log.e(TAG, "setStreamVolume() Ignore volume change during MirrorLink session");
+            return;
+        }
+
         if (mUseFixedVolume) {
             return;
         }
@@ -3852,6 +3868,12 @@ public class AudioService extends IAudioService.Stub
             address = "";
         }
         String btDeviceName =  btDevice.getName();
+        if (btDeviceName == null) {
+            Slog.i(TAG, "handleBtScoActiveDeviceChange: btDeviceName is null," +
+                       " sending empty string");
+            btDeviceName = "";
+        }
+
         boolean result = false;
         if (isActive) {
             result |= handleDeviceConnection(isActive, outDeviceTypes[0], address, btDeviceName);
