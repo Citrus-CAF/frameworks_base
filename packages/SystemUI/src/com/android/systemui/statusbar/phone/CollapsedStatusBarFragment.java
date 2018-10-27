@@ -57,16 +57,23 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     public static final String STATUS_BAR_ICON_MANAGER_TAG = "status_bar_icon_manager";
     public static final int FADE_IN_DURATION = 320;
     public static final int FADE_IN_DELAY = 50;
+    public static final int STATUS_BAR_CLOCK_HIDDEN = 0;
+    public static final int STATUS_BAR_CLOCK_LEFT   = 1;
+    public static final int STATUS_BAR_CLOCK_CENTER = 2;
+    public static final int STATUS_BAR_CLOCK_RIGHT  = 3;
     private PhoneStatusBarView mStatusBar;
     private KeyguardMonitor mKeyguardMonitor;
     private NetworkController mNetworkController;
     private LinearLayout mSystemIconArea;
     private View mClockView;
+    private View mRightClock;
+    private int mStatusBarClockConfig;
     private View mNotificationIconAreaInner;
     private int mDisabled1;
     private StatusBar mStatusBarComponent;
     private DarkIconManager mDarkIconManager;
     private View mOperatorNameFrame;
+    private LinearLayout mCenterClockLayout;
 
     // custom carrier label
     private View mCustomCarrierLabel;
@@ -82,6 +89,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
        void observe() {
            mContentResolver.registerContentObserver(Settings.System.getUriFor(
                    Settings.System.STATUS_BAR_SHOW_CARRIER),
+                   false, this, UserHandle.USER_ALL);
+           mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                   Settings.System.STATUS_BAR_CLOCK),
                    false, this, UserHandle.USER_ALL);
        }
 
@@ -128,9 +138,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         Dependency.get(StatusBarIconController.class).addIconGroup(mDarkIconManager);
         mSystemIconArea = mStatusBar.findViewById(R.id.system_icon_area);
         mClockView = mStatusBar.findViewById(R.id.clock);
+        mCenterClockLayout = (LinearLayout) mStatusBar.findViewById(R.id.center_clock_layout);
+        mRightClock = mStatusBar.findViewById(R.id.right_clock);
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.status_bar_carrier_text);
         showSystemIconArea(false);
-        showClock(false);
         updateSettings(false);
         initEmergencyCryptkeeperText();
         initOperatorName();
@@ -196,18 +207,11 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             if ((state1 & DISABLE_NOTIFICATION_ICONS) != 0) {
                 hideNotificationIconArea(animate);
                 hideCarrierName(animate);
+                animateHide(mClockView, animate, false);
             } else {
                 showNotificationIconArea(animate);
                 showCarrierName(animate);
-            }
-        }
-        // The clock may have already been hidden, but we might want to shift its
-        // visibility to GONE from INVISIBLE or vice versa
-        if ((diff1 & DISABLE_CLOCK) != 0 || mClockView.getVisibility() != clockHiddenMode()) {
-            if ((state1 & DISABLE_CLOCK) != 0) {
-                hideClock(animate);
-            } else {
-                showClock(animate);
+                updateClockConfig(animate);
             }
         }
     }
@@ -243,38 +247,28 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     public void hideSystemIconArea(boolean animate) {
         animateHide(mSystemIconArea, animate, true);
+        animateHide(mCenterClockLayout, animate, true);
+        if (mStatusBarClockConfig == STATUS_BAR_CLOCK_RIGHT) {
+            animateHide(mRightClock, animate, true);
+        }
     }
 
     public void showSystemIconArea(boolean animate) {
         animateShow(mSystemIconArea, animate);
-    }
-
-    public void hideClock(boolean animate) {
-        boolean isInvisible = !mStatusBar.isClosed() && !mKeyguardMonitor.isShowing();
-        animateHide(mClockView, animate, isInvisible);
-    }
-
-    public void showClock(boolean animate) {
-        animateShow(mClockView, animate);
-    }
-
-    /**
-     * If panel is expanded/expanding it usually means QS shade is opening, so
-     * don't set the clock GONE otherwise it'll mess up the animation.
-     */
-    private int clockHiddenMode() {
-        if (!mStatusBar.isClosed() && !mKeyguardMonitor.isShowing()) {
-            return View.INVISIBLE;
+        animateShow(mCenterClockLayout, animate);
+        if (mStatusBarClockConfig == STATUS_BAR_CLOCK_RIGHT) {
+            animateShow(mRightClock, animate);
         }
-        return View.GONE;
     }
 
     public void hideNotificationIconArea(boolean animate) {
         animateHide(mNotificationIconAreaInner, animate, true);
+        animateHide(mCenterClockLayout, animate, true);
     }
 
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
+        animateShow(mCenterClockLayout, animate);
     }
 
     public void hideOperatorName(boolean animate) {
@@ -375,7 +369,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mShowCarrierLabel = Settings.System.getIntForUser(
                 getContext().getContentResolver(), Settings.System.STATUS_BAR_SHOW_CARRIER, 1,
                 UserHandle.USER_CURRENT);
+        mStatusBarClockConfig = Settings.System.getIntForUser(mContentResolver,
+                Settings.System.STATUS_BAR_CLOCK, STATUS_BAR_CLOCK_LEFT, UserHandle.USER_CURRENT);
         setCarrierLabel(animate);
+        updateClockConfig(animate);
     }
 
     private void setCarrierLabel(boolean animate) {
@@ -383,6 +380,14 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             animateShow(mCustomCarrierLabel, animate);
         } else {
             animateHide(mCustomCarrierLabel, animate, false);
+        }
+    }
+
+    private void updateClockConfig(boolean animate) {
+        if (mStatusBarClockConfig == STATUS_BAR_CLOCK_CENTER || mStatusBarClockConfig == STATUS_BAR_CLOCK_RIGHT) {
+            animateHide(mClockView, animate, false);
+        } else {
+            animateShow(mClockView, animate);
         }
     }
 }
