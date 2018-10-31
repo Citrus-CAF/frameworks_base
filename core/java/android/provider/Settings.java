@@ -4309,6 +4309,9 @@ public final class Settings {
 
         /** @hide */
         private static final Validator NAVIGATION_BAR_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
+        
+        /** @hide */
+        public static final String FULL_GESTURE_NAVBAR = "full_gesture_navbar";
 
         /**
          * Value for button brightness.
