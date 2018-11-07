@@ -8583,6 +8583,9 @@ public final class Settings {
          */
         public static final String LOCK_POWER_MENU_DISABLED = "lockscreen_power_menu_disabled";
 
+        /** @hide */
+        private static final Validator LOCK_POWER_MENU_DISABLED_VALIDATOR = BOOLEAN_VALIDATOR;
+
         /**
          * Whether the torch launch gesture to double tap or long press the power button when the
          * screen is off should be enabled.
@@ -8705,6 +8708,8 @@ public final class Settings {
             MANUAL_RINGER_TOGGLE_COUNT,
             HUSH_GESTURE_USED,
             WIFI_DISCONNECT_DELAY_DURATION,
+            // Citrus-CAF additions starts
+            LOCK_POWER_MENU_DISABLED,
             TORCH_POWER_BUTTON_GESTURE,
         };
 
@@ -8855,6 +8860,8 @@ public final class Settings {
             VALIDATORS.put(HUSH_GESTURE_USED, HUSH_GESTURE_USED_VALIDATOR);
             VALIDATORS.put(MANUAL_RINGER_TOGGLE_COUNT, MANUAL_RINGER_TOGGLE_COUNT_VALIDATOR);
             VALIDATORS.put(WIFI_DISCONNECT_DELAY_DURATION, WIFI_DISCONNECT_DELAY_DURATION_VALIDATOR);
+            // Citrus-CAF additions starts
+            VALIDATORS.put(LOCK_POWER_MENU_DISABLED, LOCK_POWER_MENU_DISABLED_VALIDATOR);
             VALIDATORS.put(TORCH_POWER_BUTTON_GESTURE, TORCH_POWER_BUTTON_GESTURE_VALIDATOR);
         }
 
