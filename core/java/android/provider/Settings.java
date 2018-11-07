@@ -4315,7 +4315,7 @@ public final class Settings {
         public static final String KEY_HOME_LONG_PRESS_ACTION = "key_home_long_press_action";
 
         /** @hide */
-        private static final Validator KEY_HOME_LONG_PRESS_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator KEY_HOME_LONG_PRESS_ACTION_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
          * Action to perform when the home key is double-tapped.
@@ -4326,7 +4326,7 @@ public final class Settings {
         public static final String KEY_HOME_DOUBLE_TAP_ACTION = "key_home_double_tap_action";
 
         /** @hide */
-        private static final Validator KEY_HOME_DOUBLE_TAP_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator KEY_HOME_DOUBLE_TAP_ACTION_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
          * Action to perform when the menu key is long-pressed.
@@ -4337,7 +4337,7 @@ public final class Settings {
         public static final String KEY_MENU_LONG_PRESS_ACTION = "key_menu_long_press_action";
 
         /** @hide */
-        private static final Validator KEY_MENU_LONG_PRESS_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator KEY_MENU_LONG_PRESS_ACTION_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
          * Action to perform when the menu key is double-tapped.
@@ -4348,7 +4348,7 @@ public final class Settings {
         public static final String KEY_MENU_DOUBLE_TAP_ACTION = "key_menu_double_tap_action";
 
         /** @hide */
-        private static final Validator KEY_MENU_DOUBLE_TAP_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator KEY_MENU_DOUBLE_TAP_ACTION_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
          * Action to perform when the back key is long-pressed.
@@ -4359,7 +4359,7 @@ public final class Settings {
         public static final String KEY_BACK_LONG_PRESS_ACTION = "key_back_long_press_action";
 
         /** @hide */
-        private static final Validator KEY_BACK_LONG_PRESS_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator KEY_BACK_LONG_PRESS_ACTION_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
          * Action to perform when the back key is double-tapped.
@@ -4370,7 +4370,7 @@ public final class Settings {
         public static final String KEY_BACK_DOUBLE_TAP_ACTION = "key_back_double_tap_action";
 
         /** @hide */
-        private static final Validator KEY_BACK_DOUBLE_TAP_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator KEY_BACK_DOUBLE_TAP_ACTION_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
          * Action to perform when the assist key is long-pressed.
@@ -4381,7 +4381,7 @@ public final class Settings {
         public static final String KEY_ASSIST_LONG_PRESS_ACTION = "key_assist_long_press_action";
 
         /** @hide */
-        private static final Validator KEY_ASSIST_LONG_PRESS_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator KEY_ASSIST_LONG_PRESS_ACTION_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
          * Action to perform when the assist key is double-tapped.
@@ -4392,7 +4392,7 @@ public final class Settings {
         public static final String KEY_ASSIST_DOUBLE_TAP_ACTION = "key_assist_double_tap_action";
 
         /** @hide */
-        private static final Validator KEY_ASSIST_DOUBLE_TAP_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator KEY_ASSIST_DOUBLE_TAP_ACTION_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
          * Action to perform when the app switch key is long-pressed.
@@ -4403,7 +4403,7 @@ public final class Settings {
         public static final String KEY_APP_SWITCH_LONG_PRESS_ACTION = "key_app_switch_long_press_action";
 
         /** @hide */
-        private static final Validator KEY_APP_SWITCH_LONG_PRESS_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator KEY_APP_SWITCH_LONG_PRESS_ACTION_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
          * Action to perform when the app switch key is double-tapped.
@@ -4414,7 +4414,7 @@ public final class Settings {
         public static final String KEY_APP_SWITCH_DOUBLE_TAP_ACTION = "key_app_switch_double_tap_action";
 
         /** @hide */
-        private static final Validator KEY_APP_SWITCH_DOUBLE_TAP_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator KEY_APP_SWITCH_DOUBLE_TAP_ACTION_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
          * Action to perform when the app switch key is long-pressed.
@@ -4425,7 +4425,7 @@ public final class Settings {
         public static final String KEY_CAMERA_LONG_PRESS_ACTION = "key_camera_long_press_action";
 
         /** @hide */
-        private static final Validator KEY_CAMERA_LONG_PRESS_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator KEY_CAMERA_LONG_PRESS_ACTION_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
          * Action to perform when the camera key is double-tapped.
@@ -4436,7 +4436,7 @@ public final class Settings {
         public static final String KEY_CAMERA_DOUBLE_TAP_ACTION = "key_camera_double_tap_action";
 
         /** @hide */
-        private static final Validator KEY_CAMERA_DOUBLE_TAP_ACTION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator KEY_CAMERA_DOUBLE_TAP_ACTION_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
          * Whether user can swap navigation lateral keys.
@@ -4455,7 +4455,7 @@ public final class Settings {
         public static final String QS_COLUMNS_PORTRAIT = "qs_columns_portrait";
 
         /** @hide */
-        private static final Validator QS_COLUMNS_PORTRAIT_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator QS_COLUMNS_PORTRAIT_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
          * Number of qs columns on landscape orientation
@@ -4464,7 +4464,7 @@ public final class Settings {
         public static final String QS_COLUMNS_LANDSCAPE = "qs_columns_landscape";
 
         /** @hide */
-        private static final Validator QS_COLUMNS_LANDSCAPE_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator QS_COLUMNS_LANDSCAPE_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
          * @hide
@@ -4472,7 +4472,7 @@ public final class Settings {
         public static final String QS_ROWS_PORTRAIT = "qs_rows_portrait";
 
         /** @hide */
-        private static final Validator QS_ROWS_PORTRAIT_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator QS_ROWS_PORTRAIT_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
          * Number of qs columns on landscape orientation
@@ -4481,7 +4481,7 @@ public final class Settings {
         public static final String QS_ROWS_LANDSCAPE = "qs_rows_landscape";
 
         /** @hide */
-        private static final Validator QS_ROWS_LANDSCAPE_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator QS_ROWS_LANDSCAPE_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /*
          * Whether to display qs tile titles in the qs panel
@@ -4490,8 +4490,7 @@ public final class Settings {
         public static final String QS_TILE_TITLE_VISIBILITY = "qs_tile_title_visibility";
 
         /** @hide */
-        private static final Validator QS_TILE_TITLE_VISIBILITY_VALIDATOR =
-                BOOLEAN_VALIDATOR;
+        private static final Validator QS_TILE_TITLE_VISIBILITY_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
          * Indicates whether ANBI (Accidental navigation button interaction) is enabled.
@@ -4516,14 +4515,12 @@ public final class Settings {
          * Whether to use the custom quick unlock screen control
          * @hide
          */
-        public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL =
-                "lockscreen_quick_unlock_control";
+        public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL = "lockscreen_quick_unlock_control";
 
         /** @hide */
         private static final Validator LOCKSCREEN_QUICK_UNLOCK_CONTROL_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /** Whether to skip music track with volume rocker
-        /**
          * @hide
          */
         public static final String VOLUME_BUTTON_MUSIC_CONTROL = "volume_button_music_control";
