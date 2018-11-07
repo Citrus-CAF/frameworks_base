@@ -4541,6 +4541,33 @@ public final class Settings {
         private static final Validator DOUBLE_TAP_SLEEP_LOCKSCREEN_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Whether the phone vibrates on call connect
+         * @hide
+         */
+        public static final String VIBRATE_ON_CONNECT = "vibrate_on_connect";
+
+        /** @hide */
+        private static final Validator VIBRATE_ON_CONNECT_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * Whether the phone vibrates on disconnect
+         * @hide
+         */
+        public static final String VIBRATE_ON_DISCONNECT = "vibrate_on_disconnect";
+
+        /** @hide */
+        private static final Validator VIBRATE_ON_DISCONNECT_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * Whether the phone vibrates on call waiting
+         * @hide
+         */
+        public static final String VIBRATE_ON_CALLWAITING = "vibrate_on_callwaiting";
+
+        /** @hide */
+        private static final Validator VIBRATE_ON_CALLWAITING_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
@@ -4649,6 +4676,9 @@ public final class Settings {
             LOCKSCREEN_QUICK_UNLOCK_CONTROL,
             VOLUME_BUTTON_MUSIC_CONTROL,
             DOUBLE_TAP_SLEEP_LOCKSCREEN,
+            VIBRATE_ON_CONNECT,
+            VIBRATE_ON_DISCONNECT,
+            VIBRATE_ON_CALLWAITING,
         };
 
         /**
@@ -4808,7 +4838,10 @@ public final class Settings {
             PRIVATE_SETTINGS.add(LOCKSCREEN_PIN_SCRAMBLE_LAYOUT);
             PRIVATE_SETTINGS.add(LOCKSCREEN_QUICK_UNLOCK_CONTROL);
             PRIVATE_SETTINGS.add(VOLUME_BUTTON_MUSIC_CONTROL);
-            PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_LOCKSCREEN);
+            PRIVATE_SETTINGS.add(VIBRATE_ON_CONNECT);
+            PRIVATE_SETTINGS.add(VIBRATE_ON_DISCONNECT);
+            PRIVATE_SETTINGS.add(VIBRATE_ON_CALLWAITING);
+
         }
 
         /**
@@ -4943,6 +4976,9 @@ public final class Settings {
             VALIDATORS.put(LOCKSCREEN_QUICK_UNLOCK_CONTROL, LOCKSCREEN_QUICK_UNLOCK_CONTROL_VALIDATOR);
             VALIDATORS.put(VOLUME_BUTTON_MUSIC_CONTROL, VOLUME_BUTTON_MUSIC_CONTROL_VALIDATOR);
             VALIDATORS.put(DOUBLE_TAP_SLEEP_LOCKSCREEN, DOUBLE_TAP_SLEEP_LOCKSCREEN_VALIDATOR);
+            VALIDATORS.put(VIBRATE_ON_CONNECT, VIBRATE_ON_CONNECT_VALIDATOR);
+            VALIDATORS.put(VIBRATE_ON_DISCONNECT, VIBRATE_ON_DISCONNECT_VALIDATOR);
+            VALIDATORS.put(VIBRATE_ON_CALLWAITING, VIBRATE_ON_CALLWAITING_VALIDATOR);
         }
 
         /**
