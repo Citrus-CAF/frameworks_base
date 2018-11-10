@@ -4576,6 +4576,12 @@ public final class Settings {
         private static final Validator HEADS_UP_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Whether to use icon pack for Recents
+         * @hide
+         */
+        public static final String RECENTS_ICON_PACK = "recents_icon_pack";
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
