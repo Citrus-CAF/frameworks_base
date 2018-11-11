@@ -4617,7 +4617,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.LESS_BORING_HEADS_UP),
+                    Settings.System.HEADS_UP_ENABLED),
                     false, this, UserHandle.USER_ALL);
         }
 
@@ -4636,7 +4636,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN))) {
                 setStatusBarWindowViewOptions();
            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.LESS_BORING_HEADS_UP))) {
+                    Settings.System.HEADS_UP_ENABLED))) {
                 setUseLessBoringHeadsUp();
             }
         }
@@ -4668,7 +4668,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private void setUseLessBoringHeadsUp() {
         boolean lessBoringHeadsUp = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.LESS_BORING_HEADS_UP, 0, UserHandle.USER_CURRENT) == 1;
+                Settings.System.HEADS_UP_ENABLED, 1, UserHandle.USER_CURRENT) == 1;
         mEntryManager.setUseLessBoringHeadsUp(lessBoringHeadsUp);
     }
 

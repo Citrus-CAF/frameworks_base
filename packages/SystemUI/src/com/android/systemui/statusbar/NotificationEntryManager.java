@@ -922,7 +922,7 @@ public class NotificationEntryManager implements Dumpable, NotificationInflater.
         String notificationPackageName = sbn.getPackageName().toLowerCase();
         isImportantHeadsUp = notificationPackageName.contains("dialer") ||
                 notificationPackageName.contains("messaging");
-        return !mPresenter.isDozing() && mLessBoringHeadsUp && !isImportantHeadsUp;
+        return !mPresenter.isDozing() && !mLessBoringHeadsUp && !isImportantHeadsUp;
     }
 
     protected boolean shouldPeek(NotificationData.Entry entry) {
@@ -931,7 +931,7 @@ public class NotificationEntryManager implements Dumpable, NotificationInflater.
 
     public boolean shouldPeek(NotificationData.Entry entry, StatusBarNotification sbn) {
         if (!mUseHeadsUp || mPresenter.isDeviceInVrMode() || shouldSkipHeadsUp(sbn)) {
-            if (DEBUG) Log.d(TAG, "No peeking: no huns or vr mode or less boring headsup enabled");
+            if (DEBUG) Log.d(TAG, "No peeking: no huns or vr mode or headsup disabled");
             return false;
         }
 

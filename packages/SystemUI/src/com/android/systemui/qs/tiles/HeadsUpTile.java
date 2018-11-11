@@ -19,13 +19,11 @@ package com.android.systemui.qs.tiles;
 
 import android.content.Intent;
 import android.provider.Settings;
-import android.provider.Settings.Global;
 import android.service.quicksettings.Tile;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
-import com.android.systemui.qs.GlobalSetting;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
 import com.android.systemui.R;
@@ -35,17 +33,8 @@ public class HeadsUpTile extends QSTileImpl<BooleanState> {
 
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_heads_up);
 
-    private final GlobalSetting mSetting;
-
     public HeadsUpTile(QSHost host) {
         super(host);
-
-        mSetting = new GlobalSetting(mContext, mHandler, Global.HEADS_UP_NOTIFICATIONS_ENABLED) {
-            @Override
-            protected void handleValueChanged(int value) {
-                handleRefreshState(value);
-            }
-        };
     }
 
     @Override
@@ -64,20 +53,23 @@ public class HeadsUpTile extends QSTileImpl<BooleanState> {
         return new Intent("android.settings.NOTIFICATION_SETTINGS");
     }
 
+   private boolean isHeadsUpEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.HEADS_UP_ENABLED, 1) == 1;
+    }
+
     private void setEnabled(boolean enabled) {
-        Settings.Global.putInt(mContext.getContentResolver(),
-                Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED,
+        Settings.System.putInt(mContext.getContentResolver(),
+                Settings.System.HEADS_UP_ENABLED,
                 enabled ? 1 : 0);
     }
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
-        final int value = arg instanceof Integer ? (Integer) arg : mSetting.getValue();
-        final boolean headsUp = value != 0;
-        state.value = headsUp;
+        state.value = isHeadsUpEnabled();
         state.label = mContext.getString(R.string.quick_settings_heads_up_label);
         state.icon = mIcon;
-        if (headsUp) {
+        if (isHeadsUpEnabled()) {
             state.contentDescription =  mContext.getString(
                     R.string.accessibility_quick_settings_heads_up_on);
             state.state = Tile.STATE_ACTIVE;
