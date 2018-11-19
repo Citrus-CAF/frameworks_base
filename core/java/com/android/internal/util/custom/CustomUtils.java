@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -28,6 +29,8 @@ import android.view.IWindowManager;
 import android.view.WindowManagerGlobal;
 
 import com.android.internal.statusbar.IStatusBarService;
+
+import java.util.Locale;
 
 /**
  * Some custom utilities
@@ -106,5 +109,10 @@ public class CustomUtils {
         if (pm!= null) {
             pm.goToSleep(SystemClock.uptimeMillis());
         }
+    }
+
+    public static boolean isChineseLanguage() {
+       return Resources.getSystem().getConfiguration().locale.getLanguage().startsWith(
+               Locale.CHINESE.getLanguage());
     }
 }
