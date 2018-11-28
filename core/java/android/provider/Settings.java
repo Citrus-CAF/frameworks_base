@@ -4752,6 +4752,20 @@ public final class Settings {
         private static final Validator DEVICE_FEATURE_SETTINGS_VALIDATOR = ANY_STRING_VALIDATOR;
 
         /**
+         * @hide
+         * Whether to set a lower brightness level when enabling night mode
+         * 0: Disabled
+         * 1: Set the brightness to a very low value
+         * 2: Set the brightness to a low value
+         * 3: Set the brightness to a medium value
+         * @hide
+         */
+        public static final String NIGHT_BRIGHTNESS_VALUE = "night_brightness_value";
+
+        /** @hide */
+        private static final Validator NIGHT_BRIGHTNESS_VALUE_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
+
+        /**
          * Citrus-CAF SystemSettings additions ends
          */
 
@@ -4881,6 +4895,7 @@ public final class Settings {
             DEVICE_PROXI_CHECK_ENABLED,
             DEVICE_GESTURE_FEEDBACK_ENABLED,
             DEVICE_FEATURE_SETTINGS,
+            NIGHT_BRIGHTNESS_VALUE,
         };
 
         /**
@@ -5061,6 +5076,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DEVICE_PROXI_CHECK_ENABLED);
             PRIVATE_SETTINGS.add(DEVICE_GESTURE_FEEDBACK_ENABLED);
             PRIVATE_SETTINGS.add(DEVICE_FEATURE_SETTINGS);
+            PRIVATE_SETTINGS.add(NIGHT_BRIGHTNESS_VALUE);
         }
 
         /**
@@ -5216,6 +5232,7 @@ public final class Settings {
             VALIDATORS.put(DEVICE_PROXI_CHECK_ENABLED, DEVICE_PROXI_CHECK_ENABLED_VALIDATOR);
             VALIDATORS.put(DEVICE_GESTURE_FEEDBACK_ENABLED, DEVICE_GESTURE_FEEDBACK_ENABLED_VALIDATOR);
             VALIDATORS.put(DEVICE_FEATURE_SETTINGS, DEVICE_FEATURE_SETTINGS_VALIDATOR);
+            VALIDATORS.put(NIGHT_BRIGHTNESS_VALUE, NIGHT_BRIGHTNESS_VALUE_VALIDATOR);
         }
 
         /**
