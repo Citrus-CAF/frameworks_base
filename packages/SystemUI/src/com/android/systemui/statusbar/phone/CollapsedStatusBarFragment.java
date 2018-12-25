@@ -23,6 +23,7 @@ import android.app.Fragment;
 import android.app.StatusBarManager;
 import android.content.ContentResolver;
 import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.UserHandle;
@@ -96,7 +97,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
        }
 
        @Override
-       public void onChange(boolean selfChange) {
+       public void onChange(boolean selfChange, Uri uri) {
            updateSettings(true);
        }
     }
@@ -366,6 +367,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     public void updateSettings(boolean animate) {
+        if (getContext() == null) {
+            return;
+        }
         mShowCarrierLabel = Settings.System.getIntForUser(
                 getContext().getContentResolver(), Settings.System.STATUS_BAR_SHOW_CARRIER, 1,
                 UserHandle.USER_CURRENT);
