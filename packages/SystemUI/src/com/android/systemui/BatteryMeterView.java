@@ -119,8 +119,6 @@ public class BatteryMeterView extends LinearLayout implements
         atts.recycle();
 
         mSettingObserver = new SettingObserver(new Handler(context.getMainLooper()));
-        mShowPercentAvailable = context.getResources().getBoolean(
-                com.android.internal.R.bool.config_battery_percentage_setting_available);
 
 
         addOnAttachStateChangeListener(
