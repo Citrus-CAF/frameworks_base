@@ -27,6 +27,7 @@ import static android.app.ActivityManager.START_TASK_TO_FRONT;
 import static android.app.ActivityManager.StackId.INVALID_STACK_ID;
 import static android.app.ITaskStackListener.FORCED_RESIZEABLE_REASON_SECONDARY_DISPLAY;
 import static android.app.ITaskStackListener.FORCED_RESIZEABLE_REASON_SPLIT_SCREEN;
+import static android.app.WaitResult.INVALID_DELAY;
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_ASSISTANT;
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_HOME;
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_RECENTS;
@@ -224,8 +225,8 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
     public static boolean mPerfSendTapHint = false;
     public static boolean mIsPerfBoostAcquired = false;
     public static int mPerfHandle = -1;
-    public BoostFramework mPerfBoost = null;
-    public BoostFramework mUxPerf = null;
+    public BoostFramework mPerfBoost = new BoostFramework();
+    public BoostFramework mUxPerf = new BoostFramework();
     static final int HANDLE_DISPLAY_ADDED = FIRST_SUPERVISOR_STACK_MSG + 5;
     static final int HANDLE_DISPLAY_CHANGED = FIRST_SUPERVISOR_STACK_MSG + 6;
     static final int HANDLE_DISPLAY_REMOVED = FIRST_SUPERVISOR_STACK_MSG + 7;
@@ -455,7 +456,6 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
     private boolean mTaskLayersChanged = true;
 
     private ActivityMetricsLogger mActivityMetricsLogger;
-    private LaunchTimeTracker mLaunchTimeTracker = new LaunchTimeTracker();
 
     private final ArrayList<ActivityRecord> mTmpActivityList = new ArrayList<>();
 
@@ -638,10 +638,6 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
 
     public ActivityMetricsLogger getActivityMetricsLogger() {
         return mActivityMetricsLogger;
-    }
-
-    LaunchTimeTracker getLaunchTimeTracker() {
-        return mLaunchTimeTracker;
     }
 
     public KeyguardController getKeyguardController() {
@@ -1131,8 +1127,8 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
         }
     }
 
-    void waitActivityVisible(ComponentName name, WaitResult result) {
-        final WaitInfo waitInfo = new WaitInfo(name, result);
+    void waitActivityVisible(ComponentName name, WaitResult result, long startTimeMs) {
+        final WaitInfo waitInfo = new WaitInfo(name, result, startTimeMs);
         mWaitingForActivityVisible.add(waitInfo);
     }
 
@@ -1163,8 +1159,7 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
                 changed = true;
                 result.timeout = false;
                 result.who = w.getComponent();
-                result.totalTime = SystemClock.uptimeMillis() - result.thisTime;
-                result.thisTime = result.totalTime;
+                result.totalTime = SystemClock.uptimeMillis() - w.getStartTime();
                 mWaitingForActivityVisible.remove(w);
             }
         }
@@ -1203,9 +1198,18 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
         }
     }
 
-    void reportActivityLaunchedLocked(boolean timeout, ActivityRecord r,
-            long thisTime, long totalTime) {
+    void reportActivityLaunchedLocked(boolean timeout, ActivityRecord r, long totalTime) {
         boolean changed = false;
+        if (totalTime > 0) {
+            if (mPerfBoost != null) {
+               if (r.app != null) {
+                   mPerfBoost.perfHint(BoostFramework.VENDOR_HINT_FIRST_DRAW, r.packageName, r.app.pid, BoostFramework.Draw.EVENT_TYPE_V1);
+               }
+            }
+            if (mUxPerf != null) {
+                mUxPerf.perfUXEngine_events(BoostFramework.UXE_EVENT_DISPLAYED_ACT, 0, r.packageName, (int)totalTime);
+            }
+        }
         for (int i = mWaitingActivityLaunched.size() - 1; i >= 0; i--) {
             WaitResult w = mWaitingActivityLaunched.remove(i);
             if (w.who == null) {
@@ -1214,7 +1218,6 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
                 if (r != null) {
                     w.who = new ComponentName(r.info.packageName, r.info.name);
                 }
-                w.thisTime = thisTime;
                 w.totalTime = totalTime;
                 // Do not modify w.result.
             }
@@ -1698,8 +1701,6 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
         ProcessRecord app = mService.getProcessRecordLocked(r.processName,
                 r.info.applicationInfo.uid, true);
 
-        getLaunchTimeTracker().setLaunchTime(r);
-
         if (app != null && app.thread != null) {
             try {
                 if ((r.info.flags&ActivityInfo.FLAG_MULTIPROCESS) == 0
@@ -2037,7 +2038,7 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
             mHandler.removeMessages(IDLE_TIMEOUT_MSG, r);
             r.finishLaunchTickingLocked();
             if (fromTimeout) {
-                reportActivityLaunchedLocked(fromTimeout, r, -1, -1);
+                reportActivityLaunchedLocked(fromTimeout, r, INVALID_DELAY);
             }
 
             // This is a hack to semi-deal with a race condition
@@ -3450,9 +3451,6 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
 
     void acquireAppLaunchPerfLock(ActivityRecord r) {
        /* Acquire perf lock during new app launch */
-       if (mPerfBoost == null) {
-           mPerfBoost = new BoostFramework();
-       }
        if (mPerfBoost != null) {
            mPerfBoost.perfHint(BoostFramework.VENDOR_HINT_FIRST_LAUNCH_BOOST, r.packageName, -1, BoostFramework.Launch.BOOST_V1);
            mPerfSendTapHint = true;
@@ -3474,7 +3472,6 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
     }
 
     void acquireUxPerfLock(int opcode, String packageName) {
-        mUxPerf = new BoostFramework();
         if (mUxPerf != null) {
             mUxPerf.perfUXEngine_events(opcode, 0, packageName, 0);
         }
@@ -4989,10 +4986,13 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
     static class WaitInfo {
         private final ComponentName mTargetComponent;
         private final WaitResult mResult;
+        /** Time stamp when we started to wait for {@link WaitResult}. */
+        private final long mStartTimeMs;
 
-        public WaitInfo(ComponentName targetComponent, WaitResult result) {
+        WaitInfo(ComponentName targetComponent, WaitResult result, long startTimeMs) {
             this.mTargetComponent = targetComponent;
             this.mResult = result;
+            this.mStartTimeMs = startTimeMs;
         }
 
         public boolean matches(ComponentName targetComponent) {
@@ -5001,6 +5001,10 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
 
         public WaitResult getResult() {
             return mResult;
+        }
+
+        public long getStartTime() {
+            return mStartTimeMs;
         }
 
         public ComponentName getComponent() {
