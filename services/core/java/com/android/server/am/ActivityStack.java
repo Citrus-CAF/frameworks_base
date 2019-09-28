@@ -2534,7 +2534,9 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
 
         if (prev != null && prev != next) {
             if (!mStackSupervisor.mActivitiesWaitingForVisibleActivity.contains(prev)
-                    && next != null && !next.nowVisible) {
+                    && next != null && !next.nowVisible
+                    && checkKeyguardVisibility(next, true /* shouldBeVisible */,
+                            next.isTopRunningActivity())) {
                 mStackSupervisor.mActivitiesWaitingForVisibleActivity.add(prev);
                 if (DEBUG_SWITCH) Slog.v(TAG_SWITCH,
                         "Resuming top, waiting visible to hide: " + prev);
@@ -3902,6 +3904,9 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
             if (oomAdj) {
                 mService.updateOomAdjLocked();
             }
+
+            r.releasePerfLockHandlerIfNeeded();
+
             return r;
         }
 

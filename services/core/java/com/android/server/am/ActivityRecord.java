@@ -2042,6 +2042,7 @@ final class ActivityRecord extends ConfigurationContainer implements AppWindowCo
             mStackSupervisor.reportActivityLaunchedLocked(false /* timeout */, this,
                     info.windowsFullyDrawnDelayMs);
         }
+        releasePerfLockHandlerIfNeeded();
     }
     @Override
     public void onStartingWindowDrawn(long timestamp) {
@@ -2065,6 +2066,7 @@ final class ActivityRecord extends ConfigurationContainer implements AppWindowCo
             if (task != null) {
                 task.hasBeenVisible = true;
             }
+            releasePerfLockHandlerIfNeeded();
         }
     }
 
@@ -3028,5 +3030,12 @@ final class ActivityRecord extends ConfigurationContainer implements AppWindowCo
         }
         proto.write(TRANSLUCENT, !fullscreen);
         proto.end(token);
+    }
+
+    void releasePerfLockHandlerIfNeeded() {
+        if (mPerf != null && perfActivityBoostHandler > 0) {
+            mPerf.perfLockReleaseHandler(perfActivityBoostHandler);
+            perfActivityBoostHandler = -1;
+        }
     }
 }
