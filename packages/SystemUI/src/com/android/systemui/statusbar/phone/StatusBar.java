@@ -5859,11 +5859,12 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private void setNavBarEnabled(boolean enabled) {
         if (enabled) {
+        if (mNavigationBarView == null) {
             createNavigationBar();
             if (RESET_SYSTEMUI_VISIBILITY_FOR_NAVBAR) {
                 resetSystemUIVisibility();
             }
-        } else {
+        } } else {
             removeNavigationBar();
         }
     }
